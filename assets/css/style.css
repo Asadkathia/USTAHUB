@@ -1795,7 +1795,7 @@ Headers:		'Varela Round', sans-serif;
     color: #ff0000;
 }
 .pricing ul li.not-available {
-    color: rgba(0,0,0,, .5);
+    color: rgba(0,0,0, 0.5);
 }
 .pricing.box {
     background-color: #fff;
@@ -4029,7 +4029,7 @@ textarea.form-control {
     width: 140px;
     display: block;
     background: #ff0000;
-    box-shadow: $bs;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Corrected from $bs */
     position: absolute;
     top: 25px;
     left: -30px;
@@ -4077,4 +4077,144 @@ textarea.form-control {
     position: relative;
     left: -6px;
     line-height: 40px;
+}
+
+/* Hero Carousel Styles */
+.hero-carousel {
+    position: relative;
+    width: 100%;
+    height: 75vh;
+    min-height: 500px;
+    overflow: hidden;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.7s ease-in-out;
+}
+
+.hero-slide.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+.hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-slide .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 1;
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 2;
+    width: 100%;
+    max-width: 800px;
+    color: #fff;
+}
+
+#hero-search-form .input-group-text,
+#hero-search-form-2 .input-group-text {
+    border-right: 0;
+    background-color: #fff;
+}
+
+#hero-search-form .form-control,
+#hero-search-form-2 .form-control {
+    border-left: 0;
+    border-right: 0;
+}
+
+#hero-search-form .btn-danger,
+#hero-search-form-2 .btn-danger {
+    background-color: #d32323;
+    border-color: #d32323;
+}
+
+.hero-content nav ul li a {
+    color: #fff;
+    font-weight: 500;
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+}
+
+.hero-content nav ul li a:hover {
+    opacity: 1;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    border: none;
+    padding: 0.5rem;
+    border-radius: 50%;
+    z-index: 3;
+}
+
+.carousel-control-prev {
+    left: 1rem;
+}
+
+.carousel-control-next {
+    right: 1rem;
+}
+
+.carousel-dots {
+    bottom: 1rem;
+}
+
+.carousel-dots .dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin: 0 6px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}
+
+.carousel-dots .dot.active {
+    background: #fff;
+}
+
+@media (max-width: 768px) {
+    .hero-carousel {
+        height: auto;
+        min-height: 400px;
+    }
+    
+    .hero-content {
+        top: 40%;
+    }
+    
+    #hero-search-form .row,
+    #hero-search-form-2 .row {
+        flex-direction: column;
+    }
+    
+    #hero-search-form .col-md-10, /* Updated from .col-sm-8 */
+    #hero-search-form-2 .col-md-10 { /* Updated from .col-sm-8 */
+        width: 100%;
+        margin-bottom: 1rem;
+    }
 }

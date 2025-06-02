@@ -36,37 +36,99 @@
         <!--*********************************************************************************************************-->
         <!--************ HERO ***************************************************************************************-->
         <!--*********************************************************************************************************-->
-        <div class="hero-header">
-            <div class="overlay"></div>
+        <section class="hero-carousel position-relative">
             <!-- Modern JS NavBar Mount Points -->
             <div id="navbar-top"></div>
             <div id="navbar-bottom"></div>
-            <!-- Hero/Search Section -->
-            <div class="hero-content">
-                    <div class="container">
-                        <h1 class="center">
-                        Find Trusted <a href="#">Local Services</a> for Your <a href="#">Home</a> and <a href="#">Business</a>
-                        </h1>
-                    <p class="subtitle">
-                        Connect with professional service providers in your area. From home repairs to business solutions, we've got you covered.
-                    </p>
-                    <form class="hero-form form search-bar mt-4">
-                        <div class="main-search-form yelp-style-search d-flex justify-content-center align-items-center flex-wrap">
-                            <div class="form-group mb-0 mr-2 position-relative">
-                                <input type="text" class="form-control yelp-search-input custom-dropdown-input" placeholder="Select Category" readonly>
+            
+            <!-- First Slide -->
+            <div class="hero-slide active">
+                <img src="assets/img/20250602_2128_Plumber at Work_simple_compose_01jwrqfajwempr63t4c7jej4q2.png" class="w-100 h-100 object-fit-cover" alt="Professional plumber at work">
+                <div class="overlay" style="background:rgba(0,0,0,0.4)"></div>
+                <div class="hero-content container position-absolute">
+                    <h1 class="display-4 fw-bold text-white text-center mb-4">Find Trusted Local Services</h1>
+                    <p class="lead text-white text-center mb-5">Connect with professional service providers in your area</p>
+                    
+                    <div class="row g-0 justify-content-center align-items-stretch">
+                        <div class="col-md-10">
+                            <form id="hero-search-form" class="d-flex">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0" placeholder="Plumbing, Cleaning, Electrical...">
+                                    <span class="input-group-text bg-white border-start-0 border-end-0">
+                                        <i class="fa fa-map-marker"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0" placeholder="Enter location">
+                                    <button type="submit" class="btn btn-danger px-4">Search</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                            <div class="form-group mb-0 mr-2">
-                                <label for="input-location" class="col-form-label sr-only">Location</label>
-                                <input name="location" type="text" class="form-control yelp-search-input" id="input-location" placeholder="Enter Location">
-                </div>
-                            <button type="submit" class="btn btn-primary yelp-search-btn d-flex align-items-center justify-content-center">
-                                <i class="fa fa-search mr-1"></i> <span class="d-none d-md-inline">Search</span>
-                            </button>
-                                    </div>
-                </form>
-                    </div>
+                    
+                    <nav class="mt-4">
+                        <ul class="list-inline text-center mb-0">
+                            <li class="list-inline-item mx-3"><a href="#">Plumbing</a></li>
+                            <li class="list-inline-item mx-3"><a href="#">Cleaning</a></li>
+                            <li class="list-inline-item mx-3"><a href="#">Electrical</a></li>
+                            <li class="list-inline-item mx-3"><a href="#">Painting</a></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
+            
+            <!-- Second Slide -->
+            <div class="hero-slide">
+                <img src="assets/img/20250602_2131_Modern Clinic Reception_simple_compose_01jwrqkzgset2a0b21ftwz02dc.png" class="w-100 h-100 object-fit-cover" alt="Modern clinic reception">
+                <div class="overlay" style="background:rgba(0,0,0,0.4)"></div>
+                <div class="hero-content container position-absolute">
+                    <h1 class="display-4 fw-bold text-white text-center mb-4">Professional Services at Your Doorstep</h1>
+                    <p class="lead text-white text-center mb-5">Quality service providers for all your needs</p>
+                    
+                    <div class="row g-0 justify-content-center align-items-stretch">
+                        <div class="col-md-10">
+                            <form id="hero-search-form-2" class="d-flex">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0" placeholder="Healthcare, Beauty, Education...">
+                                    <span class="input-group-text bg-white border-start-0 border-end-0">
+                                        <i class="fa fa-map-marker"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0" placeholder="Enter location">
+                                    <button type="submit" class="btn btn-danger px-4">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <nav class="mt-4">
+                        <ul class="list-inline text-center mb-0">
+                            <li class="list-inline-item mx-3"><a href="#">Healthcare</a></li>
+                            <li class="list-inline-item mx-3"><a href="#">Beauty</a></li>
+                            <li class="list-inline-item mx-3"><a href="#">Education</a></li>
+                            <li class="list-inline-item mx-3"><a href="#">Fitness</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            
+            <!-- Carousel Controls -->
+            <button class="carousel-control-prev" aria-label="Previous slide">
+                <i class="fa fa-chevron-left fa-2x text-white"></i>
+            </button>
+            <button class="carousel-control-next" aria-label="Next slide">
+                <i class="fa fa-chevron-right fa-2x text-white"></i>
+            </button>
+            
+            <!-- Carousel Dots -->
+            <div class="carousel-dots text-center position-absolute w-100">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+            </div>
+        </section>
 
         <!--*********************************************************************************************************-->
         <!--************ CONTENT ************************************************************************************-->
@@ -78,40 +140,48 @@
                     <h2 class="text-center mb-5" style="font-weight:700;">Popular Service Categories</h2>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                         <div class="col">
-                            <div class="card h-100 border-0 shadow-sm hover-lift">
-                                <div class="card-body text-center p-4">
-                                    <img src="assets/img/icons/plumbing.png" alt="Plumbing" class="mb-4" style="width: 64px; height: 64px;">
-                                    <h3 class="h5 mb-2">Plumbing</h3>
-                                    <p class="text-muted mb-0">Trusted local plumbers for home and office needs</p>
+                            <a href="service-category.html?category=plumbing" class="text-decoration-none">
+                                <div class="card h-100 border-0 shadow-sm hover-lift">
+                                    <div class="card-body text-center p-4">
+                                        <img src="assets/img/icons/plumbing.png" alt="Plumbing" class="mb-4" style="width: 64px; height: 64px;">
+                                        <h3 class="h5 mb-2 text-dark">Plumbing</h3>
+                                        <p class="text-muted mb-0">Trusted local plumbers for home and office needs</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="col">
-                            <div class="card h-100 border-0 shadow-sm hover-lift">
-                                <div class="card-body text-center p-4">
-                                    <img src="assets/img/icons/cleaning.png" alt="Cleaning" class="mb-4" style="width: 64px; height: 64px;">
-                                    <h3 class="h5 mb-2">Cleaning</h3>
-                                    <p class="text-muted mb-0">Professional cleaning services for your space</p>
+                            <a href="service-category.html?category=cleaning" class="text-decoration-none">
+                                <div class="card h-100 border-0 shadow-sm hover-lift">
+                                    <div class="card-body text-center p-4">
+                                        <img src="assets/img/icons/cleaning.png" alt="Cleaning" class="mb-4" style="width: 64px; height: 64px;">
+                                        <h3 class="h5 mb-2 text-dark">Cleaning</h3>
+                                        <p class="text-muted mb-0">Professional cleaning services for your space</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="col">
-                            <div class="card h-100 border-0 shadow-sm hover-lift">
-                                <div class="card-body text-center p-4">
-                                    <img src="assets/img/icons/electrician.png" alt="Electrician" class="mb-4" style="width: 64px; height: 64px;">
-                                    <h3 class="h5 mb-2">Electrical</h3>
-                                    <p class="text-muted mb-0">Licensed electricians for all your needs</p>
+                            <a href="service-category.html?category=electrical" class="text-decoration-none">
+                                <div class="card h-100 border-0 shadow-sm hover-lift">
+                                    <div class="card-body text-center p-4">
+                                        <img src="assets/img/icons/electrician.png" alt="Electrician" class="mb-4" style="width: 64px; height: 64px;">
+                                        <h3 class="h5 mb-2 text-dark">Electrical</h3>
+                                        <p class="text-muted mb-0">Licensed electricians for all your needs</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="col">
-                            <div class="card h-100 border-0 shadow-sm hover-lift">
-                                <div class="card-body text-center p-4">
-                                    <img src="assets/img/icons/painting.png" alt="Painting" class="mb-4" style="width: 64px; height: 64px;">
-                                    <h3 class="h5 mb-2">Painting</h3>
-                                    <p class="text-muted mb-0">Expert painters for interior and exterior</p>
+                            <a href="service-category.html?category=painting" class="text-decoration-none">
+                                <div class="card h-100 border-0 shadow-sm hover-lift">
+                                    <div class="card-body text-center p-4">
+                                        <img src="assets/img/icons/painting.png" alt="Painting" class="mb-4" style="width: 64px; height: 64px;">
+                                        <h3 class="h5 mb-2 text-dark">Painting</h3>
+                                        <p class="text-muted mb-0">Expert painters for interior and exterior</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
