@@ -1,0 +1,14 @@
+/*
+ * custom.css
+ * Place your custom styles here. This file is loaded after Bootstrap and your main style.css.
+ */
+
+/* Example custom style: */
+body {
+  /* You can override or add custom styles here */
+}
+
+/* Example: Add a subtle shadow to all cards */
+.card, .service-card {
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+} 

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="UstaHub - Service Provider Dashboard">
+    <meta name="author" content="UstaHub">
+    <title>Service Provider Dashboard - UstaHub</title>
+
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="assets/img/favicon.ico">
+
+    <!-- Google Fonts-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/user.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+
+    <style>
+        /* Top Navbar Styles */
+        .top-navbar {
+            border-bottom: none;
+            background: transparent !important;
+            padding: 12px 0;
+            position: relative;
+            z-index: 3;
+        }
+        .top-navbar .nav-left {
+            display: flex;
+            align-items: center;
+        }
+        .top-navbar .nav-right {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 24px;
+        }
+        .top-navbar .nav-link {
+            color: #fff !important;
+            font-weight: 500;
+            font-size: 1.1rem;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 24px;
+            transition: all 0.3s ease;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+        }
+        .top-navbar .nav-link:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .top-navbar .brand img {
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+            transition: transform 0.3s ease;
+        }
+        .top-navbar .brand:hover img {
+            transform: scale(1.05);
+        }
+        @media (max-width: 991.98px) {
+            .top-navbar .nav-right {
+                gap: 12px;
+            }
+            .top-navbar .nav-link {
+                font-size: 1rem;
+                padding: 6px 12px;
+            }
+        }
+        @media (max-width: 767.98px) {
+            .top-navbar {
+                padding: 8px 0;
+            }
+            .top-navbar .nav-right {
+                gap: 8px;
+            }
+            .top-navbar .nav-link {
+                font-size: 0.9rem;
+                padding: 4px 8px;
+            }
+        }
+        /* Hero Section Styles */
+        .hero-header {
+            position: relative;
+            width: 100%;
+            min-height: 520px;
+            background-image: url('assets/img/hero-background-image-01.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+        }
+        .hero-header .overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 2;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            color: #fff;
+            text-align: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+        .hero-content h1 {
+            color: #fff;
+            font-size: 3.2rem;
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            animation: fadeInDown 1s ease-out;
+        }
+        .hero-content .subtitle {
+            font-size: 1.4rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2rem;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+        /* Bottom Navbar Styles */
+        .bottom-navbar {
+            border-bottom: 1px solid #e0e0e0;
+            background: transparent !important;
+            z-index: 1040;
+            min-height: 56px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .custom-navbar.bottom-navbar .nav-center {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .nav-item > a {
+            color: #333;
+            font-weight: 500;
+            font-size: 1.08rem;
+            padding: 12px 18px;
+            border-radius: 22px;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        .nav-item > a:hover, .nav-item > a.active {
+            background: #e00707;
+            color: #fff;
+        }
+        .grid-dropdown {
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: 100%;
+            transform: translateX(-50%);
+            grid-template-columns: 1fr 1fr;
+            gap: 0 32px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+            padding: 24px 32px;
+            min-width: 520px;
+            color: #222;
+            z-index: 1000;
+        }
+        .grid-dropdown .dropdown-col {
+            display: flex;
+            flex-direction: column;
+        }
+        .grid-dropdown a {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            color: #222;
+            font-size: 1.08rem;
+            border-radius: 8px;
+            transition: background 0.15s, color 0.15s;
+            text-decoration: none;
+        }
+        .grid-dropdown a i {
+            font-size: 1.2em;
+            margin-right: 12px;
+            color: #e00707;
+            min-width: 22px;
+            text-align: center;
+            transition: color 0.15s;
+        }
+        .grid-dropdown a:hover {
+            background: #fbeaec;
+            color: #e00707;
+        }
+        .grid-dropdown a:hover i {
+            color: #b00606;
+        }
+        .bottom-navbar .nav-item.dropdown > a {
+            padding: 0 18px;
+            line-height: 56px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            display: block;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+            background: transparent !important;
+            transition: color 0.2s;
+        }
+        .bottom-navbar .nav-item.dropdown > a:hover {
+            color: #fff;
+            background: transparent !important;
+            opacity: 0.9;
+        }
+        .nav-item.dropdown:hover > .grid-dropdown {
+            display: grid;
+        }
+        @media (max-width: 991.98px) {
+            .bottom-navbar {
+                min-height: 48px;
+                padding: 0 8px;
+            }
+            .nav-menu {
+                gap: 1rem;
+            }
+            .grid-dropdown {
+                min-width: 320px;
+                padding: 1rem 0.5rem;
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 767.98px) {
+            .bottom-navbar {
+                min-height: 40px;
+                padding: 0 2px;
+            }
+            .nav-menu {
+                gap: 0.5rem;
+            }
+            .grid-dropdown {
+                min-width: 220px;
+                padding: 0.5rem 0.2rem;
+            }
+        }
+    </style>
+</head>
+<body class="provider-dashboard">
+    <!-- Mount point for detached dropdown list -->
+    <div id="dropdown-mount"></div>
+    
+    <div class="page">
+        <!-- Hero Section -->
+        <div class="hero-header">
+            <div class="overlay"></div>
+            <div id="navbar-top"></div>
+            <div id="navbar-bottom"></div>
+            <div class="hero-content">
+                <div class="container">
+                    <h1 class="center">Service Provider Dashboard</h1>
+                    <p class="subtitle">Manage your services and grow your business</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <section class="content">
+            <div class="container">
+                <div class="row">
+                    <!-- Sidebar -->
+                    <div class="col-lg-3">
+                        <div class="dashboard-sidebar">
+                            <nav>
+                                <a href="#" class="nav-link active">
+                                    <i class="fa fa-home"></i>
+                                    Dashboard
+                                </a>
+                                <a href="#" class="nav-link">
+                                    <i class="fa fa-list"></i>
+                                    My Services
+                                </a>
+                                <a href="#" class="nav-link">
+                                    <i class="fa fa-calendar"></i>
+                                    Bookings
+                                </a>
+                                <a href="#" class="nav-link">
+                                    <i class="fa fa-star"></i>
+                                    Reviews
+                                </a>
+                                <a href="#" class="nav-link">
+                                    <i class="fa fa-wallet"></i>
+                                    Earnings
+                                </a>
+                                <a href="#" class="nav-link">
+                                    <i class="fa fa-cog"></i>
+                                    Settings
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- Main Dashboard Content -->
+                    <div class="col-lg-9">
+                        <!-- Performance Metrics Cards -->
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3">
+                                <div class="card shadow-sm text-center p-3">
+                                    <h6>New Requests</h6>
+                                    <h2 id="stat-requests">0</h2>
+                                    <div class="progress mt-2" style="height: 4px;">
+                                        <div class="progress-bar bg-primary" id="requests-progress" style="width: 0%"></div>
+                                    </div>
+                                    <small class="text-muted">Last 7 days</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card shadow-sm text-center p-3">
+                                    <h6>Upcoming Bookings</h6>
+                                    <h2 id="stat-bookings">0</h2>
+                                    <div class="progress mt-2" style="height: 4px;">
+                                        <div class="progress-bar bg-success" id="bookings-progress" style="width: 0%"></div>
+                                    </div>
+                                    <small class="text-muted">Next 7 days</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card shadow-sm text-center p-3">
+                                    <h6>Jobs Completed</h6>
+                                    <h2 id="stat-completed">0</h2>
+                                    <div class="progress mt-2" style="height: 4px;">
+                                        <div class="progress-bar bg-info" id="completed-progress" style="width: 0%"></div>
+                                    </div>
+                                    <small class="text-muted">This month</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity & Quick Actions -->
+                        <div class="row">
+                            <!-- Recent Activity -->
+                            <div class="col-lg-8">
+                                <div class="card shadow-sm">
+                                    <div class="card-header bg-white">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5 class="mb-0">Recent Activity</h5>
+                                            <div class="btn-group">
+                                                <button class="btn btn-sm btn-outline-secondary active">All</button>
+                                                <button class="btn btn-sm btn-outline-secondary">Bookings</button>
+                                                <button class="btn btn-sm btn-outline-secondary">Reviews</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <div class="list-group list-group-flush">
+                                            <div class="list-group-item">
+                                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                                    <div>
+                                                        <h6 class="mb-1">New Booking: Plumbing Service</h6>
+                                                        <p class="mb-1 text-muted">John Smith • 2 hours ago</p>
+                                                    </div>
+                                                    <span class="badge bg-success">$150</span>
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                                    <div>
+                                                        <h6 class="mb-1">New Review: 5 Stars</h6>
+                                                        <p class="mb-1 text-muted">Sarah Johnson • 5 hours ago</p>
+                                                    </div>
+                                                    <div class="text-warning">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                                    <div>
+                                                        <h6 class="mb-1">Profile View Milestone</h6>
+                                                        <p class="mb-1 text-muted">2,500 profile views • Yesterday</p>
+                                                    </div>
+                                                    <i class="fas fa-trophy text-warning"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Quick Actions -->
+                            <div class="col-lg-4">
+                                <div class="card shadow-sm">
+                                    <div class="card-header bg-white">
+                                        <h5 class="mb-0">Quick Actions</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-grid gap-2">
+                                            <button id="add-service-btn" class="btn btn-primary">
+                                                <i class="fas fa-plus-circle me-2"></i>Add New Service
+                                            </button>
+                                            <button class="btn btn-outline-primary">
+                                                <i class="fas fa-calendar-alt me-2"></i>Update Availability
+                                            </button>
+                                            <button class="btn btn-outline-primary">
+                                                <i class="fas fa-chart-line me-2"></i>View Detailed Analytics
+                                            </button>
+                                            <button class="btn btn-outline-primary">
+                                                <i class="fas fa-bullhorn me-2"></i>Boost Visibility
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Performance Tips -->
+                                <div class="card shadow-sm mt-4">
+                                    <div class="card-header bg-white">
+                                        <h5 class="mb-0">Performance Tips</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="alert alert-info mb-0">
+                                            <i class="fas fa-lightbulb me-2"></i>
+                                            <strong>Pro Tip:</strong> Adding photos to your profile can increase views by up to 40%
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Services Table -->
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <h5 class="mb-3">My Services</h5>
+                                <div id="services-table"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="wrapper">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <a href="#" class="brand">
+                                <img src="assets/img/logo.png" alt="UstaHub Logo" style="max-height: 48px; width: auto;">
+                            </a>
+                            <p>
+                                UstaHub connects customers with trusted local service professionals. Find, compare, and book services for all your needs.
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <h2>Navigation</h2>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <nav>
+                                        <ul class="list-unstyled">
+                                            <li><a href="index-2.html">Home</a></li>
+                                            <li><a href="about-us.html">About Us</a></li>
+                                            <li><a href="contact.html">Contact</a></li>
+                                            <li><a href="blog.html">Blog</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <nav>
+                                        <ul class="list-unstyled">
+                                            <li><a href="terms.html">Terms & Conditions</a></li>
+                                            <li><a href="privacy.html">Privacy Policy</a></li>
+                                            <li><a href="faq.html">FAQ</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <h2>Contact Us</h2>
+                            <address>
+                                <figure>
+                                    <i class="fa fa-map-marker"></i>
+                                    <span>123 Business Street, Suite 100<br>New York, NY 10001</span>
+                                </figure>
+                                <figure>
+                                    <i class="fa fa-phone"></i>
+                                    <span>+1 (555) 123-4567</span>
+                                </figure>
+                                <figure>
+                                    <i class="fa fa-envelope"></i>
+                                    <span><a href="mailto:info@ustahub.com">info@ustahub.com</a></span>
+                                </figure>
+                                <figure>
+                                    <i class="fa fa-clock-o"></i>
+                                    <span>Mon - Fri: 9:00 AM - 5:00 PM</span>
+                                </figure>
+                            </address>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="background">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="additional-info">
+                                <p>© 2024 UstaHub. All rights reserved.</p>
+                                <div class="pull-right">
+                                    <a href="#" class="btn btn-default btn-sm"><i class="fa fa-facebook"></i></a>
+                                    <a href="#" class="btn btn-default btn-sm"><i class="fa fa-twitter"></i></a>
+                                    <a href="#" class="btn btn-default btn-sm"><i class="fa fa-instagram"></i></a>
+                                    <a href="#" class="btn btn-default btn-sm"><i class="fa fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/selectize.min.js"></script>
+    <script src="assets/js/masonry.pkgd.min.js"></script>
+    <script src="assets/js/icheck.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/custom-dropdown.js"></script>
+    <script type="module" src="assets/js/supabase.js"></script>
+    <script src="assets/js/navbars.js"></script>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Then load dashboard and initialize -->
+    <script src="assets/js/dashboard.js"></script>
+    <script>
+        // Wait for Supabase to be initialized
+        window.addEventListener('load', async () => {
+            // Add a small delay to ensure Supabase is initialized
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+            try {
+                // Check authentication
+                const { data: { session }, error } = await window.supabase.auth.getSession();
+                
+                if (error || !session) {
+                    window.location.href = 'sign-in.html';
+                    return;
+                }
+                
+                // Check if user is a provider
+                const { data: profile, error: profileError } = await window.supabase
+                    .from('profiles')
+                    .select('role')
+                    .eq('id', session.user.id)
+                    .single();
+                    
+                if (profileError || profile.role !== 'provider') {
+                    window.location.href = 'consumer-profile.html';
+                    return;
+                }
+
+                // Initialize dashboard
+                initProviderDashboard();
+            } catch (error) {
+                console.error('Error during initialization:', error);
+                window.location.href = 'sign-in.html';
+            }
+        });
+    </script>
+    <!-- Before closing body tag, add offcanvas for adding service -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="add-service-offcanvas" aria-labelledby="addServiceLabel">
+        <div class="offcanvas-header">
+            <h5 id="addServiceLabel" class="offcanvas-title">Add New Service</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form id="add-service-form">
+                <div class="mb-3">
+                    <label for="serviceName" class="form-label">Service Name</label>
+                    <input type="text" name="serviceName" id="serviceName" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="serviceCategory" class="form-label">Service Category</label>
+                    <select name="serviceCategory" id="serviceCategory" class="form-control" required placeholder="Select a category...">
+                        <option value="" disabled selected>Select a category...</option>
+                        <option value="plumbing">Plumbing</option>
+                        <option value="electrical-services">Electrical Services</option>
+                        <option value="hvac">HVAC (Heating & Cooling)</option>
+                        <option value="home-cleaning">Home Cleaning</option>
+                        <option value="landscaping">Landscaping & Gardening</option>
+                        <option value="painting-services">Painting Services</option>
+                        <option value="carpentry">Carpentry</option>
+                        <option value="moving-services">Moving Services</option>
+                        <option value="appliance-repair">Appliance Repair</option>
+                        <option value="roofing-services">Roofing</option>
+                        <option value="locksmith-services">Locksmith</option>
+                        <option value="handyman-services">Handyman / Contractors</option>
+                        <option value="hair-salon">Hair Salon</option>
+                        <option value="nail-salon">Nail Salon</option>
+                        <option value="spa-services">Spa Services</option>
+                        <option value="massage-therapy">Massage Therapy</option>
+                        <option value="wellness-services">Wellness (General)</option>
+                        <option value="beauty-general">Beauty (General)</option>
+                        <option value="auto-repair">Auto Repair & Mechanic</option>
+                        <option value="car-wash">Car Wash & Detailing</option>
+                        <option value="it-services">IT & Tech Support</option>
+                        <option value="marketing-services">Marketing & Advertising</option>
+                        <option value="tutoring-lessons">Tutoring & Lessons</option>
+                        <option value="event-planning">Event Planning</option>
+                        <option value="photography-services">Photography & Videography</option>
+                        <option value="pet-grooming">Pet Grooming</option>
+                        <option value="pet-sitting">Pet Sitting & Care</option>
+                        <option value="real-estate-services">Real Estate Agents</option>
+                        <option value="legal-services">Legal Services</option>
+                        <option value="accounting-services">Accounting & Bookkeeping</option>
+                        <option value="business-consulting">Business Consulting</option>
+                        <option value="fitness-training">Fitness & Personal Training</option>
+                        <option value="catering-services">Catering Services</option>
+                        <option value="graphic-design">Graphic & Web Design</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="servicePrice" class="form-label">Price (USD/hour)</label>
+                    <input type="number" name="servicePrice" id="servicePrice" class="form-control" min="1" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Add Service</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html> 

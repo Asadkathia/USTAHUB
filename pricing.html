@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="ThemeStarz">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Varela+Round" rel="stylesheet">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/selectize.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/user.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+
+	<title>UstaHub - Pricing Plans</title>
+
+    <style>
+    .bottom-navbar {
+        border-bottom: 1px solid #e0e0e0;
+        background: transparent !important;
+        z-index: 1040;
+        min-height: 56px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    .bottom-navbar .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    .bottom-navbar .nav-item {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    .bottom-navbar .nav-item.dropdown > a {
+        padding: 0 18px;
+        line-height: 56px;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 500;
+        display: block;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+        background: transparent !important;
+        transition: color 0.2s;
+    }
+    .bottom-navbar .nav-item.dropdown > a:hover {
+        color: #fff;
+        background: transparent !important;
+        opacity: 0.9;
+    }
+    .bottom-navbar .grid-dropdown {
+        display: none;
+        position: absolute;
+        left: 50%;
+        top: 100%;
+        transform: translateX(-50%);
+        grid-template-columns: 1fr 1fr;
+        gap: 0 32px;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+        padding: 24px 32px;
+        min-width: 520px;
+        color: #222;
+        z-index: 1000;
+    }
+    .bottom-navbar .nav-item.dropdown:hover .grid-dropdown {
+        display: grid;
+    }
+    .bottom-navbar .grid-dropdown .dropdown-col {
+        display: flex;
+        flex-direction: column;
+    }
+    .bottom-navbar .grid-dropdown a {
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+        color: #222;
+        font-size: 1.08rem;
+        border-radius: 8px;
+        transition: background 0.15s, color 0.15s;
+        text-decoration: none;
+    }
+    .bottom-navbar .grid-dropdown a i {
+        font-size: 1.2em;
+        margin-right: 12px;
+        color: #e00707;
+        min-width: 22px;
+        text-align: center;
+        transition: color 0.15s;
+    }
+    .bottom-navbar .grid-dropdown a:hover {
+        background: #fbeaec;
+        color: #e00707;
+    }
+    .bottom-navbar .grid-dropdown a:hover i {
+        color: #b00606;
+    }
+    @media (max-width: 991.98px) {
+        .bottom-navbar {
+            min-height: 48px;
+            padding: 0 8px;
+        }
+        .bottom-navbar .nav-menu {
+            gap: 1rem;
+        }
+        .bottom-navbar .grid-dropdown {
+            min-width: 320px;
+            padding: 1rem 0.5rem;
+            grid-template-columns: 1fr;
+        }
+    }
+    @media (max-width: 767.98px) {
+        .bottom-navbar {
+            min-height: 40px;
+            padding: 0 2px;
+        }
+        .bottom-navbar .nav-menu {
+            gap: 0.5rem;
+        }
+        .bottom-navbar .grid-dropdown {
+            min-width: 220px;
+            padding: 0.5rem 0.2rem;
+        }
+    }
+    </style>
+
+</head>
+<body>
+    <div class="page sub-page">
+        <!--*********************************************************************************************************-->
+        <!--************ HERO ***************************************************************************************-->
+        <!--*********************************************************************************************************-->
+        <header class="hero">
+            <div class="hero-wrapper">
+                <!--============ Secondary Navigation ===============================================================-->
+                <div class="secondary-navigation">
+                    <div class="container">
+                        <ul class="left">
+                            <li>
+                            <span>
+                                <i class="fa fa-phone"></i> +1 123 456 789
+                            </span>
+                            </li>
+                        </ul>
+                        <!--end left-->
+                        <ul class="right">
+                            <li>
+                                <a href="my-ads.html">
+                                    <i class="fa fa-heart"></i>My Services
+                                </a>
+                            </li>
+                            <li>
+                                <a href="sign-in.html">
+                                    <i class="fa fa-sign-in"></i>Sign In
+                                </a>
+                            </li>
+                            <li>
+                                <a href="register.html">
+                                    <i class="fa fa-pencil-square-o"></i>Register
+                                </a>
+                            </li>
+                        </ul>
+                        <!--end right-->
+                    </div>
+                    <!--end container-->
+                </div>
+                <!--============ End Secondary Navigation ===========================================================-->
+                <!--============ Main Navigation ====================================================================-->
+                <div class="main-navigation">
+                    <div class="container">
+                        <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
+                            <a class="navbar-brand" href="index-2.html">
+                                <img src="assets/img/logo.png" alt="UstaHub Logo">
+                            </a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbar">
+                                <!--Main navigation list-->
+                                <ul class="navbar-nav">
+                                            <li class="nav-item">
+                                        <a class="nav-link" href="index-2.html">Home</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Services
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="servicesDropdown">
+                                            <a class="dropdown-item" href="listing-grid-full-width.html">Home Services</a>
+                                            <a class="dropdown-item" href="listing-grid-sidebar.html">Personal Services</a>
+                                            <a class="dropdown-item" href="listing-grid-compact-sidebar.html">Event Services</a>
+                                            <a class="dropdown-item" href="listing-grid-compact-full-width.html">Business Services</a>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item has-child">
+                                        <a class="nav-link" href="#">For Professionals</a>
+                                        <ul class="child">
+                                            <li class="nav-item">
+                                                <a href="pricing.html" class="nav-link">Pricing Plans</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="my-profile.html" class="nav-link">My Profile</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                                    <li class="nav-item">
+                                        <a class="nav-link" href="blog.html">Blog</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="contact.html">Contact</a>
+                                    </li>
+                                </ul>
+                                <!--Main navigation list-->
+                            </div>
+                            <!--end navbar-collapse-->
+                        </nav>
+                        <!--end navbar-->
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index-2.html">Home</a></li>
+                            <li class="breadcrumb-item active">Pricing Plans</li>
+                        </ol>
+                        <!--end breadcrumb-->
+                    </div>
+                    <!--end container-->
+                </div>
+                <!--============ End Main Navigation ================================================================-->
+                <!--============ Page Title =========================================================================-->
+                <div class="page-title">
+                    <div class="container">
+                        <h1>Pricing Plans</h1>
+                    </div>
+                    <!--end container-->
+                </div>
+                <!--============ End Page Title =====================================================================-->
+                <div class="background"></div>
+                <!--end background-->
+            </div>
+            <!--end hero-wrapper-->
+        </header>
+        <!--end hero-->
+
+        <!--*********************************************************************************************************-->
+        <!--************ CONTENT ************************************************************************************-->
+        <!--*********************************************************************************************************-->
+        <section class="content">
+            <section class="block">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="text-center mb-5">For Service Providers</h2>
+                        </div>
+                    </div>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-lg-3">
+                                <div class="pricing box description">
+                                    <h2 class="opacity-30">Features</h2>
+                                    <ul>
+                                        <li>Service Listings</li>
+                                        <li>Profile Builder</li>
+                                        <li>Booking Management</li>
+                                        <li>Customer Reviews</li>
+                                        <li>Payment Processing</li>
+                                        <li>Support</li>
+                                        <li>Commission Rate</li>
+                                    </ul>
+                                </div>
+                                <!--end pricing-box description-->
+                            </div>
+                            <!--end col-md-4-->
+                            <div class="col-md-6 col-sm-6 col-lg-3">
+                                <div class="pricing box">
+                                    <h2>Basic</h2>
+                                    <figure>Free</figure>
+                                    <ul>
+                                        <li class="available">1 Listing</li>
+                                        <li class="available">Basic Profile</li>
+                                        <li class="available">Manual Booking</li>
+                                        <li class="available">Basic Reviews</li>
+                                        <li class="available">Standard</li>
+                                        <li>Email Support</li>
+                                        <li>15%</li>
+                                    </ul>
+                                    <a href="register.html" class="btn btn-primary btn-rounded">Get Started</a>
+                                </div>
+                                <!--end pricing-box-->
+                            </div>
+                            <!--end col-md-3-->
+                            <div class="col-md-6 col-sm-6 col-lg-3">
+                                <div class="pricing box featured">
+                                    <h2>Professional</h2>
+                                    <figure>$29.90<span>/month</span></figure>
+                                    <ul>
+                                        <li class="available">5 Listings</li>
+                                        <li class="available">Enhanced Profile</li>
+                                        <li class="available">Advanced Booking</li>
+                                        <li class="available">Featured Reviews</li>
+                                        <li class="available">Priority</li>
+                                        <li>24/7 Support</li>
+                                        <li>10%</li>
+                                    </ul>
+                                    <a href="register.html" class="btn btn-primary btn-rounded">Get Started</a>
+                                </div>
+                                <!--end pricing-box-->
+                            </div>
+                            <!--end col-md-3-->
+                            <div class="col-md-6 col-sm-6 col-lg-3">
+                                <div class="pricing box">
+                                    <h2>Premium</h2>
+                                    <figure>$49.90<span>/month</span></figure>
+                                    <ul>
+                                        <li class="available">Unlimited</li>
+                                        <li class="available">Premium Profile</li>
+                                        <li class="available">Full Booking Suite</li>
+                                        <li class="available">Premium Reviews</li>
+                                        <li class="available">Priority</li>
+                                        <li>24/7 VIP Support</li>
+                                        <li>5%</li>
+                                    </ul>
+                                    <a href="register.html" class="btn btn-primary btn-rounded">Get Started</a>
+                                </div>
+                                <!--end pricing-box-->
+                            </div>
+                            <!--end col-md-3-->
+                        </div>
+                    </section>
+
+                    <div class="row mt-5">
+                        <div class="col-md-12">
+                            <h2 class="text-center mb-5">For Customers</h2>
+                        </div>
+                    </div>
+                    <section>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-lg-3">
+                                <div class="pricing box description">
+                                    <h2 class="opacity-30">Features</h2>
+                                    <ul>
+                                        <li>Service Search</li>
+                                        <li>Booking</li>
+                                        <li>Reviews</li>
+                                        <li>Payment Protection</li>
+                                        <li>Support</li>
+                                        <li>Service Fee</li>
+                                    </ul>
+                                </div>
+                                <!--end pricing-box description-->
+                            </div>
+                            <!--end col-md-4-->
+                            <div class="col-md-6 col-sm-6 col-lg-3">
+                                <div class="pricing box">
+                                    <h2>Basic</h2>
+                                    <figure>Free</figure>
+                                    <ul>
+                                        <li class="available">Basic Search</li>
+                                        <li class="available">Standard Booking</li>
+                                        <li class="available">Basic Reviews</li>
+                                        <li class="available">Standard</li>
+                                        <li>Email Support</li>
+                                        <li>5%</li>
+                                    </ul>
+                                    <a href="register.html" class="btn btn-primary btn-rounded">Get Started</a>
+                                </div>
+                                <!--end pricing-box-->
+                            </div>
+                            <!--end col-md-3-->
+                            <div class="col-md-6 col-sm-6 col-lg-3">
+                                <div class="pricing box featured">
+                                    <h2>Premium</h2>
+                                    <figure>$9.90<span>/month</span></figure>
+                                    <ul>
+                                        <li class="available">Advanced Search</li>
+                                        <li class="available">Priority Booking</li>
+                                        <li class="available">Premium Reviews</li>
+                                        <li class="available">Enhanced</li>
+                                        <li>24/7 Support</li>
+                                        <li>3%</li>
+                                    </ul>
+                                    <a href="register.html" class="btn btn-primary btn-rounded">Get Started</a>
+                                </div>
+                                <!--end pricing-box-->
+                            </div>
+                            <!--end col-md-3-->
+                            <div class="col-md-6 col-sm-6 col-lg-3">
+                                <div class="pricing box">
+                                    <h2>Business</h2>
+                                    <figure>$19.90<span>/month</span></figure>
+                                    <ul>
+                                        <li class="available">Enterprise Search</li>
+                                        <li class="available">VIP Booking</li>
+                                        <li class="available">Premium Reviews</li>
+                                        <li class="available">Maximum</li>
+                                        <li>24/7 VIP Support</li>
+                                        <li>0%</li>
+                                    </ul>
+                                    <a href="register.html" class="btn btn-primary btn-rounded">Get Started</a>
+                                </div>
+                                <!--end pricing-box-->
+                            </div>
+                            <!--end col-md-3-->
+                        </div>
+                    </section>
+                </div>
+                <!--end container-->
+            </section>
+            <!--end block-->
+        </section>
+        <!--end content-->
+
+        <!--*********************************************************************************************************-->
+        <!--************ FOOTER *************************************************************************************-->
+        <!--*********************************************************************************************************-->
+        <footer class="footer">
+            <div class="wrapper">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <a href="index-2.html" class="brand">
+                                <img src="assets/img/logo.png" alt="UstaHub Logo">
+                            </a>
+                            <p>
+                                UstaHub connects customers with trusted local service professionals. Find, compare, and book services for all your needs.
+                            </p>
+                        </div>
+                        <!--end col-md-5-->
+                        <div class="col-md-3">
+                            <h2>Navigation</h2>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <nav class="nav-menu">
+                                        <ul class="list-unstyled">
+                                            <li><a href="index-2.html">Home</a></li>
+                                            <li><a href="about-us.html">About Us</a></li>
+                                            <li><a href="contact.html">Contact</a></li>
+                                            <li><a href="blog.html">Blog</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <nav>
+                                        <ul class="list-unstyled">
+                                            <li>
+                                                <a href="about-us.html#faq">FAQ</a>
+                                            </li>
+                                            <li>
+                                                <a href="about-us.html#terms">Terms & Conditions</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end col-md-3-->
+                        <div class="col-md-4">
+                            <h2>Service Categories</h2>
+                            <nav>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <a href="listing-grid-full-width.html">Home Services</a>
+                                        <small>Plumbing, Electrical, Cleaning</small>
+                                    </li>
+                                    <li>
+                                        <a href="listing-grid-sidebar.html">Personal Services</a>
+                                        <small>Fitness, Beauty, Education</small>
+                                    </li>
+                                    <li>
+                                        <a href="listing-grid-compact-sidebar.html">Event Services</a>
+                                        <small>Photography, Catering, Decor</small>
+                                    </li>
+                                    <li>
+                                        <a href="listing-grid-compact-full-width.html">Business Services</a>
+                                        <small>Marketing, IT, Consulting</small>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!--end col-md-4-->
+                    </div>
+                    <!--end row-->
+                </div>
+                <div class="background">
+                    <div class="background-image original-size">
+                        <img src="assets/img/footer-background-icons.jpg" alt="">
+                    </div>
+                    <!--end background-image-->
+                </div>
+                <!--end background-->
+            </div>
+            <!--end wrapper-->
+            <div class="sub-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="copyrights">
+                                Copyright 2024 © UstaHub. All rights reserved.
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="social-media">
+                                <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                                <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                                <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+                                <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--end footer-->
+    </div>
+    <!--end page-->
+
+	<script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/popper.min.js"></script>
+	<script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+	<script src="assets/js/selectize.min.js"></script>
+	<script src="assets/js/masonry.pkgd.min.js"></script>
+	<script src="assets/js/icheck.min.js"></script>
+	<script src="assets/js/jquery.validate.min.js"></script>
+	<script src="assets/js/custom.js"></script>
+
+</body>
+</html>

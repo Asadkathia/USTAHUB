@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="UstaHub">
+  <meta name="description" content="Manage your UstaHub consumer profile, bookings, and preferences.">
+  <meta name="keywords" content="consumer profile, service marketplace, local services, professional services">
+
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Varela+Round" rel="stylesheet">
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
+  <link rel="stylesheet" href="assets/fonts/font-awesome.css" type="text/css">
+  <link rel="stylesheet" href="assets/css/selectize.css" type="text/css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/user.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+  <!-- Bootstrap JS and Popper.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+  
+  <!-- Load Supabase first -->
+  <script type="module" src="assets/js/supabase.js"></script>
+  
+  <!-- Custom JS -->
+  <script src="assets/js/navbars.js"></script>
+  <script src="assets/js/profile.js"></script>
+
+  <title>My Profile - UstaHub</title>
+
+  <style>
+    :root {
+      --primary-color: #e00707;
+      --hover-shadow: 0 8px 32px rgba(224,7,7,0.15);
+      --card-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      --transition: 0.3s ease;
+    }
+    /* Top Navbar Styles */
+    .top-navbar {
+      border-bottom: none;
+      background: transparent !important;
+      padding: 12px 0;
+      position: relative;
+      z-index: 3;
+    }
+    .top-navbar .nav-left {
+      display: flex;
+      align-items: center;
+    }
+    .top-navbar .nav-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 24px;
+    }
+    .top-navbar .nav-link {
+      color: #fff !important;
+      font-weight: 500;
+      font-size: 1.1rem;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 24px;
+      transition: all 0.3s ease;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+    .top-navbar .nav-link:hover {
+      background: rgba(255,255,255,0.15);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .top-navbar .brand img {
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+      transition: transform 0.3s ease;
+    }
+    .top-navbar .brand:hover img {
+      transform: scale(1.05);
+    }
+    @media (max-width: 991.98px) {
+      .top-navbar .nav-right {
+        gap: 12px;
+      }
+      .top-navbar .nav-link {
+        font-size: 1rem;
+        padding: 6px 12px;
+      }
+    }
+    @media (max-width: 767.98px) {
+      .top-navbar {
+        padding: 8px 0;
+      }
+      .top-navbar .nav-right {
+        gap: 8px;
+      }
+      .top-navbar .nav-link {
+        font-size: 0.9rem;
+        padding: 4px 8px;
+      }
+    }
+
+    /* Hero Section Styles */
+    .hero-header {
+      position: relative;
+      width: 100%;
+      min-height: 520px;
+      background-image: url('assets/img/hero-background-image-01.jpg');
+      background-size: cover;
+      background-position: center;
+      z-index: 1;
+    }
+    .hero-header .overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 2;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      color: #fff;
+      text-align: center;
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+    .hero-content h1 {
+      color: #fff;
+      font-size: 3.2rem;
+      font-weight: 700;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+      animation: fadeInDown 1s ease-out;
+    }
+    .hero-content .subtitle {
+      font-size: 1.4rem;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 2rem;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      animation: fadeInUp 1s ease-out 0.3s both;
+    }
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @media (max-width: 991.98px) {
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      .hero-content .subtitle {
+        font-size: 1.2rem;
+      }
+    }
+    @media (max-width: 767.98px) {
+      .hero-content h1 {
+        font-size: 2rem;
+      }
+      .hero-content .subtitle {
+        font-size: 1.1rem;
+      }
+    }
+
+    /* Bottom Navbar Styles */
+    .bottom-navbar {
+      border-bottom: 1px solid #e0e0e0;
+      background: transparent !important;
+      z-index: 1040;
+      min-height: 56px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .custom-navbar.bottom-navbar .nav-center {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .nav-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .nav-item > a {
+      color: #333;
+      font-weight: 500;
+      font-size: 1.08rem;
+      padding: 12px 18px;
+      border-radius: 22px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+    }
+    .nav-item > a:hover, .nav-item > a.active {
+      background: #e00707;
+      color: #fff;
+    }
+    .grid-dropdown {
+      display: none;
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      transform: translateX(-50%);
+      grid-template-columns: 1fr 1fr;
+      gap: 0 32px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      padding: 24px 32px;
+      min-width: 520px;
+      color: #222;
+      z-index: 1000;
+    }
+    .grid-dropdown .dropdown-col {
+      display: flex;
+      flex-direction: column;
+    }
+    .grid-dropdown a {
+      display: flex;
+      align-items: center;
+      padding: 8px 0;
+      color: #222;
+      font-size: 1.08rem;
+      border-radius: 8px;
+      transition: background 0.15s, color 0.15s;
+      text-decoration: none;
+    }
+    .grid-dropdown a i {
+      font-size: 1.2em;
+      margin-right: 12px;
+      color: #e00707;
+      min-width: 22px;
+      text-align: center;
+      transition: color 0.15s;
+    }
+    .grid-dropdown a:hover {
+      background: #fbeaec;
+      color: #e00707;
+    }
+    .grid-dropdown a:hover i {
+      color: #b00606;
+    }
+    .bottom-navbar .nav-item.dropdown > a {
+      padding: 0 18px;
+      line-height: 56px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      display: block;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+      background: transparent !important;
+      transition: color 0.2s;
+    }
+    .bottom-navbar .nav-item.dropdown > a:hover {
+      color: #fff;
+      background: transparent !important;
+      opacity: 0.9;
+    }
+    .nav-item.dropdown:hover > .grid-dropdown {
+      display: grid;
+    }
+    @media (max-width: 991.98px) {
+      .bottom-navbar {
+        min-height: 48px;
+        padding: 0 8px;
+      }
+      .nav-menu {
+        gap: 1rem;
+      }
+      .grid-dropdown {
+        min-width: 320px;
+        padding: 1rem 0.5rem;
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 767.98px) {
+      .bottom-navbar {
+        min-height: 40px;
+        padding: 0 2px;
+      }
+      .nav-menu {
+        gap: 0.5rem;
+      }
+      .grid-dropdown {
+        min-width: 220px;
+        padding: 0.5rem 0.2rem;
+      }
+    }
+    /* Existing Profile Styles */
+    .profile-card { border: none; border-radius: 16px; box-shadow: var(--card-shadow); transition: all var(--transition); }
+    .profile-card:hover { box-shadow: var(--hover-shadow); }
+    .profile-avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: var(--card-shadow); }
+    .nav-tabs { border: none; margin-bottom: 2rem; }
+    .nav-tabs .nav-link { border: none; color: #6c757d; font-weight: 500; padding: 1rem 1.5rem; border-radius: 8px; transition: all var(--transition); }
+    .nav-tabs .nav-link:hover { background: #f8f9fa; color: var(--primary-color); }
+    .nav-tabs .nav-link.active { background: var(--primary-color); color: white; }
+    .list-group-item { border: none; border-radius: 12px !important; margin-bottom: 1rem; box-shadow: var(--card-shadow); transition: all var(--transition); }
+    .list-group-item:hover { transform: translateY(-2px); box-shadow: var(--hover-shadow); }
+    .form-control:focus { border-color: var(--primary-color); box-shadow: 0 0 0 0.2rem rgba(224,7,7,0.15); }
+    .form-control.is-valid { border-color: #28a745; padding-right: calc(1.5em + 0.75rem); background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right calc(0.375em + 0.1875rem) center; background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem); }
+    .form-switch .form-check-input:checked { background-color: var(--primary-color); border-color: var(--primary-color); }
+    .empty-state { text-align: center; padding: 3rem 1rem; color: #6c757d; }
+    .empty-state i { font-size: 4rem; margin-bottom: 1rem; opacity: 0.5; }
+    .fade-in { animation: fadeIn 0.3s ease-out; }
+    .slide-down { animation: slideDown 0.3s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideDown { from { transform: translateY(-10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @media (max-width: 767.98px) { .profile-card { margin-bottom: 2rem; } .nav-tabs .nav-link { padding: 0.75rem 1rem; } }
+  </style>
+</head>
+<body>
+  <!-- Mount point for detached dropdown list (for custom dropdown, must be outside all containers) -->
+  <div id="dropdown-mount"></div>
+  <!-- React Hero Section Mount Point -->
+  <div id="react-hero"></div>
+  <div class="page">
+    <!-- Hero Section -->
+    <div class="hero-header">
+        <div class="overlay"></div>
+        <!-- Modern JS NavBar Mount Points -->
+        <div id="navbar-top"></div>
+        <div id="navbar-bottom"></div>
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <div class="container">
+                <h1 class="center">My Profile</h1>
+                <p class="subtitle">Manage your account settings and preferences</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <section class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <!-- Profile Card -->
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <img id="profileAvatar" src="assets/img/default-avatar.svg" alt="Profile Avatar" class="profile-avatar">
+                            <h3 id="profileName">Loading...</h3>
+                            <p id="profileEmail" class="text-muted">Loading...</p>
+                        </div>
+                        <div class="profile-info">
+                            <div class="info-item">
+                                <i class="fa fa-phone"></i>
+                                <span id="profilePhone">Loading...</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fa fa-map-marker"></i>
+                                <span id="profileLocation">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <!-- Profile Tabs -->
+                    <div class="profile-tabs">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#bookings">My Bookings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#favorites">Favorites</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#settings">Settings</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <!-- Bookings Tab -->
+                            <div class="tab-pane fade show active" id="bookings">
+                                <div class="list-group" id="bookingsList">
+                                    <!-- Bookings will be loaded here -->
+                                </div>
+                            </div>
+                            <!-- Favorites Tab -->
+                            <div class="tab-pane fade" id="favorites">
+                                <div class="list-group" id="favoritesList">
+                                    <!-- Favorites will be loaded here -->
+                                </div>
+                            </div>
+                            <!-- Settings Tab -->
+                            <div class="tab-pane fade" id="settings">
+                                <form id="settingsForm">
+                                    <div class="form-check mb-3">
+                                        <input type="checkbox" class="form-check-input" id="emailNotifications">
+                                        <label class="form-check-label" for="emailNotifications">Email Notifications</label>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input type="checkbox" class="form-check-input" id="smsNotifications">
+                                        <label class="form-check-label" for="smsNotifications">SMS Notifications</label>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input type="checkbox" class="form-check-input" id="marketingEmails">
+                                        <label class="form-check-label" for="marketingEmails">Marketing Emails</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Settings</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3"></div>
+
+  <script src="assets/js/auth.js"></script>
+
+  <script>
+    // Function to check auth status
+    async function checkAuthStatus() {
+      try {
+        const { data: { session }, error } = await window.supabase.auth.getSession();
+        
+        if (error) {
+          console.error('Auth error:', error);
+          throw error;
+        }
+        
+        if (!session) {
+          console.log('No session found, redirecting to sign in');
+          window.location.href = 'sign-in.html';
+          return;
+        }
+
+        console.log('Session found');
+      } catch (err) {
+        console.error('Error checking auth status:', err);
+        window.location.href = 'sign-in.html';
+      }
+    }
+
+    // Wait for DOM to be fully loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', checkAuthStatus);
+    } else {
+      checkAuthStatus();
+    }
+  </script>
+</body>
+</html> 

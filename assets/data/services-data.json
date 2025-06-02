@@ -1,0 +1,240 @@
+{
+  "home-garden": {
+    "title": "Home & Garden",
+    "description": "Find trusted professionals for all your home and garden needs",
+    "icon": "fa-home",
+    "services": [
+      {
+        "id": "contractors",
+        "name": "Contractors & Handymen",
+        "icon": "fa-wrench",
+        "description": "Professional contractors and handymen for all your home needs",
+        "subcategories": ["General Contractors", "Handymen", "Home Repairs"]
+      },
+      {
+        "id": "plumbers",
+        "name": "Plumbers",
+        "icon": "fa-tint",
+        "description": "Expert plumbing services for repairs, installations, and maintenance",
+        "subcategories": ["Emergency Plumbing", "Installation", "Repairs", "Maintenance"]
+      },
+      {
+        "id": "electricians",
+        "name": "Electricians",
+        "icon": "fa-bolt",
+        "description": "Licensed electricians for all your electrical needs",
+        "subcategories": ["Electrical Repairs", "Installation", "Safety Inspections"]
+      },
+      {
+        "id": "hvac",
+        "name": "Heating & Air Conditioning",
+        "icon": "fa-snowflake-o",
+        "description": "HVAC services for installation, repair, and maintenance",
+        "subcategories": ["AC Installation", "Heating Systems", "Maintenance"]
+      },
+      {
+        "id": "appliances",
+        "name": "Appliances and Repair",
+        "icon": "fa-cogs",
+        "description": "Professional appliance repair and maintenance services",
+        "subcategories": ["Refrigerator Repair", "Washer/Dryer Repair", "Oven Repair"]
+      },
+      {
+        "id": "roofing",
+        "name": "Roofing",
+        "icon": "fa-home",
+        "description": "Expert roofing services for repairs and installations",
+        "subcategories": ["Roof Repair", "New Installation", "Maintenance"]
+      },
+      {
+        "id": "locksmiths",
+        "name": "Locksmiths",
+        "icon": "fa-unlock-alt",
+        "description": "24/7 locksmith services for emergencies and installations",
+        "subcategories": ["Emergency Services", "Lock Installation", "Security Systems"]
+      },
+      {
+        "id": "painters",
+        "name": "Painters",
+        "icon": "fa-paint-brush",
+        "description": "Professional painting services for homes and businesses",
+        "subcategories": ["Interior Painting", "Exterior Painting", "Commercial Painting"]
+      }
+    ]
+  },
+  "health-beauty": {
+    "title": "Health & Beauty",
+    "description": "Discover wellness and beauty services for your needs",
+    "icon": "fa-heart",
+    "services": [
+      {
+        "id": "doctors",
+        "name": "Doctors",
+        "icon": "fa-user-md",
+        "description": "Find qualified medical professionals",
+        "subcategories": ["General Practitioners", "Specialists", "Telemedicine"]
+      },
+      {
+        "id": "dentists",
+        "name": "Dentists",
+        "icon": "fa-hospital-o",
+        "description": "Professional dental care services",
+        "subcategories": ["General Dentistry", "Cosmetic Dentistry", "Emergency Care"]
+      },
+      {
+        "id": "therapists",
+        "name": "Therapists",
+        "icon": "fa-heartbeat",
+        "description": "Mental health and wellness professionals",
+        "subcategories": ["Counseling", "Physical Therapy", "Occupational Therapy"]
+      },
+      {
+        "id": "wellness",
+        "name": "Wellness Centers",
+        "icon": "fa-plus-square",
+        "description": "Comprehensive wellness and health services",
+        "subcategories": ["Yoga", "Meditation", "Holistic Health"]
+      },
+      {
+        "id": "salons",
+        "name": "Hair Salons",
+        "icon": "fa-scissors",
+        "description": "Professional hair care and styling services",
+        "subcategories": ["Haircuts", "Styling", "Color Treatment"]
+      },
+      {
+        "id": "nails",
+        "name": "Nail Salons",
+        "icon": "fa-hand-o-right",
+        "description": "Manicure and pedicure services",
+        "subcategories": ["Manicure", "Pedicure", "Nail Art"]
+      }
+    ]
+  },
+  "auto-transport": {
+    "title": "Auto & Transport",
+    "description": "Automotive and transportation services",
+    "icon": "fa-car",
+    "services": [
+      {
+        "id": "auto-repair",
+        "name": "Auto Repair",
+        "icon": "fa-wrench",
+        "description": "Professional auto repair and maintenance",
+        "subcategories": ["Engine Repair", "Brake Service", "General Maintenance"]
+      },
+      {
+        "id": "car-wash",
+        "name": "Car Washes",
+        "icon": "fa-car",
+        "description": "Car cleaning and detailing services",
+        "subcategories": ["Exterior Wash", "Interior Cleaning", "Detailing"]
+      },
+      {
+        "id": "tire-service",
+        "name": "Tire Services",
+        "icon": "fa-tachometer",
+        "description": "Tire sales, repair, and maintenance",
+        "subcategories": ["Tire Replacement", "Rotation", "Balancing"]
+      },
+      {
+        "id": "taxi",
+        "name": "Taxi Services",
+        "icon": "fa-taxi",
+        "description": "Reliable taxi and transportation services",
+        "subcategories": ["Local Transport", "Airport Transfer", "Hourly Service"]
+      },
+      {
+        "id": "moving",
+        "name": "Moving Services",
+        "icon": "fa-truck",
+        "description": "Professional moving and relocation services",
+        "subcategories": ["Local Moving", "Long Distance", "Packing Services"]
+      }
+    ]
+  },
+  "business": {
+    "title": "Business",
+    "description": "Professional business services and solutions",
+    "icon": "fa-briefcase",
+    "services": [
+      {
+        "id": "business-services",
+        "name": "Business Services",
+        "icon": "fa-briefcase",
+        "description": "Comprehensive business solutions",
+        "subcategories": ["Consulting", "Management", "Strategy"]
+      },
+      {
+        "id": "it-services",
+        "name": "IT Services",
+        "icon": "fa-laptop",
+        "description": "Information technology solutions",
+        "subcategories": ["Network Setup", "Security", "Support"]
+      },
+      {
+        "id": "marketing",
+        "name": "Marketing",
+        "icon": "fa-bullhorn",
+        "description": "Digital and traditional marketing services",
+        "subcategories": ["Digital Marketing", "Social Media", "SEO"]
+      },
+      {
+        "id": "education",
+        "name": "Education",
+        "icon": "fa-graduation-cap",
+        "description": "Educational and training services",
+        "subcategories": ["Online Courses", "Tutoring", "Professional Training"]
+      },
+      {
+        "id": "real-estate",
+        "name": "Real Estate",
+        "icon": "fa-building",
+        "description": "Real estate services and property management",
+        "subcategories": ["Property Sales", "Rentals", "Management"]
+      }
+    ]
+  },
+  "lifestyle": {
+    "title": "Lifestyle",
+    "description": "Services to enhance your lifestyle",
+    "icon": "fa-heart",
+    "services": [
+      {
+        "id": "food-dining",
+        "name": "Food & Dining",
+        "icon": "fa-cutlery",
+        "description": "Restaurants and food services",
+        "subcategories": ["Restaurants", "Catering", "Food Delivery"]
+      },
+      {
+        "id": "shopping",
+        "name": "Shopping",
+        "icon": "fa-shopping-bag",
+        "description": "Retail and shopping services",
+        "subcategories": ["Online Shopping", "Personal Shopping", "Gift Services"]
+      },
+      {
+        "id": "fitness",
+        "name": "Fitness",
+        "icon": "fa-dumbbell",
+        "description": "Fitness and wellness services",
+        "subcategories": ["Personal Training", "Group Classes", "Nutrition"]
+      },
+      {
+        "id": "events",
+        "name": "Events",
+        "icon": "fa-calendar",
+        "description": "Event planning and management",
+        "subcategories": ["Weddings", "Corporate Events", "Parties"]
+      },
+      {
+        "id": "pet-services",
+        "name": "Pet Services",
+        "icon": "fa-paw",
+        "description": "Pet care and services",
+        "subcategories": ["Pet Sitting", "Grooming", "Training"]
+      }
+    ]
+  }
+} 

@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="UstaHub">
+    <meta name="description" content="Contact UstaHub - Get in touch with our team for support, inquiries, or feedback.">
+    <meta name="keywords" content="contact us, support, help, feedback, inquiries">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Varela+Round" rel="stylesheet">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/selectize.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/user.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="assets/css/custom-dropdown.css">
+    <style>
+    .hero-header {
+        position: relative;
+        width: 100%;
+        min-height: 520px;
+        background-image: url('assets/img/hero-background-image-01.jpg');
+        background-size: cover;
+        background-position: center;
+        z-index: 1;
+    }
+    .hero-header .overlay {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.45);
+        z-index: 2;
+    }
+    .top-navbar, .bottom-navbar {
+        background: transparent !important;
+        position: relative;
+        z-index: 3;
+        border-bottom: none;
+    }
+    .top-navbar {
+        border-bottom: none;
+        background: transparent !important;
+        padding: 12px 0;
+    }
+    .top-navbar .nav-link {
+        color: #fff !important;
+        font-weight: 500;
+        font-size: 1.1rem;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 24px;
+        transition: all 0.3s ease;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+    .top-navbar .nav-link:hover {
+        background: rgba(255,255,255,0.15);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .top-navbar .brand img {
+        filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+        transition: transform 0.3s ease;
+    }
+    .top-navbar .brand:hover img {
+        transform: scale(1.05);
+    }
+    .bottom-navbar {
+        border-bottom: 1px solid #e0e0e0;
+        background: transparent !important;
+        z-index: 1040;
+        min-height: 56px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    .bottom-navbar .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    .bottom-navbar .nav-item {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    .bottom-navbar .nav-item.dropdown > a {
+        padding: 0 18px;
+        line-height: 56px;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 500;
+        display: block;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+        background: transparent !important;
+        transition: color 0.2s;
+    }
+    .bottom-navbar .nav-item.dropdown > a:hover {
+        color: #fff;
+        background: transparent !important;
+        opacity: 0.9;
+    }
+    .bottom-navbar .grid-dropdown {
+        display: none;
+        position: absolute;
+        left: 50%;
+        top: 100%;
+        transform: translateX(-50%);
+        grid-template-columns: 1fr 1fr;
+        gap: 0 32px;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+        padding: 24px 32px;
+        min-width: 520px;
+        color: #222;
+        z-index: 1000;
+    }
+    .bottom-navbar .nav-item.dropdown:hover .grid-dropdown {
+        display: grid;
+    }
+    .bottom-navbar .grid-dropdown .dropdown-col {
+        display: flex;
+        flex-direction: column;
+    }
+    .bottom-navbar .grid-dropdown a {
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+        color: #222;
+        font-size: 1.08rem;
+        border-radius: 8px;
+        transition: background 0.15s, color 0.15s;
+        text-decoration: none;
+    }
+    .bottom-navbar .grid-dropdown a i {
+        font-size: 1.2em;
+        margin-right: 12px;
+        color: #e00707;
+        min-width: 22px;
+        text-align: center;
+        transition: color 0.15s;
+    }
+    .bottom-navbar .grid-dropdown a:hover {
+        background: #fbeaec;
+        color: #e00707;
+    }
+    .bottom-navbar .grid-dropdown a:hover i {
+        color: #b00606;
+    }
+    @media (max-width: 991.98px) {
+        .bottom-navbar {
+            min-height: 48px;
+            padding: 0 8px;
+        }
+        .bottom-navbar .nav-menu {
+            gap: 1rem;
+        }
+        .bottom-navbar .grid-dropdown {
+            min-width: 320px;
+            padding: 1rem 0.5rem;
+            grid-template-columns: 1fr;
+        }
+    }
+    @media (max-width: 767.98px) {
+        .bottom-navbar {
+            min-height: 40px;
+            padding: 0 2px;
+        }
+        .bottom-navbar .nav-menu {
+            gap: 0.5rem;
+        }
+        .bottom-navbar .grid-dropdown {
+            min-width: 220px;
+            padding: 0.5rem 0.2rem;
+        }
+    }
+    .hero-content {
+        position: relative;
+        z-index: 4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 300px;
+        color: #fff;
+        text-align: center;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    .hero-content h1 {
+        color: #fff;
+        font-size: 3.2rem;
+        font-weight: 700;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+        animation: fadeInDown 1s ease-out;
+    }
+    .hero-content .subtitle {
+        font-size: 1.4rem;
+        color: rgba(255,255,255,0.9);
+        margin-bottom: 2rem;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        animation: fadeInUp 1s ease-out 0.3s both;
+    }
+    @keyframes fadeInDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 767.98px) {
+        .hero-content h1 { font-size: 2rem; }
+        .hero-content .subtitle { font-size: 1.1rem; }
+    }
+    </style>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script type="module" src="assets/js/supabase.js"></script>
+    <script src="assets/js/navbars.js"></script>
+
+	<title>Contact Us - UstaHub</title>
+
+</head>
+<body>
+    <!-- Mount point for detached dropdown list -->
+    <div id="dropdown-mount"></div>
+    
+    <div class="page">
+        <!-- Hero Section -->
+        <div class="hero-header">
+            <div class="overlay"></div>
+            <!-- Modern JS NavBar Mount Points -->
+            <div id="navbar-top"></div>
+            <div id="navbar-bottom"></div>
+            <!-- Hero Content -->
+            <div class="hero-content">
+                <div class="container">
+                    <h1 class="center">Contact Us</h1>
+                    <p class="subtitle">We're here to help and answer any questions you might have</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <section class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 mx-auto">
+                        <div class="block">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h2>Get in Touch</h2>
+                                    <p>Have questions or need assistance? We're here to help! Fill out the form and we'll get back to you as soon as possible.</p>
+                                    
+                                    <div class="contact-info">
+                                        <div class="info-item">
+                                            <i class="fa fa-map-marker"></i>
+                                            <div>
+                                                <h3>Address</h3>
+                                                <p>123 Service Street<br>New York, NY 10001</p>
+                                            </div>
+                                        </div>
+                                        <div class="info-item">
+                                            <i class="fa fa-phone"></i>
+                                            <div>
+                                                <h3>Phone</h3>
+                                                <p>+1 (555) 123-4567</p>
+                                            </div>
+                                        </div>
+                                        <div class="info-item">
+                                            <i class="fa fa-envelope"></i>
+                                            <div>
+                                                <h3>Email</h3>
+                                                <p>support@ustahub.com</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <form class="form email">
+                                        <div class="form-group">
+                                            <label for="name" class="col-form-label required">Your Name</label>
+                                            <input name="name" type="text" class="form-control" id="name" placeholder="Your Name" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="col-form-label required">Your Email</label>
+                                            <input name="email" type="email" class="form-control" id="email" placeholder="Your Email" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="subject" class="col-form-label required">Subject</label>
+                                            <input name="subject" type="text" class="form-control" id="subject" placeholder="Subject" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message" class="col-form-label required">Your Message</label>
+                                            <textarea name="message" id="message" class="form-control" rows="4" placeholder="Your Message" required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Send Message</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="wrapper">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <a href="#" class="brand">
+                                <img src="assets/img/logo.png" alt="UstaHub Logo" style="max-height: 48px; width: auto;">
+                            </a>
+                            <p>
+                                UstaHub connects customers with trusted local service professionals. Find, compare, and book services for all your needs.
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <h2>Navigation</h2>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6">
+                                    <nav>
+                                        <ul class="list-unstyled">
+                                            <li><a href="index-2.html">Home</a></li>
+                                            <li><a href="about-us.html">About Us</a></li>
+                                            <li><a href="contact.html">Contact</a></li>
+                                            <li><a href="blog.html">Blog</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <nav>
+                                        <ul class="list-unstyled">
+                                            <li><a href="service-category.html">Services</a></li>
+                                            <li><a href="pricing.html">Pricing</a></li>
+                                            <li><a href="about-us.html#faq">FAQ</a></li>
+                                            <li><a href="about-us.html#terms">Terms & Conditions</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <h2>Service Categories</h2>
+                            <nav>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <a href="listing-grid-full-width.html">Home Services</a>
+                                        <small>Plumbing, Electrical, Cleaning</small>
+                                    </li>
+                                    <li>
+                                        <a href="listing-grid-sidebar.html">Personal Services</a>
+                                        <small>Fitness, Beauty, Education</small>
+                                    </li>
+                                    <li>
+                                        <a href="listing-grid-compact-sidebar.html">Event Services</a>
+                                        <small>Photography, Catering, Decor</small>
+                                    </li>
+                                    <li>
+                                        <a href="listing-grid-compact-full-width.html">Business Services</a>
+                                        <small>Marketing, IT, Consulting</small>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="background">
+                    <div class="background-image original-size">
+                        <img src="assets/img/footer-background-icons.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/popper.min.js"></script>
+    <script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/selectize.min.js"></script>
+    <script src="assets/js/masonry.pkgd.min.js"></script>
+    <script src="assets/js/icheck.min.js"></script>
+    <script src="assets/js/jquery.validate.min.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/custom-dropdown.js"></script>
+    <script src="assets/js/navbar.js"></script>
+</body>
+</html>
