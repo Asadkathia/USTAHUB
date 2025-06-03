@@ -4,6 +4,8 @@
     { "src": "assets/**", "use": "@vercel/static" }
   ],
   "rewrites": [
-    { "source": "/:path((?!assets/|favicon.ico).+)", "destination": "/:path.html" }
+    { "source": "/", "destination": "/index-2.html" },
+    { "source": "/:path((?!assets/|favicon.ico|index-2.html).+)", "destination": "/:path.html" },
+    { "source": "/:path((?!assets/|favicon.ico).+)", "destination": "/:path" }
   ]
 } 
