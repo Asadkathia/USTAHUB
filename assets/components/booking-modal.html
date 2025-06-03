@@ -1,0 +1,208 @@
+<!-- Booking Modal Component -->
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookingModalLabel">
+                    <i class="fas fa-calendar-check me-2"></i>Book Service
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <!-- Progress Steps -->
+                <div class="booking-steps mb-4">
+                    <div class="step-indicator">
+                        <div class="step active" data-step="1">
+                            <div class="step-number">1</div>
+                            <div class="step-title">Service</div>
+                        </div>
+                        <div class="step" data-step="2">
+                            <div class="step-number">2</div>
+                            <div class="step-title">Date & Time</div>
+                        </div>
+                        <div class="step" data-step="3">
+                            <div class="step-number">3</div>
+                            <div class="step-title">Your Info</div>
+                        </div>
+                        <div class="step" data-step="4">
+                            <div class="step-number">4</div>
+                            <div class="step-title">Confirm</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 1: Service Details -->
+                <div class="booking-step-content" id="step-1">
+                    <div class="service-summary">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="" alt="Service" class="service-image me-3" id="modalServiceImage">
+                            <div>
+                                <h6 class="mb-1" id="modalServiceTitle">Service Title</h6>
+                                <p class="text-muted mb-0" id="modalProviderName">Provider Name</p>
+                            </div>
+                        </div>
+                        <div class="service-options">
+                            <div class="mb-3">
+                                <label class="form-label">Service Duration</label>
+                                <select class="form-select" id="serviceDuration">
+                                    <option value="1">1 hour - $50</option>
+                                    <option value="2">2 hours - $90</option>
+                                    <option value="3">3 hours - $130</option>
+                                    <option value="4">4+ hours - Contact for quote</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Additional Services (Optional)</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="urgentService" value="20">
+                                    <label class="form-check-label" for="urgentService">
+                                        Urgent Service (+$20)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="weekendService" value="15">
+                                    <label class="form-check-label" for="weekendService">
+                                        Weekend Service (+$15)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Date & Time Selection -->
+                <div class="booking-step-content d-none" id="step-2">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-label">Select Date</label>
+                            <input type="date" class="form-control" id="serviceDate" min="">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Select Time</label>
+                            <select class="form-select" id="serviceTime">
+                                <option value="">Choose a time</option>
+                                <option value="08:00">8:00 AM</option>
+                                <option value="09:00">9:00 AM</option>
+                                <option value="10:00">10:00 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="12:00">12:00 PM</option>
+                                <option value="13:00">1:00 PM</option>
+                                <option value="14:00">2:00 PM</option>
+                                <option value="15:00">3:00 PM</option>
+                                <option value="16:00">4:00 PM</option>
+                                <option value="17:00">5:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <label class="form-label">Service Address</label>
+                        <textarea class="form-control" id="serviceAddress" rows="3" placeholder="Enter the full address where service is needed"></textarea>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Customer Information -->
+                <div class="booking-step-content d-none" id="step-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-label">Full Name *</label>
+                            <input type="text" class="form-control" id="customerName" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Phone Number *</label>
+                            <input type="tel" class="form-control" id="customerPhone" required placeholder="+92 XXX XXXXXXX">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Email Address *</label>
+                            <input type="email" class="form-control" id="customerEmail" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Preferred Contact Method</label>
+                            <select class="form-select" id="contactMethod">
+                                <option value="phone">Phone Call</option>
+                                <option value="whatsapp">WhatsApp</option>
+                                <option value="email">Email</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <label class="form-label">Special Instructions (Optional)</label>
+                        <textarea class="form-control" id="specialInstructions" rows="3" placeholder="Any specific requirements or instructions for the service provider"></textarea>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Confirmation -->
+                <div class="booking-step-content d-none" id="step-4">
+                    <div class="booking-summary">
+                        <h6 class="mb-3">Booking Summary</h6>
+                        <div class="summary-item">
+                            <span>Service:</span>
+                            <span id="summaryService">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Provider:</span>
+                            <span id="summaryProvider">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Date & Time:</span>
+                            <span id="summaryDateTime">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Duration:</span>
+                            <span id="summaryDuration">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Address:</span>
+                            <span id="summaryAddress">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Customer:</span>
+                            <span id="summaryCustomer">-</span>
+                        </div>
+                        <hr>
+                        <div class="summary-item total">
+                            <span><strong>Total Estimated Cost:</strong></span>
+                            <span><strong id="summaryTotal">$0</strong></span>
+                        </div>
+                        
+                        <div class="payment-method mt-3">
+                            <label class="form-label">Payment Method</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="payOnService" value="cash" checked>
+                                <label class="form-check-label" for="payOnService">
+                                    Pay when service is completed
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="paymentMethod" id="payOnline" value="online">
+                                <label class="form-check-label" for="payOnline">
+                                    Pay online now (Coming soon)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <div class="d-flex justify-content-between w-100">
+                    <button type="button" class="btn btn-secondary" id="prevStepBtn" style="display: none;">
+                        <i class="fas fa-arrow-left me-2"></i>Previous
+                    </button>
+                    <div class="ms-auto">
+                        <button type="button" class="btn btn-outline-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="nextStepBtn">
+                            Next <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+ 

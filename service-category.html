@@ -26,6 +26,8 @@
     <!-- Custom styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/user.css">
+    <link rel="stylesheet" href="assets/css/booking-modal.css">
 
     <style>
         /* Top Navbar Styles */
@@ -550,6 +552,79 @@
             justify-content: space-between;
         }
 
+        .service-list-item__pricing {
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .service-list-item__pricing .price-label {
+            display: block;
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.2rem;
+        }
+
+        .service-list-item__pricing .price-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #e00707;
+        }
+
+        .service-list-item__buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            width: 100%;
+            min-width: 160px;
+        }
+
+        .service-list-item__buttons .btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .service-list-item__buttons .view-details-btn {
+            color: #e00707;
+            border-color: #e00707;
+        }
+
+        .service-list-item__buttons .view-details-btn:hover {
+            background-color: #e00707;
+            border-color: #e00707;
+            color: #fff;
+        }
+
+        .service-list-item__buttons .book-now-btn {
+            background-color: #e00707;
+            border-color: #e00707;
+            color: #fff;
+        }
+
+        .service-list-item__buttons .book-now-btn:hover {
+            background-color: #b00606;
+            border-color: #b00606;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(224,7,7,0.25);
+        }
+
+        .service-list-item__provider {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        .service-list-item__provider i {
+            margin-right: 0.5rem;
+            color: #e00707;
+        }
+
         .service-list-item__estimate {
             font-size: 1rem;
             font-weight: 600;
@@ -735,7 +810,7 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
-        // Function to create service list item with animation (Simplified)
+        // Function to create service list item with animation (Enhanced with booking)
         function createServiceListItem(service, index) {
             const listItem = document.createElement('div');
             listItem.className = 'service-list-item';
@@ -743,9 +818,13 @@
             listItem.setAttribute('data-aos-delay', index * 50);
 
             // Mock data/placeholders for fields not directly in current 'service' object
-            const rating = service.rating || (Math.random() * (5 - 3.5) + 3.5).toFixed(1); // Random rating between 3.5 and 5.0
-            const reviewCount = service.review_count || Math.floor(Math.random() * 200) + 10; // Random review count
+            const rating = service.rating || (Math.random() * (5 - 3.5) + 3.5).toFixed(1);
+            const reviewCount = service.review_count || Math.floor(Math.random() * 200) + 10;
             const sampleReview = service.sample_review || "This provider was excellent! Very professional and did a great job. Highly recommended.";
+            
+            // Provider information
+            const providerName = service.provider ? `${service.provider.first_name} ${service.provider.last_name}` : 'Professional Provider';
+            const servicePrice = service.price ? `$${service.price}/hr` : 'Contact for pricing';
             
             // Generate star icons based on rating
             let starsHTML = '';
@@ -760,7 +839,7 @@
                 starsHTML += '<i class="fas fa-star-half-alt"></i>';
             }
             for (let i = 0; i < emptyStars; i++) {
-                starsHTML += '<i class="far fa-star"></i>'; // Using far for empty star
+                starsHTML += '<i class="far fa-star"></i>';
             }
 
             listItem.innerHTML = `
@@ -770,6 +849,10 @@
                     </div>
                     <div class="service-list-item__details">
                         <h3 class="service-list-item__name">${index + 1}. ${service.title || 'Service Title'}</h3>
+                        <div class="service-list-item__provider">
+                            <i class="fas fa-user-tie"></i>
+                            <span>by ${providerName}</span>
+                        </div>
                         <div class="service-list-item__rating-reviews">
                             <span class="stars">${starsHTML}</span>
                             <span class="rating-value">${rating}</span>
@@ -778,12 +861,21 @@
                         <p class="service-list-item__description">${service.description || "Service description."}</p>
                         <div class="service-list-item__feedback">
                             <p class="feedback-text">"${sampleReview.substring(0, 100)}${sampleReview.length > 100 ? '...' : ''}"</p>
-                            ${sampleReview.length > 100 ? '<a href="service-details.html?serviceId=${service.id}#reviews" class="read-more-reviews">Read more</a>' : ''}
+                            ${sampleReview.length > 100 ? `<a href="service-details.html?serviceId=${service.id}#reviews" class="read-more-reviews">Read more</a>` : ''}
                         </div>
                     </div>
                 </div>
                 <div class="service-list-item__actions">
-                    <a href="service-details.html?serviceId=${service.id}" class="btn btn-primary view-profile-btn">View Details</a>
+                    <div class="service-list-item__pricing">
+                        <span class="price-label">Starting at</span>
+                        <span class="price-value">${servicePrice}</span>
+                    </div>
+                    <div class="service-list-item__buttons">
+                        <a href="service-details.html?serviceId=${service.id}" class="btn btn-outline-primary view-details-btn">View Details</a>
+                        <button class="btn btn-primary book-now-btn" data-service-id="${service.id}" data-provider-id="${service.provider_id}" data-service-title="${service.title}">
+                            <i class="fas fa-calendar-check me-2"></i>Book Now
+                        </button>
+                    </div>
                 </div>
             `;
             return listItem;
@@ -824,7 +916,12 @@
                     if (subCategoriesToFetch && subCategoriesToFetch.length > 0) {
                         const { data, error } = await window.supabase
                             .from('services')
-                            .select('*')
+                            .select(`
+                                *,
+                                provider:profiles!services_provider_id_fkey(
+                                    id, first_name, last_name, phone
+                                )
+                            `)
                             .in('category', subCategoriesToFetch);
                         servicesToDisplay = data;
                         supabaseError = error;
@@ -835,7 +932,12 @@
                     pageTitleCategoryName = categoryNameFromUrl.charAt(0).toUpperCase() + categoryNameFromUrl.slice(1);
                     const { data, error } = await window.supabase
                         .from('services')
-                        .select('*')
+                        .select(`
+                            *,
+                            provider:profiles!services_provider_id_fkey(
+                                id, first_name, last_name, phone
+                            )
+                        `)
                         .eq('category', categoryNameFromUrl);
                     servicesToDisplay = data;
                     supabaseError = error;
@@ -858,6 +960,23 @@
                         const serviceItem = createServiceListItem(service, index);
                         servicesGrid.appendChild(serviceItem);
                     });
+                    
+                    // Add event listeners for Book Now buttons
+                    document.querySelectorAll('.book-now-btn').forEach(button => {
+                        button.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            const serviceId = this.getAttribute('data-service-id');
+                            const providerId = this.getAttribute('data-provider-id');
+                            const serviceTitle = this.getAttribute('data-service-title');
+                            
+                            // For now, show a placeholder modal (we'll implement the full modal next)
+                            if (window.openBookingModal) {
+                                window.openBookingModal(serviceId, providerId, serviceTitle);
+                            } else {
+                                alert(`Booking functionality coming soon!\nService: ${serviceTitle}\nService ID: ${serviceId}`);
+                            }
+                        });
+                    });
                 } else {
                     servicesGrid.innerHTML = '<div class="col-12 text-center py-5"><i class="fas fa-search-dollar fa-3x text-muted mb-3"></i><h4>No Services Found</h4><p class="text-muted">There are currently no services listed in the "' + pageTitleCategoryName.toLowerCase() + '" category. Check back later or explore other categories.</p></div>';
                 }
@@ -874,6 +993,46 @@
         }
 
         document.addEventListener('DOMContentLoaded', loadServices);
+    </script>
+
+    <!-- Include Booking Modal Component -->
+    <div id="bookingModalContainer"></div>
+
+    <!-- Include Booking Modal JavaScript -->
+    <script src="assets/js/booking-modal.js"></script>
+    
+    <script>
+        // Load booking modal component
+        fetch('assets/components/booking-modal.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('bookingModalContainer').innerHTML = html;
+                
+                // Wait a moment for DOM to update
+                setTimeout(() => {
+                    // Initialize booking modal after HTML is loaded
+                    if (typeof BookingModal !== 'undefined') {
+                        try {
+                            window.bookingModal = new BookingModal();
+                            
+                            // Global function to open booking modal
+                            window.openBookingModal = function(serviceId, providerId, serviceTitle) {
+                                console.log('Opening booking modal for:', serviceTitle);
+                                window.bookingModal.openModal(serviceId, providerId, serviceTitle);
+                            };
+                            
+                            console.log('Booking modal initialized successfully');
+                        } catch (error) {
+                            console.error('Error initializing booking modal:', error);
+                        }
+                    } else {
+                        console.error('BookingModal class not found');
+                    }
+                }, 100);
+            })
+            .catch(error => {
+                console.error('Error loading booking modal:', error);
+            });
     </script>
 </body>
 </html> 

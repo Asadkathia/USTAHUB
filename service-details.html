@@ -26,6 +26,7 @@
     <!-- Custom styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/booking-modal.css">
 
     <style>
         /* Top Navbar Styles */
@@ -226,23 +227,87 @@
             line-height: 1.6;
         }
         .cta-section {
+            background: #fff;
+            border-radius: 16px;
+            padding: 3rem;
             text-align: center;
-            margin-top: 3rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
-        .cta-section .btn-primary {
-            background: #e00707;
-            border: none;
-            padding: 1rem 3rem;
-            border-radius: 30px;
-            font-size: 1.2rem;
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .cta-buttons .btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
             font-weight: 600;
+            border-radius: 12px;
             transition: all 0.3s ease;
+            min-width: 200px;
+        }
+        .cta-buttons .btn-primary {
+            background: #e00707;
+            border-color: #e00707;
             box-shadow: 0 4px 15px rgba(224,7,7,0.2);
         }
-        .cta-section .btn-primary:hover {
+        .cta-buttons .btn-primary:hover {
             background: #b00606;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(224,7,7,0.3);
+            border-color: #b00606;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(224,7,7,0.3);
+        }
+        .cta-buttons .btn-outline-primary {
+            color: #e00707;
+            border-color: #e00707;
+        }
+        .cta-buttons .btn-outline-primary:hover {
+            background: #e00707;
+            border-color: #e00707;
+            color: #fff;
+        }
+        .service-provider-info {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #eee;
+        }
+        .provider-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: inline-block;
+        }
+        .provider-details h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .provider-details p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        .provider-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .provider-rating .stars {
+            color: #ffc107;
+        }
+        .provider-rating .rating-text {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 768px) {
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .cta-buttons .btn {
+                width: 100%;
+                max-width: 300px;
+            }
         }
 
         /* Loading Spinner */
@@ -320,9 +385,13 @@
             .feature-item {
                 padding: 1rem;
             }
-            .cta-section .btn-primary {
-                padding: 0.8rem 2rem;
-                font-size: 1.1rem;
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .cta-buttons .btn {
+                width: 100%;
+                max-width: 300px;
             }
         }
 
@@ -492,7 +561,32 @@
                 <div class="service-features" id="serviceFeatures"></div>
             </div>
             <div class="cta-section" data-aos="fade-up" data-aos-delay="200">
-                <a href="#" class="btn btn-primary" id="contactButton">Contact Service Provider</a>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary btn-lg book-service-btn" id="bookServiceButton">
+                        <i class="fas fa-calendar-check me-2"></i>Book This Service
+                    </button>
+                    <a href="#" class="btn btn-outline-primary btn-lg" id="contactButton">
+                        <i class="fas fa-envelope me-2"></i>Contact Provider
+                    </a>
+                </div>
+                <div class="service-provider-info" id="providerInfo" style="display: none;">
+                    <div class="provider-card">
+                        <div class="provider-details">
+                            <h4 id="providerName">Provider Name</h4>
+                            <p id="providerSpecialty">Specialty</p>
+                            <div class="provider-rating">
+                                <span class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half"></i>
+                                </span>
+                                <span class="rating-text">4.8 (120+ reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -556,7 +650,12 @@
             try {
                 const { data: service, error } = await window.supabase
                     .from('services')
-                    .select('*')
+                    .select(`
+                        *,
+                        provider:profiles!services_provider_id_fkey(
+                            id, first_name, last_name, phone
+                        )
+                    `)
                     .eq('id', serviceId)
                     .single();
 
@@ -566,21 +665,25 @@
                 const title = document.getElementById('serviceTitle');
                 const description = document.getElementById('serviceDescription');
                 
-                title.textContent = service.name;
+                title.textContent = service.title || service.name;
                 description.textContent = service.description;
                 
                 // Update page title
-                document.title = `${service.name} - UstaHub`;
+                document.title = `${service.title || service.name} - UstaHub`;
                 
                 // Update about section
                 document.getElementById('serviceAbout').textContent = 
-                    `Welcome to our ${service.name} service. We provide professional ${service.name.toLowerCase()} solutions tailored to your needs. Our team of experts is dedicated to delivering high-quality service and ensuring your complete satisfaction.`;
+                    `Welcome to our ${service.title || service.name} service. We provide professional ${(service.title || service.name).toLowerCase()} solutions tailored to your needs. Our team of experts is dedicated to delivering high-quality service and ensuring your complete satisfaction.`;
                 
-                // Populate subcategories with animation
+                // Populate subcategories with animation (if available)
                 const subcategoriesList = document.getElementById('subcategoriesList');
-                subcategoriesList.innerHTML = service.subcategories
-                    .map((sub, index) => `<span data-aos="fade-up" data-aos-delay="${index * 100}">${sub}</span>`)
-                    .join('');
+                if (service.subcategories && Array.isArray(service.subcategories)) {
+                    subcategoriesList.innerHTML = service.subcategories
+                        .map((sub, index) => `<span data-aos="fade-up" data-aos-delay="${index * 100}">${sub}</span>`)
+                        .join('');
+                } else {
+                    subcategoriesList.innerHTML = `<span data-aos="fade-up">${service.category}</span>`;
+                }
                 
                 // Populate features with staggered animation
                 const serviceFeatures = document.getElementById('serviceFeatures');
@@ -616,6 +719,34 @@
                 // Update contact button
                 document.getElementById('contactButton').href = `contact.html?service=${service.id}`;
 
+                // Update provider info if available
+                if (service.provider) {
+                    const providerName = `${service.provider.first_name} ${service.provider.last_name}`;
+                    document.getElementById('providerName').textContent = providerName;
+                    document.getElementById('providerSpecialty').textContent = service.category || 'Professional Service Provider';
+                    document.getElementById('providerInfo').style.display = 'block';
+                }
+
+                // Add booking button functionality
+                const bookButton = document.getElementById('bookServiceButton');
+                bookButton.setAttribute('data-service-id', service.id);
+                bookButton.setAttribute('data-provider-id', service.provider_id);
+                bookButton.setAttribute('data-service-title', service.title || service.name);
+                
+                bookButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const serviceId = this.getAttribute('data-service-id');
+                    const providerId = this.getAttribute('data-provider-id');
+                    const serviceTitle = this.getAttribute('data-service-title');
+                    
+                    // For now, show a placeholder (we'll implement the full modal next)
+                    if (window.openBookingModal) {
+                        window.openBookingModal(serviceId, providerId, serviceTitle);
+                    } else {
+                        alert(`Booking functionality coming soon!\nService: ${serviceTitle}\nService ID: ${serviceId}`);
+                    }
+                });
+
                 hideLoading();
             } catch (error) {
                 console.error('Error loading service details:', error);
@@ -628,6 +759,180 @@
 
         // Load service details when the page loads
         document.addEventListener('DOMContentLoaded', loadServiceDetails);
+    </script>
+
+    <!-- Include Booking Modal Component -->
+    <div id="bookingModalContainer"></div>
+
+    <!-- Include Booking Modal JavaScript -->
+    <script src="assets/js/booking-modal.js"></script>
+    
+    <script>
+        // Load booking modal component
+        fetch('assets/components/booking-modal.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('bookingModalContainer').innerHTML = html;
+                
+                // Wait a moment for DOM to update
+                setTimeout(() => {
+                    // Initialize booking modal after HTML is loaded
+                    if (typeof BookingModal !== 'undefined') {
+                        try {
+                            window.bookingModal = new BookingModal();
+                            
+                            // Global function to open booking modal
+                            window.openBookingModal = function(serviceId, providerId, serviceTitle) {
+                                console.log('Opening booking modal for:', serviceTitle);
+                                window.bookingModal.openModal(serviceId, providerId, serviceTitle);
+                            };
+                            
+                            console.log('Booking modal initialized successfully');
+                        } catch (error) {
+                            console.error('Error initializing booking modal:', error);
+                        }
+                    } else {
+                        console.error('BookingModal class not found');
+                    }
+                }, 100);
+            })
+            .catch(error => {
+                console.error('Error loading booking modal:', error);
+            });
+    </script>
+
+    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookingModalLabel">Book Service</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="bookingForm" class="needs-validation" novalidate>
+                        <input type="hidden" id="serviceId" name="serviceId">
+                        <input type="hidden" id="providerId" name="providerId">
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="bookingDate" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="bookingDate" name="date" required>
+                                <div class="invalid-feedback">Please select a date</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="bookingTime" class="form-label">Time</label>
+                                <input type="time" class="form-control" id="bookingTime" name="time" required>
+                                <div class="invalid-feedback">Please select a time</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="duration" class="form-label">Duration (hours)</label>
+                            <input type="number" class="form-control" id="duration" name="duration" min="1" step="0.5" required>
+                            <div class="invalid-feedback">Please enter a valid duration</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Service Location</label>
+                            <textarea class="form-control" id="address" name="address" rows="2" required></textarea>
+                            <div class="invalid-feedback">Please enter the service location</div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" name="phone" required>
+                                <div class="invalid-feedback">Please enter a valid phone number</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                                <div class="invalid-feedback">Please enter a valid email</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="instructions" class="form-label">Special Instructions (Optional)</label>
+                            <textarea class="form-control" id="instructions" name="instructions" rows="3"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="paymentMethod" class="form-label">Preferred Payment Method</label>
+                            <select class="form-select" id="paymentMethod" name="paymentMethod">
+                                <option value="">Select payment method</option>
+                                <option value="cash">Cash</option>
+                                <option value="card">Card</option>
+                                <option value="bank_transfer">Bank Transfer</option>
+                            </select>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <small>Note: The final price will be confirmed by the service provider after reviewing your requirements.</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="submitBooking">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const bookingForm = document.getElementById('bookingForm');
+        const submitButton = document.getElementById('submitBooking');
+
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('bookingDate').min = today;
+
+        submitButton.addEventListener('click', async function() {
+            if (!bookingForm.checkValidity()) {
+                bookingForm.classList.add('was-validated');
+                return;
+            }
+
+            try {
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
+
+                const formData = new FormData(bookingForm);
+                const bookingData = Object.fromEntries(formData.entries());
+                
+                // Add service and provider IDs
+                bookingData.serviceId = document.getElementById('serviceId').value;
+                bookingData.providerId = document.getElementById('providerId').value;
+
+                const result = await submitBooking(bookingData);
+                
+                // Show success message
+                const modal = bootstrap.Modal.getInstance(document.getElementById('bookingModal'));
+                modal.hide();
+                
+                // Show success alert
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-success alert-dismissible fade show';
+                alertDiv.innerHTML = `
+                    <strong>Success!</strong> Your booking has been submitted successfully.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                document.querySelector('.container').insertBefore(alertDiv, document.querySelector('.container').firstChild);
+
+                // Reset form
+                bookingForm.reset();
+                bookingForm.classList.remove('was-validated');
+
+            } catch (error) {
+                console.error('Booking error:', error);
+                alert('Failed to submit booking: ' + error.message);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerHTML = 'Book Now';
+            }
+        });
+    });
     </script>
 </body>
 </html> 
