@@ -35,7 +35,7 @@
             background: transparent !important;
             padding: 12px 0;
             position: relative;
-            z-index: 3;
+            z-index: 5;
         }
         .top-navbar .nav-left {
             display: flex;
@@ -116,7 +116,7 @@
             min-height: 300px;
             color: #fff;
             text-align: center;
-            padding-top: 40px;
+            padding-top: 140px;
             padding-bottom: 40px;
         }
         .hero-content h1 {
@@ -658,6 +658,10 @@
                 <div class="mb-3">
                     <label for="servicePrice" class="form-label">Price (USD/hour)</label>
                     <input type="number" name="servicePrice" id="servicePrice" class="form-control" min="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="serviceDescription" class="form-label">Service Description</label>
+                    <textarea name="serviceDescription" id="serviceDescription" class="form-control" rows="4" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Add Service</button>
             </form>

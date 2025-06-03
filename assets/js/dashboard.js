@@ -608,7 +608,6 @@ function attachServiceTableHandlers(servicesData) {
                 const row = btn.closest('tr');
                 const serviceId = row.dataset.serviceId;
             
-            // Fetch the specific service details for editing to ensure fresh data
             const { data: service, error } = await window.supabase
                 .from('services')
                 .select('*')
@@ -620,20 +619,31 @@ function attachServiceTableHandlers(servicesData) {
                 return;
             }
             
-            // For simplicity, editing will be done in the offcanvas form, pre-filled.
-            // Open the offcanvas, pre-fill with service data, and change submit handler to update.
             const offcanvasElement = document.getElementById('add-service-offcanvas');
             const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement) || new bootstrap.Offcanvas(offcanvasElement);
             const serviceForm = document.getElementById('add-service-form');
             const formTitle = offcanvasElement.querySelector('#addServiceLabel');
+            const serviceCategorySelect = serviceForm.serviceCategory;
+            const serviceCategoryLabel = serviceCategorySelect ? serviceCategorySelect.closest('.mb-3').querySelector('label[for="serviceCategory"]') : null;
             
             formTitle.textContent = 'Edit Service';
             serviceForm.serviceName.value = service.title;
-            // Category will be locked to provider's specialty, so no need to set it here if it matches.
-            // If the service somehow has a different category, this might be an issue, but our new flow prevents that.
-            serviceForm.serviceCategory.value = service.category; // This will be provider's category
             serviceForm.servicePrice.value = service.price;
-            serviceForm.dataset.editingServiceId = serviceId; // Store ID for update
+            serviceForm.serviceDescription.value = service.description || '';
+            serviceForm.dataset.editingServiceId = serviceId;
+
+            // Set and disable category for editing
+            if (serviceCategorySelect) {
+                serviceCategorySelect.value = service.category; 
+                serviceCategorySelect.disabled = true; 
+                if (serviceCategoryLabel) serviceCategoryLabel.textContent = 'Service Category (Locked for this service)';
+                
+                const selectizeInstance = $(serviceCategorySelect).data('selectize');
+                if (selectizeInstance) {
+                    selectizeInstance.setValue(service.category, true); // silent true
+                    selectizeInstance.disable();
+                }
+            }
 
             offcanvas.show();
             });
@@ -657,177 +667,114 @@ function attachServiceTableHandlers(servicesData) {
     }
     
 function initFloatingActionButton() {
-    const fab = document.getElementById('add-service-btn') || document.getElementById('add-service-fab');
-    const offcanvasElement = document.getElementById('add-service-offcanvas');
+    const addServiceBtn = document.getElementById('add-service-btn');
+    const addServiceForm = document.getElementById('add-service-form');
+    const addServiceOffcanvasElement = document.getElementById('add-service-offcanvas');
     
-    if (!fab || !offcanvasElement) {
-        console.warn('FAB or Offcanvas for adding services not found.');
-            return;
-        }
-        
-    const offcanvas = new bootstrap.Offcanvas(offcanvasElement);
-    const serviceForm = document.getElementById('add-service-form');
-    const serviceCategoryDropdown = document.getElementById('serviceCategory');
-    const formTitle = offcanvasElement.querySelector('#addServiceLabel');
-    let serviceCategorySelectize = null;
+    if (!addServiceOffcanvasElement) {
+        console.warn("Add service offcanvas element not found. Skipping FAB init.");
+        return;
+    }
+    const addServiceOffcanvas = new bootstrap.Offcanvas(addServiceOffcanvasElement);
+    const serviceCategorySelect = addServiceForm ? addServiceForm.serviceCategory : null;
+    const serviceCategoryLabel = serviceCategorySelect ? serviceCategorySelect.closest('.mb-3').querySelector('label[for="serviceCategory"]') : null;
 
-    const triggerButton = document.getElementById('add-service-btn');
-    if (triggerButton) {
-        triggerButton.addEventListener('click', () => {
-            formTitle.textContent = 'Add New Service'; // Set title for adding
-            serviceForm.reset(); // Reset form for new entry
-            delete serviceForm.dataset.editingServiceId; // Clear editing ID
-            offcanvas.show();
-        });
-    } else if (fab) {
-         fab.addEventListener('click', () => {
-            formTitle.textContent = 'Add New Service';
-            serviceForm.reset();
-            delete serviceForm.dataset.editingServiceId;
-            offcanvas.show();
+    if (addServiceBtn) {
+        addServiceBtn.addEventListener('click', () => {
+            if (addServiceForm) {
+                addServiceForm.reset();
+                delete addServiceForm.dataset.editingServiceId;
+                const formTitle = addServiceOffcanvasElement.querySelector('#addServiceLabel');
+                if (formTitle) formTitle.textContent = 'Add New Service';
+                const submitButton = addServiceForm.querySelector('button[type="submit"]');
+                if (submitButton) submitButton.textContent = 'Add Service';
+
+                // Enforce primary service category
+                if (serviceCategorySelect) {
+                    const selectizeInstance = $(serviceCategorySelect).data('selectize');
+                    if (currentProviderProfile && currentProviderProfile.primary_service_category) {
+                        serviceCategorySelect.value = currentProviderProfile.primary_service_category;
+                        serviceCategorySelect.disabled = true;
+                        if (serviceCategoryLabel) serviceCategoryLabel.textContent = 'Service Category (Your Registered Specialty)';
+                        if (selectizeInstance) {
+                            selectizeInstance.setValue(currentProviderProfile.primary_service_category, true); // silent true
+                            selectizeInstance.disable();
+                        }
+                    } else {
+                        serviceCategorySelect.disabled = false; 
+                        if (serviceCategoryLabel) serviceCategoryLabel.textContent = 'Service Category';
+                        serviceCategorySelect.selectedIndex = 0; // Reset to placeholder
+                        if (selectizeInstance) {
+                            selectizeInstance.clear(true); // silent true
+                            selectizeInstance.enable();
+                        }
+                    }
+                }
+            }
+            addServiceOffcanvas.show();
         });
     }
 
-    offcanvasElement.addEventListener('shown.bs.offcanvas', () => {
-        if (!serviceCategoryDropdown) {
-            console.error("Service category dropdown not found.");
-            return;
-        }
-
-        const categories = [
-            { value: "plumbing", text: "Plumbing" },{ value: "electrical-services", text: "Electrical Services" },{ value: "hvac", text: "HVAC (Heating & Cooling)" },{ value: "home-cleaning", text: "Home Cleaning" },{ value: "landscaping", text: "Landscaping & Gardening" },{ value: "painting-services", text: "Painting Services" },{ value: "carpentry", text: "Carpentry" },{ value: "moving-services", text: "Moving Services" },{ value: "appliance-repair", text: "Appliance Repair" },{ value: "roofing-services", text: "Roofing" },{ value: "locksmith-services", text: "Locksmith" },{ value: "handyman-services", text: "Handyman / Contractors" },{ value: "hair-salon", text: "Hair Salon" },{ value: "nail-salon", text: "Nail Salon" },{ value: "spa-services", text: "Spa Services" },{ value: "massage-therapy", text: "Massage Therapy" },{ value: "wellness-services", text: "Wellness (General)" },{ value: "beauty-general", text: "Beauty (General)" },{ value: "auto-repair", text: "Auto Repair & Mechanic" },{ value: "car-wash", text: "Car Wash & Detailing" },{ value: "it-services", text: "IT & Tech Support" },{ value: "marketing-services", text: "Marketing & Advertising" },{ value: "tutoring-lessons", text: "Tutoring & Lessons" },{ value: "event-planning", text: "Event Planning" },{ value: "photography-services", text: "Photography & Videography" },{ value: "pet-grooming", text: "Pet Grooming" },{ value: "pet-sitting", text: "Pet Sitting & Care" },{ value: "real-estate-services", text: "Real Estate Agents" },{ value: "legal-services", text: "Legal Services" },{ value: "accounting-services", text: "Accounting & Bookkeeping" },{ value: "business-consulting", text: "Business Consulting" },{ value: "fitness-training", text: "Fitness & Personal Training" },{ value: "catering-services", text: "Catering Services" },{ value: "graphic-design", text: "Graphic & Web Design" },{ value: "other", text: "Other" }
-        ];
-
-        let currentHTMLOptions = Array.from(serviceCategoryDropdown.options).map(opt => opt.value);
-        let needsRepopulate = categories.some(cat => !currentHTMLOptions.includes(cat.value)) || serviceCategoryDropdown.options.length !== categories.length +1; // +1 for placeholder
-
-        if (needsRepopulate || serviceCategoryDropdown.options.length <=1 ) { // Repopulate if empty or significantly different
-            serviceCategoryDropdown.innerHTML = '<option value="" disabled>Select a category...</option>';
-            categories.forEach(cat => {
-                const option = document.createElement('option');
-                option.value = cat.value;
-                option.textContent = cat.text;
-                serviceCategoryDropdown.appendChild(option);
-            });
-        }
-        // Ensure placeholder is selected if not editing
-        if (!serviceForm.dataset.editingServiceId) {
-             serviceCategoryDropdown.selectedIndex = 0; 
-        }
-
-        const labelElement = serviceCategoryDropdown.closest('.mb-3').querySelector('label[for="serviceCategory"]');
-        
-        // Destroy existing Selectize instance before re-initializing or changing state
-        if ($(serviceCategoryDropdown).data('selectize')) {
-            $(serviceCategoryDropdown).data('selectize').destroy();
-        }
-
-        if (currentProviderProfile && currentProviderProfile.primary_service_category && !serviceForm.dataset.editingServiceId) {
-            const providerRegisteredCategory = currentProviderProfile.primary_service_category;
-            serviceCategoryDropdown.value = providerRegisteredCategory;
-            serviceCategoryDropdown.disabled = true;
-            if (labelElement) labelElement.textContent = 'Service Category (Your Registered Specialty)';
-            
-            serviceCategorySelectize = $(serviceCategoryDropdown).selectize({
-                placeholder: 'Category (Locked)',
-            })[0].selectize;
-            // Selectize should pick up value and disabled state. Explicitly disable if needed.
-            serviceCategorySelectize.disable(); 
-
-        } else if (serviceForm.dataset.editingServiceId) { // If editing, category should be set from service, but still locked
-             serviceCategoryDropdown.value = serviceForm.serviceCategory.value; // Value already set from service data
-             serviceCategoryDropdown.disabled = true;
-             if (labelElement) labelElement.textContent = 'Service Category (Locked for this service)';
-             serviceCategorySelectize = $(serviceCategoryDropdown).selectize({
-                placeholder: 'Category (Locked)',
-            })[0].selectize;
-            serviceCategorySelectize.disable(); 
-
-        } else {
-            serviceCategoryDropdown.disabled = false;
-            if (labelElement) labelElement.textContent = 'Service Category';
-            serviceCategorySelectize = $(serviceCategoryDropdown).selectize({
-                create: false, // Or true if you want to allow creating new categories from this form
-                sortField: 'text',
-                placeholder: 'Select a category...'
-            })[0].selectize;
-            serviceCategorySelectize.enable();
-        }
-        // If form was reset, ensure name/price are clear only when adding new, not editing
-        if (!serviceForm.dataset.editingServiceId) {
-             serviceForm.querySelector('#serviceName').value = '';
-             serviceForm.querySelector('#servicePrice').value = '';
-        }
-
-    });
-
-    if (serviceForm) {
-        serviceForm.addEventListener('submit', async (e) => {
+    if (addServiceForm) {
+        addServiceForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const serviceName = serviceForm.serviceName.value.trim();
-            const serviceCategory = serviceCategoryDropdown.value; 
-            const servicePrice = serviceForm.servicePrice.value;
-            const editingServiceId = serviceForm.dataset.editingServiceId;
+            const serviceName = addServiceForm.serviceName.value.trim();
+            const serviceCategory = serviceCategorySelect ? serviceCategorySelect.value : ''; 
+            const servicePrice = parseFloat(addServiceForm.servicePrice.value);
+            const serviceDescription = addServiceForm.serviceDescription.value.trim();
 
-            if (!serviceName || !serviceCategory || !servicePrice || parseFloat(servicePrice) <= 0) {
-                utils.showToast('Please enter valid service details, category, and price.', 'danger');
+            if (!serviceName || !serviceCategory || isNaN(servicePrice) || servicePrice <= 0 || !serviceDescription) {
+                let errorMsg = 'Please fill in all fields correctly, including a description.';
+                if (!serviceCategory) {
+                    errorMsg = 'Service category is missing. This might be an issue with your profile setup.';
+                }
+                utils.showToast(errorMsg, 'danger');
                 return;
             }
-            const { data: { user } } = await window.supabase.auth.getUser();
-            if (!user) {
-                utils.showToast('You must be logged in.', 'danger');
-                return;
-            }
-            
-            const submitButton = serviceForm.querySelector('button[type="submit"]');
-            const originalButtonText = submitButton.textContent;
-            submitButton.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span>${editingServiceId ? 'Saving...' : 'Adding...'}`;
+
+            const submitButton = addServiceForm.querySelector('button[type="submit"]');
             submitButton.disabled = true;
+            submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Adding...';
 
             try {
-                let responseError, responseData;
-                const servicePayload = {
+                const { data: { user } } = await window.supabase.auth.getUser();
+                if (!user) throw new Error('User not authenticated. Please sign in.');
+
+                // Ensure provider_id is available (e.g., from currentProviderProfile or session)
+                const providerId = currentProviderProfile?.id || user.id;
+                if (!providerId) throw new Error('Provider ID not found.');
+
+                const newService = {
+                    provider_id: providerId,
                     title: serviceName,
                     category: serviceCategory,
-                    price: parseFloat(servicePrice),
-                    provider_id: user.id,
+                    price: servicePrice,
+                    description: serviceDescription, // Add description to the object
+                    // status: 'active' // Optional: set a default status
                 };
 
-                if (editingServiceId) {
-                    const { data, error } = await window.supabase
-                        .from('services')
-                        .update(servicePayload)
-                        .eq('id', editingServiceId)
-                        .select();
-                    responseData = data;
-                    responseError = error;
-                } else {
-                    const { data, error } = await window.supabase
-                        .from('services')
-                        .insert(servicePayload)
-                        .select();
-                    responseData = data;
-                    responseError = error;
-                }
+                const { data, error } = await window.supabase
+                    .from('services')
+                    .insert([newService])
+                    .select(); 
 
-                if (responseError) throw responseError;
+                if (error) throw error;
 
-                utils.showToast(`Service ${editingServiceId ? 'updated' : 'added'} successfully!`, 'success');
-                fetchAndRenderServices(); 
-                offcanvas.hide();
-                serviceForm.reset();
-                delete serviceForm.dataset.editingServiceId;
-                if (serviceCategorySelectize) {
-                    serviceCategorySelectize.clear(); // Clear selectize value after submission
-                    // Re-apply lock if needed for next 'add new' (handled by 'shown.bs.offcanvas')
+                utils.showToast('Service added successfully!', 'success');
+                addServiceForm.reset();
+                addServiceOffcanvas.hide();
+                
+                // Ensure fetchAndRenderServices is awaited if it's async
+                if (typeof fetchAndRenderServices === "function") {
+                    await fetchAndRenderServices(); // Refresh the services list
                 }
 
             } catch (error) {
-                console.error(`Error ${editingServiceId ? 'updating' : 'adding'} service:`, error);
-                utils.showToast(`Error: ${error.message}`, 'danger');
+                console.error('Error adding service:', error);
+                utils.showToast(`Error adding service: ${error.message || 'Could not save service.'}` , 'danger');
             } finally {
-                submitButton.innerHTML = originalButtonText;
                 submitButton.disabled = false;
+                submitButton.innerHTML = 'Add Service';
             }
         });
     }

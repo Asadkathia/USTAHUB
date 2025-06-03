@@ -138,9 +138,9 @@
 
         /* Service Grid Styles */
         .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
             padding: 4rem 2rem;
             max-width: 1400px;
             margin: 0 auto;
@@ -414,6 +414,256 @@
                 padding: 0.5rem 0.2rem;
             }
         }
+
+        /* Service List Item Styles */
+        .service-list-item {
+            display: flex;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 2.5rem;
+            transition: box-shadow 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+
+        .service-list-item:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+        }
+
+        .service-list-item__main {
+            display: flex;
+            flex-grow: 1;
+            gap: 2.5rem;
+        }
+
+        .service-list-item__image {
+            flex-shrink: 0;
+            width: 160px;
+            height: 160px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .service-list-item__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .service-list-item__details {
+            flex-grow: 1;
+        }
+
+        .service-list-item__name {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-list-item__badges {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .service-list-item__badges .badge {
+            font-size: 0.9rem;
+            padding: 0.4em 0.8em;
+            border-radius: 6px;
+        }
+
+        .service-list-item__badges .top-pro {
+            background-color: #e6f7ff;
+            color: #096dd9;
+            border: 1px solid #91d5ff;
+        }
+        .service-list-item__badges .top-pro i {
+            color: #096dd9;
+        }
+
+        .service-list-item__badges .rating {
+            font-size: 1rem;
+            color: #555;
+        }
+        .service-list-item__badges .rating i {
+            color: #fadb14;
+            margin-right: 0.1rem;
+        }
+
+        .service-list-item__licensed {
+            margin-bottom: 0.95rem;
+        }
+        .service-list-item__licensed .badge.licensed-pro {
+            font-size: 0.9rem;
+            padding: 0.4em 0.8em;
+        }
+         .service-list-item__licensed .badge.licensed-pro i {
+            color: #389e0d;
+        }
+
+        .service-list-item__meta {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem 1.4rem;
+            font-size: 1rem;
+            color: #777;
+        }
+
+        .service-list-item__meta li {
+            display: flex;
+            align-items: center;
+        }
+
+        .service-list-item__meta li i {
+            margin-right: 0.5rem;
+            color: #888;
+        }
+
+        .service-list-item__review {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 0;
+            line-height: 1.65;
+        }
+
+        .service-list-item__review a {
+            color: #e00707;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .service-list-item__review a:hover {
+            text-decoration: underline;
+        }
+
+        .service-list-item__actions {
+            flex-shrink: 0;
+            text-align: right;
+            margin-left: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+
+        .service-list-item__estimate {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1.2rem;
+        }
+
+        .service-list-item__actions .btn.view-profile-btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            background-color: #e00707;
+            border-color: #e00707;
+            min-width: 150px;
+            font-weight: 600;
+        }
+        .service-list-item__actions .btn.view-profile-btn:hover {
+            background-color: #b00606;
+            border-color: #b00606;
+        }
+
+        /* New styles for rating and reviews */
+        .service-list-item__rating-reviews {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            gap: 0.5rem;
+        }
+
+        .service-list-item__rating-reviews .stars {
+            color: #fadb14;
+            font-size: 1.1rem;
+        }
+        .service-list-item__rating-reviews .stars i {
+            margin-right: 1px;
+        }
+
+        .service-list-item__rating-reviews .rating-value {
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .service-list-item__rating-reviews .review-count {
+            font-size: 0.95rem;
+            color: #666;
+        }
+        
+        .service-list-item__description {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+        }
+
+        .service-list-item__feedback {
+            background-color: #f8f9fa;
+            padding: 0.8rem 1rem;
+            border-radius: 6px;
+            margin-top: 0.5rem; 
+        }
+
+        .service-list-item__feedback .feedback-text {
+            font-size: 0.95rem;
+            color: #444;
+            font-style: italic;
+            margin-bottom: 0.4rem;
+            line-height: 1.5;
+        }
+
+        .service-list-item__feedback .read-more-reviews {
+            font-size: 0.9rem;
+            color: #e00707;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .service-list-item__feedback .read-more-reviews:hover {
+            text-decoration: underline;
+        }
+        /* End of new styles for rating and reviews */
+
+        /* Responsive adjustments for the list view */
+        @media (max-width: 767.98px) {
+            .service-list-item {
+                flex-direction: column;
+                padding: 1.75rem;
+            }
+            .service-list-item__main {
+                flex-direction: column;
+                gap: 1.25rem;
+            }
+            .service-list-item__image {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 1.25rem;
+            }
+            .service-list-item__name {
+                font-size: 1.5rem;
+            }
+            .service-list-item__review,
+            .service-list-item__meta,
+            .service-list-item__badges .rating,
+            .service-list-item__badges .badge,
+            .service-list-item__licensed .badge.licensed-pro {
+                font-size: 0.95rem;
+            }
+            .service-list-item__estimate {
+                font-size: 0.95rem;
+                margin-top: 0.5rem;
+            }
+             .service-list-item__actions .btn.view-profile-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.95rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -485,18 +735,58 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
-        // Function to create service card with animation
-        function createServiceCard(service, index) {
-            const card = document.createElement('div');
-            card.className = 'service-card';
-            card.setAttribute('data-aos', 'fade-up');
-            card.setAttribute('data-aos-delay', index * 100);
-            
-            const description = service.description || 'Expert solutions for your needs. Contact us for more details.';
-            const subcategoriesHtml = '<span>' + (service.category || 'General') + '</span>';
+        // Function to create service list item with animation (Simplified)
+        function createServiceListItem(service, index) {
+            const listItem = document.createElement('div');
+            listItem.className = 'service-list-item';
+            listItem.setAttribute('data-aos', 'fade-up');
+            listItem.setAttribute('data-aos-delay', index * 50);
 
-            card.innerHTML = '<i class="fa ' + (service.icon || 'fa-tools') + '"></i><h3>' + service.title + '</h3><p>' + description + '</p><div class="subcategories">' + subcategoriesHtml + '</div><a href="service-details.html?serviceId=' + service.id + '" class="btn btn-primary">View Details</a>';
-            return card;
+            // Mock data/placeholders for fields not directly in current 'service' object
+            const rating = service.rating || (Math.random() * (5 - 3.5) + 3.5).toFixed(1); // Random rating between 3.5 and 5.0
+            const reviewCount = service.review_count || Math.floor(Math.random() * 200) + 10; // Random review count
+            const sampleReview = service.sample_review || "This provider was excellent! Very professional and did a great job. Highly recommended.";
+            
+            // Generate star icons based on rating
+            let starsHTML = '';
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5;
+            const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+
+            for (let i = 0; i < fullStars; i++) {
+                starsHTML += '<i class="fas fa-star"></i>';
+            }
+            if (halfStar) {
+                starsHTML += '<i class="fas fa-star-half-alt"></i>';
+            }
+            for (let i = 0; i < emptyStars; i++) {
+                starsHTML += '<i class="far fa-star"></i>'; // Using far for empty star
+            }
+
+            listItem.innerHTML = `
+                <div class="service-list-item__main">
+                    <div class="service-list-item__image">
+                        <img src="${service.image_url || 'assets/img/icons/' + (service.icon || 'default-icon.png')}" alt="${service.title || 'Service Image'}">
+                    </div>
+                    <div class="service-list-item__details">
+                        <h3 class="service-list-item__name">${index + 1}. ${service.title || 'Service Title'}</h3>
+                        <div class="service-list-item__rating-reviews">
+                            <span class="stars">${starsHTML}</span>
+                            <span class="rating-value">${rating}</span>
+                            <span class="review-count">(${reviewCount} reviews)</span>
+                        </div>
+                        <p class="service-list-item__description">${service.description || "Service description."}</p>
+                        <div class="service-list-item__feedback">
+                            <p class="feedback-text">"${sampleReview.substring(0, 100)}${sampleReview.length > 100 ? '...' : ''}"</p>
+                            ${sampleReview.length > 100 ? '<a href="service-details.html?serviceId=${service.id}#reviews" class="read-more-reviews">Read more</a>' : ''}
+                        </div>
+                    </div>
+                </div>
+                <div class="service-list-item__actions">
+                    <a href="service-details.html?serviceId=${service.id}" class="btn btn-primary view-profile-btn">View Details</a>
+                </div>
+            `;
+            return listItem;
         }
 
         // Function to show loading spinner
@@ -565,8 +855,8 @@
                 
                 if (servicesToDisplay && servicesToDisplay.length > 0) {
                     servicesToDisplay.forEach((service, index) => {
-                        const serviceCard = createServiceCard(service, index);
-                        servicesGrid.appendChild(serviceCard);
+                        const serviceItem = createServiceListItem(service, index);
+                        servicesGrid.appendChild(serviceItem);
                     });
                 } else {
                     servicesGrid.innerHTML = '<div class="col-12 text-center py-5"><i class="fas fa-search-dollar fa-3x text-muted mb-3"></i><h4>No Services Found</h4><p class="text-muted">There are currently no services listed in the "' + pageTitleCategoryName.toLowerCase() + '" category. Check back later or explore other categories.</p></div>';
