@@ -1,11 +1,3 @@
 {
-  "builds": [
-    { "src": "*.html", "use": "@vercel/static" },
-    { "src": "assets/**", "use": "@vercel/static" }
-  ],
-  "rewrites": [
-    { "source": "/", "destination": "/index-2.html" },
-    { "source": "/:path((?!assets/|favicon.ico|index-2.html).+)", "destination": "/:path.html" },
-    { "source": "/:path((?!assets/|favicon.ico).+)", "destination": "/:path" }
-  ]
+  "public": true
 } 
