@@ -478,8 +478,10 @@ Headers:		'Varela Round', sans-serif;
     padding-bottom: 7rem;
 }
 .hero .main-navigation {
-    z-index: 999;
+    background-color: #fff;
+    box-shadow: 0 0.1rem 0.1rem rgba(0,0,0,.04);
     position: relative;
+    z-index: 2; /* Ensure navigation is above other hero elements */
 }
 .hero .main-navigation .navbar {
     border-bottom: .1rem solid rgba(0,0,0,.1);
