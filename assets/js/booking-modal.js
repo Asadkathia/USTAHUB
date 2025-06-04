@@ -50,6 +50,12 @@ class BookingModal {
     
     async loadUserProfile() {
         try {
+            // Check if Supabase is loaded
+            if (!window.supabase) {
+                console.log('Supabase not yet loaded, skipping user profile load');
+                return;
+            }
+            
             const { data: { user } } = await window.supabase.auth.getUser();
             if (user) {
                 const { data: profile } = await window.supabase
@@ -327,12 +333,19 @@ class BookingModal {
     
     async submitBooking() {
         try {
+            // Check if Supabase is loaded
+            if (!window.supabase) {
+                this.showError('System not ready. Please refresh the page and try again.');
+                return;
+            }
+            
             this.showLoading();
             
             // Prepare booking data
             const bookingData = {
                 service_id: this.serviceData.id,
                 provider_id: this.serviceData.provider_id,
+                booking_date: new Date().toISOString(),
                 scheduled_date: document.getElementById('serviceDate').value,
                 scheduled_time: document.getElementById('serviceTime').value,
                 duration_hours: parseFloat(document.getElementById('serviceDuration').value),
@@ -341,7 +354,7 @@ class BookingModal {
                 customer_email: document.getElementById('customerEmail').value,
                 special_instructions: document.getElementById('specialInstructions').value,
                 estimated_price: this.calculatePrice(),
-                payment_method: document.querySelector('input[name="paymentMethod"]:checked').value,
+                payment_method: document.querySelector('input[name="paymentMethod"]:checked')?.value || 'cash',
                 status: 'pending'
             };
             
@@ -349,6 +362,10 @@ class BookingModal {
             const { data: { user } } = await window.supabase.auth.getUser();
             if (user) {
                 bookingData.consumer_id = user.id;
+            } else {
+                this.showError('You must be logged in to make a booking.');
+                this.hideLoading();
+                return;
             }
             
             // Submit to Supabase
@@ -385,23 +402,75 @@ class BookingModal {
         // Replace modal content with success message
         const modalBody = document.querySelector('#bookingModal .modal-body');
         modalBody.innerHTML = `
-            <div class="booking-success text-center py-4">
-                <div class="success-icon">
-                    <i class="fas fa-check-circle"></i>
+            <div class="booking-success text-center py-5">
+                <div class="success-icon mb-4" style="animation: bounceIn 0.6s ease-out;">
+                    <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
                 </div>
-                <h4>Booking Confirmed!</h4>
-                <p class="text-muted">Your booking request has been submitted successfully.</p>
-                <div class="booking-reference mt-3 p-3 bg-light rounded">
-                    <strong>Booking Reference: #${bookingData.id.substring(0, 8).toUpperCase()}</strong>
+                <h3 class="text-success mb-3">🎉 Booking Confirmed!</h3>
+                <p class="text-muted mb-4">Your booking request has been submitted successfully.</p>
+                
+                <div class="booking-reference mt-4 mb-4 p-4 bg-light rounded-3 border border-success" style="border-left: 4px solid #28a745 !important;">
+                    <div class="mb-2">
+                        <strong class="text-dark">Booking Reference</strong>
+                    </div>
+                    <h4 class="text-success mb-0">#${bookingData.booking_reference || bookingData.id.substring(0, 8).toUpperCase()}</h4>
                 </div>
-                <p class="mt-3">The service provider will contact you shortly to confirm the details.</p>
+                
+                <div class="booking-details p-4 bg-white rounded-3 border">
+                    <h5 class="mb-3">Booking Details</h5>
+                    <div class="row text-start">
+                        <div class="col-6 mb-2">
+                            <small class="text-muted">Service:</small><br>
+                            <strong>${this.serviceData.title}</strong>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <small class="text-muted">Date & Time:</small><br>
+                            <strong>${document.getElementById('serviceDate').value} at ${document.getElementById('serviceTime').value}</strong>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <small class="text-muted">Duration:</small><br>
+                            <strong>${document.getElementById('serviceDuration').value} hour(s)</strong>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <small class="text-muted">Status:</small><br>
+                            <span class="badge bg-warning">Pending Confirmation</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mt-4 text-start">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>What happens next?</strong><br>
+                    <small>The service provider will contact you within 24 hours to confirm the booking details and discuss any specific requirements.</small>
+                </div>
+                
+                <p class="mt-4 mb-0">
+                    <i class="fas fa-mobile-alt me-2 text-primary"></i>
+                    You will receive SMS and email confirmations shortly.
+                </p>
             </div>
+            
+            <style>
+                @keyframes bounceIn {
+                    0% { transform: scale(0.3); opacity: 0; }
+                    50% { transform: scale(1.05); }
+                    70% { transform: scale(0.9); }
+                    100% { transform: scale(1); opacity: 1; }
+                }
+            </style>
         `;
         
-        // Update footer
+        // Update footer with more options
         const modalFooter = document.querySelector('#bookingModal .modal-footer');
         modalFooter.innerHTML = `
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            <div class="d-flex gap-2 w-100 justify-content-center">
+                <button type="button" class="btn btn-outline-primary" onclick="window.print()">
+                    <i class="fas fa-print me-2"></i>Print Details
+                </button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                    <i class="fas fa-check me-2"></i>Done
+                </button>
+            </div>
         `;
     }
     
@@ -430,26 +499,34 @@ class BookingModal {
     resetModal() {
         this.currentStep = 1;
         this.bookingData = {};
-        this.serviceData = {};
-        this.providerData = {};
+        // Don't reset serviceData and providerData here as they are set in openModal
         
-        // Reset form
+        // Reset form - add null checks
         document.querySelectorAll('#bookingModal input, #bookingModal select, #bookingModal textarea').forEach(field => {
-            field.value = '';
-            field.classList.remove('is-valid', 'is-invalid');
+            if (field) {
+                field.value = '';
+                field.classList.remove('is-valid', 'is-invalid');
+            }
         });
         
-        // Reset checkboxes
+        // Reset checkboxes - add null checks
         document.querySelectorAll('#bookingModal input[type="checkbox"]').forEach(checkbox => {
-            checkbox.checked = false;
+            if (checkbox) {
+                checkbox.checked = false;
+            }
         });
         
-        // Reset radio buttons to default
-        document.getElementById('payOnService').checked = true;
+        // Reset radio buttons to default - add null check
+        const payOnServiceRadio = document.getElementById('payOnService');
+        if (payOnServiceRadio) {
+            payOnServiceRadio.checked = true;
+        }
         
         // Remove validation feedback
         document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-            feedback.remove();
+            if (feedback) {
+                feedback.remove();
+            }
         });
         
         // Remove error alerts
@@ -463,19 +540,43 @@ class BookingModal {
     }
     
     openModal(serviceId, providerId, serviceTitle) {
-        // Store service data
+        // Reset and show modal first
+        this.resetModal();
+        
+        // Store service data after reset
         this.serviceData = {
             id: serviceId,
             provider_id: providerId,
             title: serviceTitle
         };
         
-        // Update modal content
-        document.getElementById('modalServiceTitle').textContent = serviceTitle;
-        document.getElementById('modalServiceImage').src = 'assets/img/icons/default-service.png';
+        // Create a simple SVG placeholder as base64 data URI
+        const placeholderImage = 'data:image/svg+xml;base64,' + btoa(`
+            <svg width="150" height="150" xmlns="http://www.w3.org/2000/svg">
+                <rect width="150" height="150" fill="#e0e0e0"/>
+                <text x="75" y="80" font-family="Arial, sans-serif" font-size="14" fill="#666" text-anchor="middle">Service</text>
+            </svg>
+        `);
         
-        // Reset and show modal
-        this.resetModal();
+        // Update modal content
+        const modalServiceTitle = document.getElementById('modalServiceTitle');
+        const modalServiceImage = document.getElementById('modalServiceImage');
+        
+        if (modalServiceTitle) {
+            modalServiceTitle.textContent = serviceTitle;
+        }
+        
+        if (modalServiceImage) {
+            // Use the SVG placeholder image
+            modalServiceImage.src = placeholderImage;
+            modalServiceImage.alt = serviceTitle;
+            
+            // Add error handling for broken images
+            modalServiceImage.onerror = function() {
+                this.src = placeholderImage;
+            };
+        }
+        
         const modal = new bootstrap.Modal(document.getElementById('bookingModal'));
         modal.show();
     }

@@ -673,8 +673,8 @@ function initFloatingActionButton() {
     
     if (!addServiceOffcanvasElement) {
         console.warn("Add service offcanvas element not found. Skipping FAB init.");
-        return;
-    }
+            return;
+        }
     const addServiceOffcanvas = new bootstrap.Offcanvas(addServiceOffcanvasElement);
     const serviceCategorySelect = addServiceForm ? addServiceForm.serviceCategory : null;
     const serviceCategoryLabel = serviceCategorySelect ? serviceCategorySelect.closest('.mb-3').querySelector('label[for="serviceCategory"]') : null;
@@ -731,7 +731,7 @@ function initFloatingActionButton() {
                 utils.showToast(errorMsg, 'danger');
                 return;
             }
-
+            
             const submitButton = addServiceForm.querySelector('button[type="submit"]');
             submitButton.disabled = true;
             submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Adding...';
@@ -753,10 +753,10 @@ function initFloatingActionButton() {
                     // status: 'active' // Optional: set a default status
                 };
 
-                const { data, error } = await window.supabase
-                    .from('services')
+                    const { data, error } = await window.supabase
+                        .from('services')
                     .insert([newService])
-                    .select(); 
+                        .select();
 
                 if (error) throw error;
 

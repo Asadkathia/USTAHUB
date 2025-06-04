@@ -842,10 +842,18 @@
                 starsHTML += '<i class="far fa-star"></i>';
             }
 
+            // Create a simple SVG placeholder as base64 data URI
+            const placeholderImage = 'data:image/svg+xml;base64,' + btoa(`
+                <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="160" height="160" fill="#e0e0e0"/>
+                    <text x="80" y="85" font-family="Arial, sans-serif" font-size="14" fill="#666" text-anchor="middle">Service</text>
+                </svg>
+            `);
+
             listItem.innerHTML = `
                 <div class="service-list-item__main">
                     <div class="service-list-item__image">
-                        <img src="${service.image_url || 'assets/img/icons/' + (service.icon || 'default-icon.png')}" alt="${service.title || 'Service Image'}">
+                        <img src="${service.image_url || placeholderImage}" alt="${service.title || 'Service Image'}" onerror="this.src='${placeholderImage}'">
                     </div>
                     <div class="service-list-item__details">
                         <h3 class="service-list-item__name">${index + 1}. ${service.title || 'Service Title'}</h3>
@@ -1008,10 +1016,9 @@
             .then(html => {
                 document.getElementById('bookingModalContainer').innerHTML = html;
                 
-                // Wait a moment for DOM to update
-                setTimeout(() => {
-                    // Initialize booking modal after HTML is loaded
-                    if (typeof BookingModal !== 'undefined') {
+                // Wait for Supabase to be loaded before initializing BookingModal
+                function initializeBookingModal() {
+                    if (typeof BookingModal !== 'undefined' && window.supabase) {
                         try {
                             window.bookingModal = new BookingModal();
                             
@@ -1025,10 +1032,16 @@
                         } catch (error) {
                             console.error('Error initializing booking modal:', error);
                         }
-                    } else {
+                    } else if (typeof BookingModal === 'undefined') {
                         console.error('BookingModal class not found');
+                    } else {
+                        // Supabase not loaded yet, wait a bit more
+                        setTimeout(initializeBookingModal, 100);
                     }
-                }, 100);
+                }
+                
+                // Start trying to initialize after a short delay
+                setTimeout(initializeBookingModal, 100);
             })
             .catch(error => {
                 console.error('Error loading booking modal:', error);

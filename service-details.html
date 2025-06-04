@@ -678,9 +678,9 @@
                 // Populate subcategories with animation (if available)
                 const subcategoriesList = document.getElementById('subcategoriesList');
                 if (service.subcategories && Array.isArray(service.subcategories)) {
-                    subcategoriesList.innerHTML = service.subcategories
-                        .map((sub, index) => `<span data-aos="fade-up" data-aos-delay="${index * 100}">${sub}</span>`)
-                        .join('');
+                subcategoriesList.innerHTML = service.subcategories
+                    .map((sub, index) => `<span data-aos="fade-up" data-aos-delay="${index * 100}">${sub}</span>`)
+                    .join('');
                 } else {
                     subcategoriesList.innerHTML = `<span data-aos="fade-up">${service.category}</span>`;
                 }
@@ -733,13 +733,21 @@
                 bookButton.setAttribute('data-provider-id', service.provider_id);
                 bookButton.setAttribute('data-service-title', service.title || service.name);
                 
-                bookButton.addEventListener('click', function(e) {
+                bookButton.addEventListener('click', async function(e) {
                     e.preventDefault();
                     const serviceId = this.getAttribute('data-service-id');
                     const providerId = this.getAttribute('data-provider-id');
                     const serviceTitle = this.getAttribute('data-service-title');
                     
-                    // For now, show a placeholder (we'll implement the full modal next)
+                    // Check if user is logged in
+                    const { data: { user }, error } = await window.supabase.auth.getUser();
+                    if (error || !user) {
+                        // Redirect to sign in page
+                        window.location.href = '/sign-in.html?redirect=' + encodeURIComponent(window.location.href);
+                        return;
+                    }
+                    
+                    // Open booking modal
                     if (window.openBookingModal) {
                         window.openBookingModal(serviceId, providerId, serviceTitle);
                     } else {
@@ -828,8 +836,8 @@
 
                         <div class="mb-3">
                             <label for="duration" class="form-label">Duration (hours)</label>
-                            <input type="number" class="form-control" id="duration" name="duration" min="1" step="0.5" required>
-                            <div class="invalid-feedback">Please enter a valid duration</div>
+                            <input type="number" class="form-control" id="duration" name="duration" min="1" max="24" step="0.5" required>
+                            <div class="invalid-feedback">Please enter a valid duration (1-24 hours)</div>
                         </div>
 
                         <div class="mb-3">
@@ -841,8 +849,8 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="phone" class="form-label">Phone Number</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" required>
-                                <div class="invalid-feedback">Please enter a valid phone number</div>
+                                <input type="tel" class="form-control" id="phone" name="phone" pattern="[0-9]{10}" required>
+                                <div class="invalid-feedback">Please enter a valid 10-digit phone number</div>
                             </div>
                             <div class="col-md-6">
                                 <label for="email" class="form-label">Email</label>
@@ -858,16 +866,24 @@
 
                         <div class="mb-3">
                             <label for="paymentMethod" class="form-label">Preferred Payment Method</label>
-                            <select class="form-select" id="paymentMethod" name="paymentMethod">
+                            <select class="form-select" id="paymentMethod" name="paymentMethod" required>
                                 <option value="">Select payment method</option>
                                 <option value="cash">Cash</option>
+                                <option value="online">Online</option>
                                 <option value="card">Card</option>
-                                <option value="bank_transfer">Bank Transfer</option>
                             </select>
+                            <div class="invalid-feedback">Please select a payment method</div>
                         </div>
 
                         <div class="alert alert-info">
-                            <small>Note: The final price will be confirmed by the service provider after reviewing your requirements.</small>
+                            <small>
+                                <strong>Note:</strong>
+                                <ul class="mb-0">
+                                    <li>The final price will be confirmed by the service provider after reviewing your requirements.</li>
+                                    <li>Your booking reference will be generated automatically.</li>
+                                    <li>You will receive a confirmation email once the booking is confirmed.</li>
+                                </ul>
+                            </small>
                         </div>
                     </form>
                 </div>

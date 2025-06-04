@@ -231,7 +231,7 @@ CREATE TRIGGER set_user_settings_updated_at
     EXECUTE FUNCTION public.handle_user_settings_updated_at();
 
 -- Create index on user_settings user_id
-CREATE INDEX IF NOT EXISTS idx_user_settings_user_id ON user_settings(user_id);
+CREATE INDEX IF NOT EXISTS idx_user_settings_user_id ON user_settings(user_id); 
 
 -- Create indexes for enhanced booking functionality
 CREATE INDEX IF NOT EXISTS idx_bookings_service_id ON bookings(service_id);

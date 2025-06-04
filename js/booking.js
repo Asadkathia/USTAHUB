@@ -15,6 +15,34 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        // Check if user is authenticated
+        const user = supabase.auth.user();
+        if (!user) {
+            // Redirect to sign-in page
+            window.location.href = 'sign-in.html';
+            return;
+        }
+
+        // Retrieve the consumer ID
+        const consumerId = user.id; // This is the authenticated user's ID
+
+        // Check if user is a consumer
+        const { data: profile, error: profileError } = await supabase
+            .from('profiles')
+            .select('role')
+            .eq('id', consumerId)
+            .single();
+
+        if (profileError) {
+            console.error("Error fetching user profile:", profileError);
+            return;
+        }
+
+        if (profile.role !== 'consumer') {
+            alert('Only consumers can make bookings.');
+            return;
+        }
+
         const bookingData = {
             serviceName: document.getElementById('serviceName').value,
             serviceProvider: document.getElementById('serviceProvider').value,

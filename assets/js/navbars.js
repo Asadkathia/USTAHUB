@@ -40,17 +40,18 @@ const bottomNavbar = `
               <a href="service-category.html?category=hvac"><i class="fa fa-snowflake-o"></i> Heating & Air Conditioning</a>
               <a href="service-category.html?category=appliances"><i class="fa fa-cogs"></i> Appliances and Repair</a>
               <a href="service-category.html?category=roofing"><i class="fa fa-home"></i> Roofing</a>
-              <a href="service-category.html?category=locksmiths"><i class="fa fa-unlock-alt"></i> Locksmiths</a>
+              <a href="service-category.html?category=locksmiths"><i class="fa fa-key"></i> Locksmiths</a>
               <a href="service-category.html?category=painting"><i class="fa fa-paint-brush"></i> Painters</a>
             </div>
             <div class="dropdown-col">
               <a href="service-category.html?category=landscaping"><i class="fa fa-leaf"></i> Landscaping</a>
-              <a href="service-category.html?category=gardening"><i class="fa fa-tree"></i> Nurseries & Gardening</a>
-              <a href="service-category.html?category=florists"><i class="fa fa-pagelines"></i> Florists</a>
+              <a href="service-category.html?category=gardening"><i class="fa fa-seedling"></i> Nurseries & Gardening</a>
+              <a href="service-category.html?category=florists"><i class="fa fa-flower"></i> Florists</a>
               <a href="service-category.html?category=tree-services"><i class="fa fa-tree"></i> Tree Services</a>
               <a href="service-category.html?category=cleaning"><i class="fa fa-broom"></i> Home Cleaning</a>
               <a href="service-category.html?category=furniture"><i class="fa fa-couch"></i> Furniture Stores</a>
               <a href="service-category.html?category=moving"><i class="fa fa-truck"></i> Movers</a>
+              <a href="service-category.html?category=carpentry"><i class="fa fa-hammer"></i> Carpentry</a>
             </div>
           </div>
         </li>
@@ -59,19 +60,19 @@ const bottomNavbar = `
           <div class="dropdown-menu grid-dropdown">
             <div class="dropdown-col">
               <a href="service-category.html?category=doctors"><i class="fa fa-user-md"></i> Doctors</a>
-              <a href="service-category.html?category=dentists"><i class="fa fa-hospital-o"></i> Dentists</a>
+              <a href="service-category.html?category=dentists"><i class="fa fa-tooth"></i> Dentists</a>
               <a href="service-category.html?category=therapists"><i class="fa fa-heartbeat"></i> Therapists</a>
               <a href="service-category.html?category=wellness"><i class="fa fa-plus-square"></i> Wellness Centers</a>
               <a href="service-category.html?category=salons"><i class="fa fa-scissors"></i> Hair Salons</a>
-              <a href="service-category.html?category=nails"><i class="fa fa-hand-o-right"></i> Nail Salons</a>
+              <a href="service-category.html?category=nails"><i class="fa fa-hand-paper-o"></i> Nail Salons</a>
             </div>
             <div class="dropdown-col">
-              <a href="service-category.html?category=spas"><i class="fa fa-spa"></i> Spas</a>
-              <a href="service-category.html?category=massage"><i class="fa fa-hand-spock-o"></i> Massage Therapists</a>
-              <a href="service-category.html?category=wellness"><i class="fa fa-heart"></i> Wellness</a>
+              <a href="service-category.html?category=spas"><i class="fa fa-leaf"></i> Spas</a>
+              <a href="service-category.html?category=massage"><i class="fa fa-hand-rock-o"></i> Massage Therapists</a>
               <a href="service-category.html?category=medical"><i class="fa fa-medkit"></i> Medical Services</a>
               <a href="service-category.html?category=health"><i class="fa fa-stethoscope"></i> Health Centers</a>
               <a href="service-category.html?category=therapy"><i class="fa fa-wheelchair"></i> Physical Therapy</a>
+              <a href="service-category.html?category=beauty"><i class="fa fa-female"></i> Beauty Services</a>
             </div>
           </div>
         </li>
@@ -81,7 +82,7 @@ const bottomNavbar = `
             <div class="dropdown-col">
               <a href="service-category.html?category=auto-repair"><i class="fa fa-wrench"></i> Auto Repair</a>
               <a href="service-category.html?category=car-wash"><i class="fa fa-car"></i> Car Washes</a>
-              <a href="service-category.html?category=tire-service"><i class="fa fa-tachometer"></i> Tire Services</a>
+              <a href="service-category.html?category=tire-service"><i class="fa fa-circle-o"></i> Tire Services</a>
               <a href="service-category.html?category=taxi"><i class="fa fa-taxi"></i> Taxi Services</a>
               <a href="service-category.html?category=moving"><i class="fa fa-truck"></i> Moving Services</a>
               <a href="service-category.html?category=travel"><i class="fa fa-plane"></i> Travel Services</a>
@@ -92,7 +93,7 @@ const bottomNavbar = `
               <a href="service-category.html?category=shipping"><i class="fa fa-ship"></i> Shipping Services</a>
               <a href="service-category.html?category=motorcycle"><i class="fa fa-motorcycle"></i> Motorcycle Services</a>
               <a href="service-category.html?category=bicycle"><i class="fa fa-bicycle"></i> Bicycle Services</a>
-              <a href="service-category.html?category=parking"><i class="fa fa-parking"></i> Parking Services</a>
+              <a href="service-category.html?category=parking"><i class="fa fa-square"></i> Parking Services</a>
             </div>
           </div>
         </li>
@@ -113,7 +114,7 @@ const bottomNavbar = `
               <a href="service-category.html?category=printing"><i class="fa fa-print"></i> Printing Services</a>
               <a href="service-category.html?category=telecom"><i class="fa fa-phone"></i> Telecom Services</a>
               <a href="service-category.html?category=accounting"><i class="fa fa-calculator"></i> Accounting</a>
-              <a href="service-category.html?category=consulting"><i class="fa fa-chart-line"></i> Consulting</a>
+              <a href="service-category.html?category=consulting"><i class="fa fa-users"></i> Consulting</a>
             </div>
           </div>
         </li>
@@ -135,6 +136,7 @@ const bottomNavbar = `
               <a href="service-category.html?category=entertainment"><i class="fa fa-gamepad"></i> Entertainment</a>
               <a href="service-category.html?category=cafes"><i class="fa fa-coffee"></i> Cafes</a>
               <a href="service-category.html?category=nightlife"><i class="fa fa-glass"></i> Nightlife</a>
+              <a href="service-category.html?category=tutoring"><i class="fa fa-chalkboard-teacher"></i> Tutoring</a>
             </div>
           </div>
         </li>
@@ -143,19 +145,17 @@ const bottomNavbar = `
           <div class="dropdown-menu grid-dropdown">
             <div class="dropdown-col">
               <a href="service-category.html?category=technology"><i class="fa fa-laptop"></i> Technology</a>
-              <a href="service-category.html?category=education"><i class="fa fa-graduation-cap"></i> Education</a>
-              <a href="service-category.html?category=photography"><i class="fa fa-camera"></i> Photography</a>
-              <a href="service-category.html?category=music"><i class="fa fa-music"></i> Music & Entertainment</a>
-              <a href="service-category.html?category=events"><i class="fa fa-calendar"></i> Event Planning</a>
-              <a href="service-category.html?category=pet-care"><i class="fa fa-paw"></i> Pet Care</a>
+              <a href="service-category.html?category=decor"><i class="fa fa-home"></i> Home Decor</a>
+              <a href="service-category.html?category=veterinary"><i class="fa fa-stethoscope"></i> Veterinary</a>
+              <a href="service-category.html?category=venues"><i class="fa fa-building"></i> Event Venues</a>
+              <a href="service-category.html?category=other"><i class="fa fa-ellipsis-h"></i> Other Services</a>
             </div>
             <div class="dropdown-col">
               <a href="service-category.html?category=travel"><i class="fa fa-plane"></i> Travel Services</a>
               <a href="service-category.html?category=consulting"><i class="fa fa-comments"></i> Consulting</a>
-              <a href="service-category.html?category=decor"><i class="fa fa-paint-brush"></i> Home Decor</a>
               <a href="service-category.html?category=wellness"><i class="fa fa-heart"></i> Wellness</a>
-              <a href="service-category.html?category=veterinary"><i class="fa fa-stethoscope"></i> Veterinary</a>
-              <a href="service-category.html?category=venues"><i class="fa fa-glass"></i> Event Venues</a>
+              <a href="service-category.html?category=photography"><i class="fa fa-camera"></i> Photography</a>
+              <a href="service-category.html?category=music"><i class="fa fa-music"></i> Music & Entertainment</a>
             </div>
           </div>
         </li>
