@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/user.css">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
 
 	<title>UstaHub - Pricing Plans</title>
 
@@ -529,6 +533,18 @@
 	<script src="assets/js/icheck.min.js"></script>
 	<script src="assets/js/jquery.validate.min.js"></script>
 	<script src="assets/js/custom.js"></script>
+
+    <!-- Inject sidebar HTML and load sidebar JS after HTML is present -->
+    <script>
+        fetch('/components/mobile-sidebar.html')
+            .then(res => res.text())
+            .then(html => {
+                document.body.insertAdjacentHTML('beforeend', html);
+                var script = document.createElement('script');
+                script.src = '/assets/js/mobile-sidebar.js';
+                document.body.appendChild(script);
+            });
+    </script>
 
 </body>
 </html>

@@ -27,6 +27,10 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/user.css">
     <link rel="stylesheet" href="assets/css/custom.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
 
     <style>
         /* Top Navbar Styles */
@@ -667,5 +671,16 @@
             </form>
         </div>
     </div>
+    <!-- Inject sidebar HTML and load sidebar JS after HTML is present -->
+    <script>
+        fetch('/components/mobile-sidebar.html')
+            .then(res => res.text())
+            .then(html => {
+                document.body.insertAdjacentHTML('beforeend', html);
+                var script = document.createElement('script');
+                script.src = '/assets/js/mobile-sidebar.js';
+                document.body.appendChild(script);
+            });
+    </script>
 </body>
 </html> 

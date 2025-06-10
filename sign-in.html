@@ -6,6 +6,10 @@
 	<meta name="author" content="UstaHub">
     <meta name="description" content="Sign in to your UstaHub account to access your services and manage your profile.">
     <meta name="keywords" content="sign in, login, account, services, profile">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Varela+Round" rel="stylesheet">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
@@ -417,6 +421,17 @@
                 });
             }
         });
+    </script>
+    <!-- Inject sidebar HTML and load sidebar JS after HTML is present -->
+    <script>
+        fetch('/components/mobile-sidebar.html')
+            .then(res => res.text())
+            .then(html => {
+                document.body.insertAdjacentHTML('beforeend', html);
+                var script = document.createElement('script');
+                script.src = '/assets/js/mobile-sidebar.js';
+                document.body.appendChild(script);
+            });
     </script>
 </body>
 </html>

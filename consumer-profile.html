@@ -6,6 +6,7 @@
   <meta name="author" content="UstaHub">
   <meta name="description" content="Manage your UstaHub consumer profile, bookings, and preferences.">
   <meta name="keywords" content="consumer profile, service marketplace, local services, professional services">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Varela+Round" rel="stylesheet">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
@@ -15,6 +16,9 @@
   <link rel="stylesheet" href="assets/css/user.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
 
   <!-- Bootstrap JS and Popper.js -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
@@ -471,6 +475,18 @@
     } else {
       checkAuthStatus();
     }
+  </script>
+
+  <!-- Inject sidebar HTML and load sidebar JS after HTML is present -->
+  <script>
+    fetch('/components/mobile-sidebar.html')
+      .then(res => res.text())
+      .then(html => {
+        document.body.insertAdjacentHTML('beforeend', html);
+        var script = document.createElement('script');
+        script.src = '/assets/js/mobile-sidebar.js';
+        document.body.appendChild(script);
+      });
   </script>
 </body>
 </html> 

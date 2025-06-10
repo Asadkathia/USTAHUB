@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="assets/css/user.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
 
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
@@ -1348,5 +1351,16 @@
 }
 </style>
 
+<!-- Inject sidebar HTML and load sidebar JS after HTML is present -->
+<script>
+  fetch('/components/mobile-sidebar.html')
+    .then(res => res.text())
+    .then(html => {
+      document.body.insertAdjacentHTML('beforeend', html);
+      var script = document.createElement('script');
+      script.src = '/assets/js/mobile-sidebar.js';
+      document.body.appendChild(script);
+    });
+</script>
 </body>
 </html>
