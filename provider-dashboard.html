@@ -31,75 +31,31 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
+    <link rel="stylesheet" href="assets/css/bottom-navbar.css">
+    <link rel="stylesheet" href="assets/css/top-navbar.css">
+    <link rel="stylesheet" href="assets/css/font-awesome-colors.css">
 
     <style>
-        /* Top Navbar Styles */
-        .top-navbar {
-            border-bottom: none;
-            background: transparent !important;
-            padding: 12px 0;
-            position: relative;
-            z-index: 5;
-        }
-        .top-navbar .nav-left {
+        /* Top navbar styles moved to dedicated top-navbar.css file */ .nav-left {
             display: flex;
             align-items: center;
         }
-        .top-navbar .nav-right {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 24px;
-        }
-        .top-navbar .nav-link {
-            color: #fff !important;
-            font-weight: 500;
-            font-size: 1.1rem;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 24px;
-            transition: all 0.3s ease;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-        }
-        .top-navbar .nav-link:hover {
-            background: rgba(255,255,255,0.15);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        .top-navbar .brand img {
-            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
-            transition: transform 0.3s ease;
-        }
-        .top-navbar .brand:hover img {
-            transform: scale(1.05);
-        }
+        /* Top navbar styles moved to dedicated top-navbar.css file */
+        /* Top navbar styles moved to dedicated top-navbar.css file */
+        /* Top navbar styles moved to dedicated top-navbar.css file */
         @media (max-width: 991.98px) {
-            .top-navbar .nav-right {
-                gap: 12px;
-            }
-            .top-navbar .nav-link {
-                font-size: 1rem;
-                padding: 6px 12px;
-            }
+            /* Top navbar styles moved to dedicated top-navbar.css file */
         }
         @media (max-width: 767.98px) {
-            .top-navbar {
-                padding: 8px 0;
-            }
-            .top-navbar .nav-right {
-                gap: 8px;
-            }
-            .top-navbar .nav-link {
-                font-size: 0.9rem;
-                padding: 4px 8px;
-            }
+            /* Top navbar styles moved to dedicated top-navbar.css file */
+            /* Top navbar styles moved to dedicated top-navbar.css file */
         }
         /* Hero Section Styles */
         .hero-header {
             position: relative;
             width: 100%;
             min-height: 520px;
-            background-image: url('assets/img/hero-background-image-01.jpg');
+            background-image: url('assets/img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.26.jpeg');
             background-size: cover;
             background-position: center;
             z-index: 1;
@@ -140,17 +96,7 @@
             animation: fadeInUp 1s ease-out 0.3s both;
         }
         /* Bottom Navbar Styles */
-        .bottom-navbar {
-            border-bottom: 1px solid #e0e0e0;
-            background: transparent !important;
-            z-index: 1040;
-            min-height: 56px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
+        /* Bottom navbar styles moved to dedicated bottom-navbar.css file */
         .custom-navbar.bottom-navbar .nav-center {
             width: 100%;
             display: flex;
@@ -184,97 +130,7 @@
             background: #e00707;
             color: #fff;
         }
-        .grid-dropdown {
-            display: none;
-            position: absolute;
-            left: 50%;
-            top: 100%;
-            transform: translateX(-50%);
-            grid-template-columns: 1fr 1fr;
-            gap: 0 32px;
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-            padding: 24px 32px;
-            min-width: 520px;
-            color: #222;
-            z-index: 1000;
-        }
-        .grid-dropdown .dropdown-col {
-            display: flex;
-            flex-direction: column;
-        }
-        .grid-dropdown a {
-            display: flex;
-            align-items: center;
-            padding: 8px 0;
-            color: #222;
-            font-size: 1.08rem;
-            border-radius: 8px;
-            transition: background 0.15s, color 0.15s;
-            text-decoration: none;
-        }
-        .grid-dropdown a i {
-            font-size: 1.2em;
-            margin-right: 12px;
-            color: #e00707;
-            min-width: 22px;
-            text-align: center;
-            transition: color 0.15s;
-        }
-        .grid-dropdown a:hover {
-            background: #fbeaec;
-            color: #e00707;
-        }
-        .grid-dropdown a:hover i {
-            color: #b00606;
-        }
-        .bottom-navbar .nav-item.dropdown > a {
-            padding: 0 18px;
-            line-height: 56px;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-            display: block;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-            background: transparent !important;
-            transition: color 0.2s;
-        }
-        .bottom-navbar .nav-item.dropdown > a:hover {
-            color: #fff;
-            background: transparent !important;
-            opacity: 0.9;
-        }
-        .nav-item.dropdown:hover > .grid-dropdown {
-            display: grid;
-        }
-        @media (max-width: 991.98px) {
-            .bottom-navbar {
-                min-height: 48px;
-                padding: 0 8px;
-            }
-            .nav-menu {
-                gap: 1rem;
-            }
-            .grid-dropdown {
-                min-width: 320px;
-                padding: 1rem 0.5rem;
-                grid-template-columns: 1fr;
-            }
-        }
-        @media (max-width: 767.98px) {
-            .bottom-navbar {
-                min-height: 40px;
-                padding: 0 2px;
-            }
-            .nav-menu {
-                gap: 0.5rem;
-            }
-            .grid-dropdown {
-                min-width: 220px;
-                padding: 0.5rem 0.2rem;
-            }
-        }
+        /* Bottom navbar styles moved to dedicated bottom-navbar.css file */
     </style>
 </head>
 <body class="provider-dashboard">

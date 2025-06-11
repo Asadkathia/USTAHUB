@@ -1,0 +1,227 @@
+/* ===== TOP NAVBAR CONSOLIDATED STYLES ===== */
+/* Single source file for all top navbar styling */
+/* Eliminates all inline duplications across HTML files */
+
+:root {
+  /* Top Navbar specific variables */
+  --top-navbar-bg: transparent;
+  --top-navbar-text: #fff;
+  --top-navbar-text-hover: #fff;
+  --top-navbar-bg-hover: rgba(255,255,255,0.15);
+  --top-navbar-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  --top-navbar-hover-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  --top-navbar-transition: all 0.3s ease;
+}
+
+/* ===== MAIN TOP NAVBAR STYLES ===== */
+.top-navbar {
+  border-bottom: none;
+  background: var(--top-navbar-bg) !important;
+  padding: 12px 0;
+  position: relative;
+  z-index: 1050;
+}
+
+/* ===== LAYOUT COMPONENTS ===== */
+.top-navbar .nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.top-navbar .nav-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 24px;
+}
+
+.top-navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* ===== NAVIGATION LINKS ===== */
+.top-navbar .nav-link {
+  color: var(--top-navbar-text) !important;
+  font-weight: 500;
+  font-size: 1.1rem;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 24px;
+  transition: var(--top-navbar-transition);
+  text-shadow: var(--top-navbar-shadow);
+}
+
+.top-navbar .nav-link:hover {
+  background: var(--top-navbar-bg-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--top-navbar-hover-shadow);
+  color: var(--top-navbar-text-hover) !important;
+}
+
+.top-navbar .nav-link:focus,
+.top-navbar .nav-link:active {
+  background: var(--top-navbar-bg-hover);
+  color: var(--top-navbar-text-hover) !important;
+  outline: none;
+}
+
+/* ===== BRAND/LOGO STYLING ===== */
+.top-navbar .brand {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.top-navbar .brand img {
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+  transition: transform 0.3s ease;
+  max-height: 48px;
+  width: auto;
+}
+
+.top-navbar .brand:hover img {
+  transform: scale(1.05);
+}
+
+/* ===== NAVBAR NAV INTEGRATION ===== */
+.top-navbar .navbar-nav {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.top-navbar .navbar-nav .nav-link {
+  font-weight: 500;
+  color: var(--top-navbar-text) !important;
+}
+
+.top-navbar .navbar-nav .nav-link.active {
+  background: var(--top-navbar-bg-hover);
+  color: var(--top-navbar-text-hover) !important;
+}
+
+/* ===== RESPONSIVE STYLES ===== */
+@media (max-width: 1199.98px) {
+  .top-navbar .nav-right {
+    gap: 18px;
+  }
+  
+  .top-navbar .nav-link {
+    font-size: 1.05rem;
+    padding: 7px 14px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .top-navbar {
+    padding: 10px 0;
+  }
+  
+  .top-navbar .nav-right {
+    gap: 12px;
+  }
+  
+  .top-navbar .nav-link {
+    font-size: 1rem;
+    padding: 6px 12px;
+  }
+  
+  .top-navbar .container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .top-navbar .navbar-nav {
+    justify-content: center;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .top-navbar {
+    padding: 8px 0;
+  }
+  
+  .top-navbar .nav-right {
+    gap: 8px;
+  }
+  
+  .top-navbar .nav-link {
+    font-size: 0.9rem;
+    padding: 4px 8px;
+  }
+  
+  .top-navbar .brand img {
+    max-height: 36px;
+  }
+}
+
+/* ===== INTEGRATION WITH HERO SECTIONS ===== */
+.hero-carousel .top-navbar,
+.hero-header .top-navbar,
+.hero .top-navbar {
+  background: transparent !important;
+  position: relative;
+  z-index: 1050;
+  border-bottom: none;
+}
+
+/* ===== NAVBAR MOUNT POINTS ===== */
+#navbar-top {
+  position: relative;
+  z-index: 1050;
+}
+
+/* ===== ANIMATION KEYFRAMES ===== */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== ACCESSIBILITY & FOCUS STATES ===== */
+.top-navbar a:focus {
+  outline: 2px solid rgba(255,255,255,0.8);
+  outline-offset: 2px;
+}
+
+.top-navbar .nav-link:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.8);
+  outline-offset: 2px;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  .top-navbar {
+    display: none;
+  }
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --top-navbar-bg: rgba(0,0,0,0.2);
+    --top-navbar-text: #f8f9fa;
+    --top-navbar-bg-hover: rgba(255,255,255,0.2);
+  }
+} 

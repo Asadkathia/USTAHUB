@@ -19,12 +19,15 @@
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
+    <link rel="stylesheet" href="assets/css/bottom-navbar.css">
+    <link rel="stylesheet" href="assets/css/top-navbar.css">
+    <link rel="stylesheet" href="assets/css/font-awesome-colors.css">
     <style>
     .hero-header {
         position: relative;
         width: 100%;
         min-height: 520px;
-        background-image: url('assets/img/hero-background-image-01.jpg');
+                    background-image: url('assets/img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.27 (2).jpeg');
         background-size: cover;
         background-position: center;
         z-index: 1;
@@ -35,44 +38,10 @@
         background: rgba(0,0,0,0.45);
         z-index: 2;
     }
-    .top-navbar, .bottom-navbar {
-        background: transparent !important;
-        position: relative;
-        z-index: 3;
-        border-bottom: none;
-    }
-    .top-navbar {
-        border-bottom: none;
-        background: transparent !important;
-        padding: 12px 0;
-    }
-    .top-navbar .nav-link {
-        color: #fff !important;
-        font-weight: 500;
-        font-size: 1.1rem;
-        text-decoration: none;
-        padding: 8px 16px;
-        border-radius: 24px;
-        transition: all 0.3s ease;
-        text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-    }
-    .top-navbar .nav-link:hover {
-        background: rgba(255,255,255,0.15);
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    .top-navbar .brand img {
-        filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
-        transition: transform 0.3s ease;
-    }
-    .top-navbar .brand:hover img {
-        transform: scale(1.05);
-    }
-    .bottom-navbar {
-        border-bottom: 1px solid #e0e0e0;
-        background: #fafafa !important;
-        z-index: 1040;
-    }
+    /* Top navbar styles moved to dedicated top-navbar.css file */.css file */
+    /* Top navbar styles moved to dedicated top-navbar.css file */
+    /* Top navbar styles moved to dedicated top-navbar.css file */
+    /* Bottom navbar styles moved to dedicated bottom-navbar.css file */
     .hero-content {
         position: relative;
         z-index: 4;
@@ -102,12 +71,10 @@
         text-shadow: 0 1px 4px rgba(0,0,0,0.2);
         animation: fadeInUp 1s ease-out 0.3s both;
     }
-    @keyframes fadeInDown {
-        from { opacity: 0; transform: translateY(-20px); }
+    /* Top navbar styles moved to dedicated top-navbar.css file */
         to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
+    /* Top navbar styles moved to dedicated top-navbar.css file */
         to { opacity: 1; transform: translateY(0); }
     }
     @media (max-width: 767.98px) {

@@ -326,9 +326,7 @@ a:focus {
 }
 
 /* ===== NAVBAR OVERRIDES ===== */
-.top-navbar, .bottom-navbar {
-  background: var(--color-secondary) !important;
-}
+/* Top navbar styles moved to dedicated top-navbar.css file */
 
 .navbar-brand {
   color: #fff !important;
@@ -343,9 +341,7 @@ a:focus {
 }
 
 /* ===== SERVICE CARDS ===== */
-.service-card i {
-  color: var(--color-primary) !important;
-}
+/* Service card icon colors moved to font-awesome-colors.css */
 
 .service-card:hover {
   border-color: var(--color-primary) !important;

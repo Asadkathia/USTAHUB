@@ -318,21 +318,28 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  opacity: 1;
+  visibility: visible;
 }
 .sidebar-trigger .fas.fa-bars {
   font-size: 1.3rem;
   color: #e00707;
 }
 
-/* Responsive: Hide navbars, show sidebar trigger on mobile */
+/* Force trigger visibility on mobile with higher specificity */
 @media (max-width: 991px) {
-  .top-navbar, .bottom-navbar {
+  /* Top navbar styles moved to dedicated top-navbar.css file */
+  .bottom-navbar {
     display: none !important;
   }
   .sidebar-trigger {
     display: flex !important;
     left: 1.1rem !important;
     right: auto !important;
+    position: fixed !important;
+    z-index: 1300 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
   /* Prevent body scroll when sidebar is open */
   body.sidebar-open {

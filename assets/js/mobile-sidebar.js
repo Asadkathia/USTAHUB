@@ -39,14 +39,43 @@
     trigger.className = 'sidebar-trigger';
     trigger.setAttribute('aria-label', 'Open menu');
     trigger.innerHTML = '<i class="fas fa-bars" aria-hidden="true"></i>';
+    
+    // Initially hide the trigger - checkMobileView will show it if needed
+    trigger.style.cssText = `
+      display: none !important;
+      position: fixed !important;
+      top: 1.1rem !important;
+      left: 1.1rem !important;
+      right: auto !important;
+      z-index: 1300 !important;
+      width: 44px !important;
+      height: 44px !important;
+      background: #fff !important;
+      border-radius: 50% !important;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+      border: none !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    `;
+    
+    // Add click event listener immediately
+    trigger.addEventListener('click', function() {
+      console.log('Mobile sidebar trigger clicked');
+      const sidebar = document.getElementById('mobile-sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      
+      if (sidebar && overlay) {
+        openSidebar();
+      } else {
+        console.log('Sidebar elements not yet loaded, trigger will be reconnected when sidebar loads');
+      }
+    });
+    
     document.body.appendChild(trigger);
-    
-    // Important: Make sure the trigger is visible and positioned correctly
-    trigger.style.display = 'flex';
-    trigger.style.left = '1.1rem'; // Position on the LEFT side
-    trigger.style.right = 'auto';  // Remove right position
-    
-    console.log('Mobile sidebar trigger created immediately');
+    console.log('Mobile sidebar trigger created immediately - initially hidden');
   }
 
   // Wait for DOM to fully load before initializing the rest
@@ -95,20 +124,47 @@
     }
 
     function createTrigger() {
+      // Check if trigger already exists (created immediately on page load)
+      trigger = document.querySelector('.sidebar-trigger');
+      if (!trigger) {
       trigger = document.createElement('button');
       trigger.className = 'sidebar-trigger';
       trigger.setAttribute('aria-label', 'Open menu');
       trigger.innerHTML = '<i class="fas fa-bars" aria-hidden="true"></i>';
       document.body.appendChild(trigger);
+        console.log('Mobile sidebar trigger created in initSidebar');
+      } else {
+        console.log('Using existing mobile sidebar trigger');
+      }
       
-      // Important: Make sure the trigger is visible and positioned correctly
-      trigger.style.display = 'flex';
-      trigger.style.left = '1.1rem'; // Position on the LEFT side
-      trigger.style.right = 'auto !important'; // Force right position to auto with !important
+      // Initially hide the trigger - checkMobileView will show it if mobile
+      trigger.style.cssText = `
+        display: none !important;
+        position: fixed !important;
+        top: 1.1rem !important;
+        left: 1.1rem !important;
+        right: auto !important;
+        z-index: 1300 !important;
+        width: 44px !important;
+        height: 44px !important;
+        background: #fff !important;
+        border-radius: 50% !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+        border: none !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+      `;
       
-      // Add click event listener to the new trigger
+      // Remove existing listeners and add new one
+      trigger.removeEventListener('click', openSidebar);
       trigger.addEventListener('click', openSidebar);
-      console.log('Mobile sidebar trigger created in initSidebar');
+      console.log('Mobile sidebar trigger updated and connected - initially hidden');
+      
+      // Check if should be visible based on current screen size
+      checkMobileView();
     }
 
     // Check if user is logged in and update auth UI accordingly
@@ -413,18 +469,9 @@
       }
     });
 
-    // Close on resize above mobile breakpoint
+    // Handle responsive behavior on window resize
     window.addEventListener('resize', function() {
-      if (window.innerWidth > 991 && sidebar && sidebar.classList.contains('open')) {
-        closeSidebar();
-      }
-      
-      // Make sure trigger is visible on mobile
-      if (window.innerWidth <= 991 && trigger) {
-        trigger.style.display = 'flex';
-        trigger.style.left = '1.1rem'; // Position on the LEFT side
-        trigger.style.right = 'auto';  // Remove right position
-      }
+      checkMobileView();
     });
     
     // Set initial ARIA states
@@ -434,17 +481,105 @@
   
   // Ensure the button is shown on mobile - apply once immediately
   function checkMobileView() {
-    if (window.innerWidth <= 991) {
+    const isMobile = window.innerWidth <= 991;
+    console.log('Checking mobile view:', isMobile, 'Window width:', window.innerWidth);
+    
       const trigger = document.querySelector('.sidebar-trigger');
+    console.log('Mobile trigger found:', !!trigger);
+    
       if (trigger) {
-        trigger.style.display = 'flex';
-        trigger.style.left = '1.1rem !important'; // Position on the LEFT side with !important
-        trigger.style.right = 'auto !important'; // Force right position to auto with !important
+      if (isMobile) {
+        // Show trigger on mobile
+        trigger.style.cssText = `
+          display: flex !important;
+          position: fixed !important;
+          top: 1.1rem !important;
+          left: 1.1rem !important;
+          right: auto !important;
+          z-index: 1300 !important;
+          width: 44px !important;
+          height: 44px !important;
+          background: #fff !important;
+          border-radius: 50% !important;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+          border: none !important;
+          align-items: center !important;
+          justify-content: center !important;
+          cursor: pointer !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+        `;
+        console.log('Mobile trigger shown and styled');
+        
+        // Hide navbars on mobile
+        const topNavbar = document.querySelector('.top-navbar');
+        const bottomNavbar = document.querySelector('.bottom-navbar');
+        if (topNavbar) {
+          topNavbar.style.display = 'none';
+          console.log('Top navbar hidden');
+        }
+        if (bottomNavbar) {
+          bottomNavbar.style.display = 'none';
+          console.log('Bottom navbar hidden');
+        }
+      } else {
+        // Hide trigger on desktop
+        trigger.style.display = 'none !important';
+        console.log('Desktop detected - mobile trigger hidden');
+        
+        // Show navbars on desktop  
+        const topNavbar = document.querySelector('.top-navbar');
+        const bottomNavbar = document.querySelector('.bottom-navbar');
+        if (topNavbar) {
+          topNavbar.style.display = '';
+          console.log('Top navbar shown');
+        }
+        if (bottomNavbar) {
+          bottomNavbar.style.display = '';
+          console.log('Bottom navbar shown');
+        }
+        
+        // Close sidebar if it's open on desktop
+        const sidebar = document.getElementById('mobile-sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        if (sidebar && sidebar.classList.contains('open')) {
+          sidebar.classList.remove('open');
+          overlay.classList.remove('active');
+          document.body.classList.remove('sidebar-open');
+          console.log('Sidebar closed on desktop resize');
+        }
       }
     }
   }
   
-  // Check initially and on window load
+  // Check initially, on window load, and on resize
   checkMobileView();
   window.addEventListener('load', checkMobileView);
+  window.addEventListener('resize', checkMobileView);
+
+  // Add a simple openSidebar function in global scope for immediate use
+  window.openSidebar = function() {
+    const sidebar = document.getElementById('mobile-sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    
+    if (sidebar && overlay) {
+      sidebar.classList.add('open');
+      overlay.classList.add('active');
+      document.body.classList.add('sidebar-open');
+      console.log('Sidebar opened');
+    }
+  };
+
+  // Add a simple closeSidebar function in global scope
+  window.closeSidebar = function() {
+    const sidebar = document.getElementById('mobile-sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    
+    if (sidebar && overlay) {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('active');
+      document.body.classList.remove('sidebar-open');
+      console.log('Sidebar closed');
+    }
+  };
 })(); 
