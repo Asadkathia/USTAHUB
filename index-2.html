@@ -12,12 +12,19 @@
     <link rel="stylesheet" href="assets/fonts/font-awesome.css" type="text/css">
     <link rel="stylesheet" href="assets/css/selectize.css" type="text/css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/rtl.css" id="rtl-stylesheet" disabled>
     <link rel="stylesheet" href="assets/css/user.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/ustahub-color-overrides.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
+    <!-- Internationalization Stylesheets -->
+    
+    <!-- RTL stylesheet will be loaded dynamically when Arabic is selected -->
 
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
@@ -138,9 +145,9 @@
         <!--*********************************************************************************************************-->
         <div id="main-content">
             <!-- Popular Service Categories -->
-            <section class="block py-5" style="background: #fff;">
+            <section class="block py-5">
                 <div class="container">
-                    <h2 class="text-center mb-5" style="font-weight:700;">Popular Service Categories</h2>
+                    <h2 class="text-center mb-5 accent-secondary" style="font-weight:700;">Popular Service Categories</h2>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                         <div class="col">
                             <a href="service-category.html?category=plumbing" class="text-decoration-none">
@@ -191,9 +198,9 @@
             </section>
 
             <!-- How UstaHub Works -->
-            <section class="block py-5" style="background: #f8f9fa;">
+            <section class="block py-5">
                 <div class="container">
-                    <h2 class="text-center mb-5" style="font-weight:700;">How UstaHub Works</h2>
+                    <h2 class="text-center mb-5 accent-secondary" style="font-weight:700;">How UstaHub Works</h2>
                     <div class="row row-cols-1 row-cols-md-3 g-4">
                         <div class="col">
                             <div class="card h-100 border-0 shadow-sm">
@@ -1351,16 +1358,37 @@
 }
 </style>
 
-<!-- Inject sidebar HTML and load sidebar JS after HTML is present -->
+<!-- Internationalization Script -->
+
+
+<!-- For integrating with Mobile Sidebar -->
 <script>
-  fetch('/components/mobile-sidebar.html')
-    .then(res => res.text())
-    .then(html => {
-      document.body.insertAdjacentHTML('beforeend', html);
-      var script = document.createElement('script');
-      script.src = '/assets/js/mobile-sidebar.js';
-      document.body.appendChild(script);
-    });
+  document.addEventListener('DOMContentLoaded', function() {
+    // Load mobile sidebar with absolute path
+    fetch('components/mobile-sidebar.html')
+      .then(res => {
+        if (!res.ok) {
+          // Try with a different path if the first attempt fails
+          return fetch('/components/mobile-sidebar.html');
+        }
+        return res;
+      })
+      .then(res => res.text())
+      .then(html => {
+        // Insert sidebar HTML
+        document.body.insertAdjacentHTML('beforeend', html);
+        
+        // Load mobile sidebar script
+        var sidebarScript = document.createElement('script');
+        sidebarScript.src = 'assets/js/mobile-sidebar.js';
+        document.body.appendChild(sidebarScript);
+        
+
+      })
+      .catch(error => {
+        console.error('Error loading mobile sidebar:', error);
+      });
+  });
 </script>
 </body>
 </html>

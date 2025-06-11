@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="assets/css/selectize.css" type="text/css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/user.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/ustahub-color-overrides.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
@@ -144,17 +146,17 @@
     .bottom-navbar .grid-dropdown a i {
         font-size: 1.2em;
         margin-right: 12px;
-        color: #e00707;
+        color: #d89136;
         min-width: 22px;
         text-align: center;
         transition: color 0.15s;
     }
     .bottom-navbar .grid-dropdown a:hover {
-        background: #fbeaec;
-        color: #e00707;
+        background: rgba(216, 145, 54, 0.1);
+        color: #d89136;
     }
     .bottom-navbar .grid-dropdown a:hover i {
-        color: #b00606;
+        color: #c17d1f;
     }
     @media (max-width: 991.98px) {
         .bottom-navbar {
@@ -422,15 +424,28 @@
             }
         });
     </script>
-    <!-- Inject sidebar HTML and load sidebar JS after HTML is present -->
     <script>
-        fetch('/components/mobile-sidebar.html')
+        // Load mobile sidebar with absolute path
+        fetch('components/mobile-sidebar.html')
+            .then(res => {
+                if (!res.ok) {
+                    // Try with a different path if the first attempt fails
+                    return fetch('/components/mobile-sidebar.html');
+                }
+                return res;
+            })
             .then(res => res.text())
             .then(html => {
+                // Insert sidebar HTML
                 document.body.insertAdjacentHTML('beforeend', html);
-                var script = document.createElement('script');
-                script.src = '/assets/js/mobile-sidebar.js';
-                document.body.appendChild(script);
+                
+                // Load mobile sidebar script
+                var sidebarScript = document.createElement('script');
+                sidebarScript.src = 'assets/js/mobile-sidebar.js';
+                document.body.appendChild(sidebarScript);
+            })
+            .catch(error => {
+                console.error('Error loading mobile sidebar:', error);
             });
     </script>
 </body>

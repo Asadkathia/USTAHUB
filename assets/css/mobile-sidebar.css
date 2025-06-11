@@ -14,7 +14,7 @@
   width: 320px;
   max-width: 90vw;
   height: 100vh;
-  background: #222;
+  background: #0d2235;
   color: #fff;
   box-shadow: 0 0 20px rgba(0,0,0,0.15);
   z-index: 1200;
@@ -35,7 +35,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 1.5rem 1rem 1.5rem;
-  background: #e00707;
+  background: #d89136;
   border-radius: 0 12px 0 0;
 }
 .sidebar-logo-link {
@@ -103,7 +103,7 @@
 
 .sidebar-signin,
 .sidebar-logout {
-  background-color: #e00707;
+  background-color: #d89136;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -118,7 +118,7 @@
 
 .sidebar-signin:hover,
 .sidebar-logout:hover {
-  background-color: #cc0606;
+  background-color: #c17d1f;
   color: #fff;
   text-decoration: none;
 }
@@ -189,10 +189,10 @@
   text-decoration: none;
 }
 .sidebar-menu li.active > a {
-  background: rgba(224, 7, 7, 0.2);
+  background: rgba(216, 145, 54, 0.2);
   color: #fff;
   font-weight: 600;
-  border-left: 4px solid #e00707;
+  border-left: 4px solid #d89136;
 }
 .sidebar-menu a:hover, 
 .sidebar-menu button.submenu-toggle:hover,

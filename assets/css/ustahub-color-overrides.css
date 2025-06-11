@@ -1,0 +1,307 @@
+/*
+ * UstaHub Color Overrides - Gulf/Central Asia Inspired Theme
+ * This file contains systematic color overrides to replace the old red-centric palette
+ * Import this file after all other CSS files for maximum specificity
+ */
+
+/* ===== PRIMARY BUTTON OVERRIDES ===== */
+.btn.btn-primary {
+  background-color: #d89136 !important;
+  border-color: #d89136 !important;
+}
+
+.btn.btn-primary:hover, 
+.btn.btn-primary:focus, 
+.btn.btn-primary:active {
+  background-color: #c17d1f !important;
+  border-color: #c17d1f !important;
+}
+
+.btn.btn-framed.btn-primary {
+  color: #d89136 !important;
+  border-color: #d89136 !important;
+}
+
+.btn.btn-framed.btn-primary:hover, 
+.btn.btn-framed.btn-primary:focus, 
+.btn.btn-framed.btn-primary:active {
+  background-color: #d89136 !important;
+  border-color: #d89136 !important;
+  color: #fff !important;
+}
+
+/* ===== HERO NAVIGATION AND LINKS ===== */
+.hero .main-navigation .navbar ul.navbar-nav .btn {
+  background-color: #d89136 !important;
+  border-color: #d89136 !important;
+}
+
+.hero .main-navigation .main-search-form-toggle {
+  background-color: #d89136 !important;
+}
+
+.hero .main-navigation .main-search-form-toggle:hover {
+  background-color: #c17d1f !important;
+}
+
+/* ===== TAGS AND BADGES ===== */
+.items:not(.selectize-input) .item h3 .tag:not(.category),
+.tag {
+  background-color: #d89136 !important;
+  color: #fff !important;
+}
+
+.tag:hover {
+  background-color: #c17d1f !important;
+}
+
+/* ===== FEATURED RIBBONS ===== */
+.ribbon-featured .ribbon-content {
+  background-color: #d89136 !important;
+}
+
+.ribbon-featured .ribbon-content:after,
+.ribbon-featured .ribbon-content:before,
+.ribbon-featured .ribbon-start,
+.ribbon-featured .ribbon-start::after {
+  background: #d89136 !important;
+}
+
+.ribbon-featured .ribbon-end:before, 
+.ribbon-featured .ribbon-end .ribbon-shadow::before {
+  border-color: transparent #d89136 transparent transparent !important;
+}
+
+.ribbon-featured .ribbon-end:after, 
+.ribbon-featured .ribbon-end .ribbon-shadow::after {
+  border-color: transparent transparent #d89136 transparent !important;
+}
+
+/* ===== PRICING ELEMENTS ===== */
+.pricing.featured:not(.box) figure {
+  background-color: #d89136 !important;
+}
+
+.pricing ul li.available {
+  color: #009578 !important;
+}
+
+.pricing ul li.not-available {
+  color: #c72c48 !important;
+}
+
+/* ===== RATING STARS ===== */
+.rating i.active {
+  color: #c72c48 !important;
+}
+
+/* ===== NAVIGATION ACTIVE STATES ===== */
+a.nav-link.active {
+  color: #d89136 !important;
+}
+
+a.nav-link.active i {
+  color: #d89136 !important;
+}
+
+/* ===== ICONS AND HIGHLIGHTS ===== */
+figure.with-icon i {
+  color: #d89136 !important;
+}
+
+/* ===== FORM ELEMENTS ===== */
+.form-group .input-group-addon.geo-location, 
+.form-group .input-group-addon.search-icon {
+  color: #d89136 !important;
+}
+
+.form-group .input-group-addon.geo-location:hover, 
+.form-group .input-group-addon.search-icon:hover {
+  background-color: #d89136 !important;
+  color: #fff !important;
+}
+
+.icheckbox.checked, 
+.iradio.checked {
+  box-shadow: inset 0 0 0 1rem #d89136 !important;
+}
+
+.iradio.checked {
+  box-shadow: inset 0 0 0 .6rem #d89136 !important;
+}
+
+/* ===== SLIDER ELEMENTS ===== */
+.ui-slider .noUi-base .noUi-connect {
+  background-color: #d89136 !important;
+}
+
+.ui-slider .noUi-base .noUi-handle {
+  border: 2px solid #d89136 !important;
+  background-color: #d89136 !important;
+}
+
+/* ===== LINK COLORS ===== */
+a {
+  color: #1587d1 !important;
+}
+
+a:hover, a:focus, a:active {
+  color: #d89136 !important;
+}
+
+a.icon i {
+  color: #d89136 !important;
+}
+
+a.link {
+  color: #1587d1 !important;
+}
+
+/* ===== PAGE PAGINATION ===== */
+.page-pagination > nav .pagination .page-item.active .page-link {
+  background-color: #d89136 !important;
+  border-color: #d89136 !important;
+}
+
+.page-pagination > nav .pagination .page-item .page-link:hover {
+  color: #d89136 !important;
+  border-color: #d89136 !important;
+}
+
+/* ===== MAP MARKERS ===== */
+.map .infobox-wrapper .infobox .image-wrapper .price {
+  background-color: #d89136 !important;
+}
+
+.map .marker:hover {
+  background-color: #d89136 !important;
+}
+
+/* ===== ACCORDION PANELS ===== */
+.nav-pills .nav-link.active {
+  background-color: #d89136 !important;
+}
+
+/* ===== OWL CAROUSEL ===== */
+.owl-carousel .owl-dots .owl-dot.active span {
+  background-color: #d89136 !important;
+}
+
+.owl-carousel.gallery-carousel .owl-nav .owl-prev, 
+.owl-carousel.gallery-carousel .owl-nav .owl-next, 
+.owl-carousel.full-width-carousel .owl-nav .owl-prev, 
+.owl-carousel.full-width-carousel .owl-nav .owl-next {
+  background-color: #d89136 !important;
+}
+
+.owl-carousel.gallery-carousel-thumbs .owl-thumb.active-thumb {
+  box-shadow: inset 0 0 0 .3rem #d89136 !important;
+}
+
+/* ===== FILE UPLOAD ===== */
+.file-upload span {
+  color: #d89136 !important;
+}
+
+/* ===== ITEM DETAILS ===== */
+.items:not(.selectize-input) .item .detail {
+  border: .1rem solid #d89136 !important;
+}
+
+.items:not(.selectize-input) .item .detail:hover {
+  background-color: #d89136 !important;
+  color: #fff !important;
+}
+
+.items:not(.selectize-input) .item.call-to-action .wrapper .title i {
+  color: #d89136 !important;
+}
+
+.items:not(.selectize-input) .item .price .number {
+  color: #d89136 !important;
+}
+
+/* ===== MESSAGING COMPONENTS ===== */
+.messaging__persons-list .messaging__person:hover, 
+.messaging__persons-list .messaging__person.active {
+  background-color: rgba(216, 145, 54, 0.1) !important;
+}
+
+/* ===== FEATURE BOXES ===== */
+.feature-box figure {
+  background-color: #d89136 !important;
+}
+
+/* ===== HERO SECTION OVERLAYS ===== */
+.hero:after {
+  background: linear-gradient(135deg, rgba(13, 34, 53, 0.8), rgba(216, 145, 54, 0.6)) !important;
+}
+
+/* ===== CUSTOM HERO CAROUSEL ===== */
+.ribbon-vertical {
+  border: 15px solid #d89136 !important;
+}
+
+.ribbon-diagonal .ribbon-diagonal__inner span {
+  background: #d89136 !important;
+}
+
+/* ===== FORM SUBMISSION STATES ===== */
+.form.form-submit .icheckbox.checked {
+  box-shadow: inset 0 0 0 1rem #d89136 !important;
+}
+
+.form.form-submit .iradio.checked {
+  box-shadow: inset 0 0 0 .6rem #d89136 !important;
+}
+
+/* ===== ANSWER ELEMENTS ===== */
+.answer .box:after {
+  background-color: #d89136 !important;
+}
+
+.answer .box:before {
+  border-color: #d89136 transparent transparent transparent !important;
+}
+
+/* ===== AUTHOR ELEMENTS ===== */
+.categories-list li i {
+  background-color: #d89136 !important;
+}
+
+/* ===== FOOTER OVERRIDES ===== */
+.footer {
+  background-color: #0d2235 !important;
+}
+
+/* ===== ACCESSIBILITY AND CONTRAST IMPROVEMENTS ===== */
+body {
+  background-color: #f6f1e7 !important;
+  color: #202122 !important;
+}
+
+.text-muted {
+  color: #757b80 !important;
+}
+
+/* ===== HIGH PRIORITY OVERRIDES FOR HERO BUTTONS ===== */
+#hero-search-form .btn-danger,
+#hero-search-form-2 .btn-danger {
+  background-color: #d89136 !important;
+  border-color: #d89136 !important;
+  color: #fff !important;
+}
+
+#hero-search-form .btn-danger:hover,
+#hero-search-form-2 .btn-danger:hover {
+  background-color: #c17d1f !important;
+  border-color: #c17d1f !important;
+  color: #fff !important;
+}
+
+/* ===== RESPONSIVE SPECIFIC OVERRIDES ===== */
+@media (max-width: 767px) {
+  .hero .main-navigation .navbar ul.navbar-nav > li.nav-item.has-child > a.nav-link:after {
+    color: #fff !important;
+  }
+} 

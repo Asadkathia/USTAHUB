@@ -1,14 +1,239 @@
 /*
- * custom.css
+ * UstaHub Custom Styles - Gulf/Central Asia Inspired Theme
  * Place your custom styles here. This file is loaded after Bootstrap and your main style.css.
  */
 
-/* Example custom style: */
-body {
-  /* You can override or add custom styles here */
+/* ===== NEW USTAHUB COLOR PALETTE ===== */
+:root {
+  /* Primary Color Palette */
+  --color-primary: #d89136;        /* Warm Desert Gold */
+  --color-secondary: #0d2235;      /* Deep Navy Blue */
+  --color-accent1: #009578;        /* Central Asian Green */
+  --color-accent2: #c72c48;        /* Uzbek/Russian Red */
+  
+  /* Background Colors */
+  --color-bg: #f6f1e7;            /* Sand/Light Beige */
+  --color-surface: #fff;           /* White for cards/surfaces */
+  
+  /* Text Colors */
+  --color-text-main: #202122;      /* Main text color */
+  --color-muted: #757b80;          /* Muted/secondary text */
+  --color-link: #1587d1;           /* Links and link hover */
+  
+  /* Utility colors for better contrast */
+  --color-primary-dark: #c17d1f;   /* Darker gold for hover states */
+  --color-secondary-light: #1a3a52; /* Lighter navy for hover states */
+  --color-accent1-dark: #007a5e;   /* Darker green for hover states */
+  --color-accent2-dark: #a52337;   /* Darker red for hover states */
 }
 
-/* Example: Add a subtle shadow to all cards */
+/* ===== GLOBAL BACKGROUND UPDATE ===== */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+}
+
+/* ===== BUTTON OVERRIDES ===== */
+.btn-primary {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: #fff !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: var(--color-primary-dark) !important;
+  border-color: var(--color-primary-dark) !important;
+  color: #fff !important;
+}
+
+.btn-danger {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: #fff !important;
+}
+
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active {
+  background-color: var(--color-primary-dark) !important;
+  border-color: var(--color-primary-dark) !important;
+  color: #fff !important;
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary) !important;
+  border-color: var(--color-secondary) !important;
+  color: #fff !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+  background-color: var(--color-secondary-light) !important;
+  border-color: var(--color-secondary-light) !important;
+  color: #fff !important;
+}
+
+/* ===== LINK COLORS ===== */
+a {
+  color: var(--color-link);
+}
+
+a:hover,
+a:focus {
+  color: var(--color-primary);
+}
+
+/* ===== TEXT COLOR OVERRIDES ===== */
+.text-muted {
+  color: var(--color-muted) !important;
+}
+
+/* ===== CARD STYLING ===== */
 .card, .service-card {
+  background-color: var(--color-surface);
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1px solid rgba(117, 123, 128, 0.1);
+}
+
+/* ===== HERO SECTION OVERRIDES ===== */
+.hero-slide .overlay {
+  background: linear-gradient(135deg, rgba(13, 34, 53, 0.6), rgba(216, 145, 54, 0.4)) !important;
+}
+
+/* ===== STEP NUMBERS STYLING ===== */
+.step-number {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent1));
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 auto;
+}
+
+/* ===== NAVIGATION ACTIVE STATES ===== */
+.nav-link.active,
+.navbar-nav .nav-link.active {
+  color: var(--color-primary) !important;
+}
+
+/* ===== SECTION BACKGROUNDS ===== */
+.block {
+  background-color: var(--color-surface);
+}
+
+/* Alternate section background */
+.block:nth-child(even) {
+  background-color: var(--color-bg);
+}
+
+/* ===== PAGINATION ACTIVE STATE ===== */
+.page-item.active .page-link {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
+/* ===== RATING STARS ===== */
+.rating i.active {
+  color: var(--color-accent2) !important;
+}
+
+/* ===== PRICING FEATURED ELEMENTS ===== */
+.pricing.featured figure,
+.pricing.box.featured {
+  background-color: var(--color-primary) !important;
+}
+
+/* ===== FORM ELEMENTS ===== */
+.form-control:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.2rem rgba(216, 145, 54, 0.25);
+}
+
+/* ===== ACCORDION/DROPDOWN ACTIVE STATES ===== */
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: rgba(216, 145, 54, 0.1);
+  color: var(--color-primary);
+}
+
+/* ===== BADGES AND TAGS ===== */
+.badge-primary,
+.tag {
+  background-color: var(--color-primary) !important;
+  color: #fff !important;
+}
+
+.badge-success {
+  background-color: var(--color-accent1) !important;
+  color: #fff !important;
+}
+
+.badge-danger {
+  background-color: var(--color-accent2) !important;
+  color: #fff !important;
+}
+
+/* ===== PROGRESS BARS ===== */
+.progress-bar {
+  background-color: var(--color-primary) !important;
+}
+
+/* ===== FOOTER STYLING ===== */
+.footer {
+  background-color: var(--color-secondary) !important;
+  color: #fff !important;
+}
+
+.footer h2,
+.footer h3,
+.footer h4 {
+  color: #fff !important;
+}
+
+.footer a {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.footer a:hover {
+  color: var(--color-primary) !important;
+}
+
+/* ===== HOVER EFFECTS ===== */
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(216, 145, 54, 0.2);
+}
+
+/* ===== ACCENT HIGHLIGHTS ===== */
+.accent-primary {
+  color: var(--color-primary) !important;
+}
+
+.accent-secondary {
+  color: var(--color-secondary) !important;
+}
+
+.bg-accent-primary {
+  background-color: var(--color-primary) !important;
+  color: #fff !important;
+}
+
+.bg-accent-secondary {
+  background-color: var(--color-secondary) !important;
+  color: #fff !important;
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+@media (max-width: 768px) {
+  .hero-slide .overlay {
+    background: linear-gradient(135deg, rgba(13, 34, 53, 0.7), rgba(216, 145, 54, 0.5)) !important;
+  }
 } 

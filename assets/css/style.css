@@ -14,8 +14,8 @@ Assigned to:	ThemeStarz
 
 [Color codes]
 
-default_color[#ff0000];
-Text: #363636;
+default_color[#d89136];
+Text: #202122;
 
 [Typography]
 
@@ -64,7 +64,7 @@ Headers:		'Varela Round', sans-serif;
     content: "?";
     color: #fff;
     font-weight: bold;
-    background-color: #ff0000;
+    background-color: #d89136;
     height: 30px;
     width: 30px;
     line-height: 28px;
@@ -78,7 +78,7 @@ Headers:		'Varela Round', sans-serif;
     height: 0;
     border-style: solid;
     border-width: 8px 4px 0 4px;
-    border-color: #ff0000 transparent transparent transparent;
+    border-color: #d89136 transparent transparent transparent;
     content: "";
     position: absolute;
     left: 41px;
