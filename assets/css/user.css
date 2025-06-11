@@ -1,45 +1,49 @@
-/* UstaHub User Custom Styles - Gulf/Central Asia Inspired Theme */
+/* UstaHub User Custom Styles - Jobber-Inspired Color Palette */
 
 /* Import the color variables from custom.css */
 /* These styles override any user-specific customizations with the new theme */
 
 /* Ensure all custom user elements follow the new color scheme */
 .user-profile-card {
-  background-color: var(--color-surface, #fff);
-  border: 1px solid rgba(117, 123, 128, 0.1);
-  color: var(--color-text-main, #202122);
+  background-color: var(--color-surface, #FFFFFF);
+  border: 1px solid rgba(122, 134, 154, 0.1);
+  color: var(--color-text, #202122);
 }
 
 .user-navigation .active {
-  color: var(--color-primary, #d89136) !important;
+  color: var(--color-primary, #24B47E) !important;
 }
 
 .user-settings .form-control:focus {
-  border-color: var(--color-primary, #d89136);
-  box-shadow: 0 0 0 0.2rem rgba(216, 145, 54, 0.25);
+  border-color: var(--color-primary, #24B47E);
+  box-shadow: 0 0 0 0.2rem rgba(36, 180, 126, 0.25);
 }
 
 /* Custom buttons for user interactions */
 .user-action-btn {
-  background-color: var(--color-primary, #d89136);
-  border-color: var(--color-primary, #d89136);
+  background-color: var(--color-primary, #24B47E);
+  border-color: var(--color-primary, #24B47E);
   color: #fff;
 }
 
 .user-action-btn:hover {
-  background-color: var(--color-primary-dark, #c17d1f);
-  border-color: var(--color-primary-dark, #c17d1f);
+  background-color: var(--color-primary-dark, #1e9c6d);
+  border-color: var(--color-primary-dark, #1e9c6d);
 }
 
 /* User status indicators */
 .status-online {
-  color: var(--color-accent1, #009578);
+  color: var(--color-success, #4BDB97);
 }
 
 .status-busy {
-  color: var(--color-accent2, #c72c48);
+  color: var(--color-warning, #FF8C42);
 }
 
 .status-offline {
-  color: var(--color-muted, #757b80);
+  color: var(--color-muted, #7A869A);
+}
+
+.status-error {
+  color: var(--color-error, #E94F37);
 }

@@ -1,8 +1,8 @@
 /*------------------------------------------------------------------
-Project:	Craigs - Easy Buy & Sell Directory Listing Template
-Version:	1.0
-Last change:	6.9.2017
-Assigned to:	ThemeStarz
+Project:	UstaHub - Service Marketplace Platform
+Version:	2.0
+Last change:	2024
+Assigned to:	UstaHub Team
 
 [Table of contents]
 
@@ -12,9 +12,23 @@ Assigned to:	ThemeStarz
 4. Universal classes
 5. Responsive
 
+[Jobber-Inspired Color Palette]
+Primary: #24B47E (Jobber Green)
+Secondary: #182B3A (Deep Navy)
+Accent 1: #FFC857 (Warm Sand Gold)
+Accent 2: #2F4858 (Slate Blue-Grey)
+Success: #4BDB97 (Lighter Green)
+Warning: #FF8C42 (Orange)
+Error: #E94F37 (Bright Red)
+Background: #F8FAF9 (Light Grey)
+Surface: #FFFFFF (White)
+Text: #202122 (Dark Charcoal)
+Muted: #7A869A (Muted Blue-Grey)
+Link: #1681D9 (Clean Blue)
+
 [Color codes]
 
-default_color[#d89136];
+default_color[#24B47E];
 Text: #202122;
 
 [Typography]
@@ -23,6 +37,22 @@ Body copy:		'Poppins', sans-serif; 14px;
 Headers:		'Varela Round', sans-serif;
 
 -------------------------------------------------------------------*/
+
+/* ===== JOBBER-INSPIRED COLOR VARIABLES ===== */
+:root {
+  --color-primary:   #24B47E;  /* Jobber Green */
+  --color-secondary: #182B3A;  /* Deep Navy */
+  --color-accent1:   #FFC857;  /* Warm Sand Gold */
+  --color-accent2:   #2F4858;  /* Slate Blue-Grey */
+  --color-success:   #4BDB97;  /* Lighter Green */
+  --color-warning:   #FF8C42;  /* Orange */
+  --color-error:     #E94F37;  /* Bright Red */
+  --color-bg:        #F8FAF9;  /* Light Grey */
+  --color-surface:   #FFFFFF;  /* White */
+  --color-text:      #202122;  /* Dark Charcoal */
+  --color-muted:     #7A869A;  /* Muted Blue-Grey */
+  --color-link:      #1681D9;  /* Clean Blue */
+}
 /*1. Classes*/
 /********
 --- A ---

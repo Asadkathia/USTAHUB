@@ -1,36 +1,41 @@
 /*
- * UstaHub Custom Styles - Gulf/Central Asia Inspired Theme
+ * UstaHub Custom Styles - Jobber-Inspired Color Palette
  * Place your custom styles here. This file is loaded after Bootstrap and your main style.css.
  */
 
-/* ===== NEW USTAHUB COLOR PALETTE ===== */
+/* ===== NEW JOBBER-INSPIRED COLOR PALETTE ===== */
 :root {
   /* Primary Color Palette */
-  --color-primary: #d89136;        /* Warm Desert Gold */
-  --color-secondary: #0d2235;      /* Deep Navy Blue */
-  --color-accent1: #009578;        /* Central Asian Green */
-  --color-accent2: #c72c48;        /* Uzbek/Russian Red */
+  --color-primary: #24B47E;         /* Jobber Green */
+  --color-secondary: #182B3A;       /* Deep Navy */
+  --color-accent1: #FFC857;         /* Warm Sand Gold */
+  --color-accent2: #2F4858;         /* Slate Blue-Grey */
+  
+  /* Status Colors */
+  --color-success: #4BDB97;         /* Lighter Green */
+  --color-warning: #FF8C42;         /* Orange */
+  --color-error: #E94F37;           /* Bright Red */
   
   /* Background Colors */
-  --color-bg: #f6f1e7;            /* Sand/Light Beige */
-  --color-surface: #fff;           /* White for cards/surfaces */
+  --color-bg: #F8FAF9;             /* Light Grey */
+  --color-surface: #FFFFFF;         /* White for cards/surfaces */
   
   /* Text Colors */
-  --color-text-main: #202122;      /* Main text color */
-  --color-muted: #757b80;          /* Muted/secondary text */
-  --color-link: #1587d1;           /* Links and link hover */
+  --color-text: #202122;            /* Dark Charcoal */
+  --color-muted: #7A869A;           /* Muted Blue-Grey */
+  --color-link: #1681D9;            /* Clean Blue */
   
   /* Utility colors for better contrast */
-  --color-primary-dark: #c17d1f;   /* Darker gold for hover states */
-  --color-secondary-light: #1a3a52; /* Lighter navy for hover states */
-  --color-accent1-dark: #007a5e;   /* Darker green for hover states */
-  --color-accent2-dark: #a52337;   /* Darker red for hover states */
+  --color-primary-dark: #1e9c6d;    /* Darker green for hover states */
+  --color-secondary-light: #2a3f52; /* Lighter navy for hover states */
+  --color-accent1-dark: #e6b54d;    /* Darker sand gold for hover states */
+  --color-accent2-light: #3d5a6b;   /* Lighter slate for hover states */
 }
 
 /* ===== GLOBAL BACKGROUND UPDATE ===== */
 body {
   background-color: var(--color-bg);
-  color: var(--color-text-main);
+  color: var(--color-text);
 }
 
 /* ===== BUTTON OVERRIDES ===== */
@@ -76,6 +81,29 @@ body {
   color: #fff !important;
 }
 
+.btn-success {
+  background-color: var(--color-success) !important;
+  border-color: var(--color-success) !important;
+  color: #fff !important;
+}
+
+.btn-warning {
+  background-color: var(--color-warning) !important;
+  border-color: var(--color-warning) !important;
+  color: #fff !important;
+}
+
+.btn-outline-primary {
+  color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: #fff !important;
+}
+
 /* ===== LINK COLORS ===== */
 a {
   color: var(--color-link);
@@ -91,16 +119,36 @@ a:focus {
   color: var(--color-muted) !important;
 }
 
+.text-primary {
+  color: var(--color-primary) !important;
+}
+
+.text-secondary {
+  color: var(--color-secondary) !important;
+}
+
+.text-success {
+  color: var(--color-success) !important;
+}
+
+.text-warning {
+  color: var(--color-warning) !important;
+}
+
+.text-danger {
+  color: var(--color-error) !important;
+}
+
 /* ===== CARD STYLING ===== */
 .card, .service-card {
   background-color: var(--color-surface);
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  border: 1px solid rgba(117, 123, 128, 0.1);
+  border: 1px solid rgba(122, 134, 154, 0.1);
 }
 
 /* ===== HERO SECTION OVERRIDES ===== */
 .hero-slide .overlay {
-  background: linear-gradient(135deg, rgba(13, 34, 53, 0.6), rgba(216, 145, 54, 0.4)) !important;
+  background: linear-gradient(135deg, rgba(24, 43, 58, 0.6), rgba(36, 180, 126, 0.4)) !important;
 }
 
 /* ===== STEP NUMBERS STYLING ===== */
@@ -142,7 +190,7 @@ a:focus {
 
 /* ===== RATING STARS ===== */
 .rating i.active {
-  color: var(--color-accent2) !important;
+  color: var(--color-accent1) !important;
 }
 
 /* ===== PRICING FEATURED ELEMENTS ===== */
@@ -154,13 +202,32 @@ a:focus {
 /* ===== FORM ELEMENTS ===== */
 .form-control:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 0.2rem rgba(216, 145, 54, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(36, 180, 126, 0.25);
+}
+
+/* ===== ALERT COMPONENTS ===== */
+.alert-success {
+  background-color: rgba(75, 219, 151, 0.1) !important;
+  border-color: var(--color-success) !important;
+  color: var(--color-success) !important;
+}
+
+.alert-warning {
+  background-color: rgba(255, 140, 66, 0.1) !important;
+  border-color: var(--color-warning) !important;
+  color: var(--color-warning) !important;
+}
+
+.alert-danger {
+  background-color: rgba(233, 79, 55, 0.1) !important;
+  border-color: var(--color-error) !important;
+  color: var(--color-error) !important;
 }
 
 /* ===== ACCORDION/DROPDOWN ACTIVE STATES ===== */
 .dropdown-item:hover,
 .dropdown-item:focus {
-  background-color: rgba(216, 145, 54, 0.1);
+  background-color: rgba(36, 180, 126, 0.1);
   color: var(--color-primary);
 }
 
@@ -172,18 +239,36 @@ a:focus {
 }
 
 .badge-success {
-  background-color: var(--color-accent1) !important;
+  background-color: var(--color-success) !important;
+  color: #fff !important;
+}
+
+.badge-warning {
+  background-color: var(--color-warning) !important;
   color: #fff !important;
 }
 
 .badge-danger {
-  background-color: var(--color-accent2) !important;
+  background-color: var(--color-error) !important;
+  color: #fff !important;
+}
+
+.badge-secondary {
+  background-color: var(--color-secondary) !important;
   color: #fff !important;
 }
 
 /* ===== PROGRESS BARS ===== */
 .progress-bar {
   background-color: var(--color-primary) !important;
+}
+
+.progress-bar-success {
+  background-color: var(--color-success) !important;
+}
+
+.progress-bar-warning {
+  background-color: var(--color-warning) !important;
 }
 
 /* ===== FOOTER STYLING ===== */
@@ -209,7 +294,7 @@ a:focus {
 /* ===== HOVER EFFECTS ===== */
 .hover-lift:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(216, 145, 54, 0.2);
+  box-shadow: 0 8px 25px rgba(36, 180, 126, 0.2);
 }
 
 /* ===== ACCENT HIGHLIGHTS ===== */
@@ -219,6 +304,10 @@ a:focus {
 
 .accent-secondary {
   color: var(--color-secondary) !important;
+}
+
+.accent-gold {
+  color: var(--color-accent1) !important;
 }
 
 .bg-accent-primary {
@@ -231,9 +320,40 @@ a:focus {
   color: #fff !important;
 }
 
+.bg-accent-gold {
+  background-color: var(--color-accent1) !important;
+  color: var(--color-secondary) !important;
+}
+
+/* ===== NAVBAR OVERRIDES ===== */
+.top-navbar, .bottom-navbar {
+  background: var(--color-secondary) !important;
+}
+
+.navbar-brand {
+  color: #fff !important;
+}
+
+.navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--color-primary) !important;
+}
+
+/* ===== SERVICE CARDS ===== */
+.service-card i {
+  color: var(--color-primary) !important;
+}
+
+.service-card:hover {
+  border-color: var(--color-primary) !important;
+}
+
 /* ===== RESPONSIVE ADJUSTMENTS ===== */
 @media (max-width: 768px) {
   .hero-slide .overlay {
-    background: linear-gradient(135deg, rgba(13, 34, 53, 0.7), rgba(216, 145, 54, 0.5)) !important;
+    background: linear-gradient(135deg, rgba(24, 43, 58, 0.7), rgba(36, 180, 126, 0.5)) !important;
   }
 } 
