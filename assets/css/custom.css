@@ -19,6 +19,7 @@
   /* Background Colors */
   --color-bg: #F8FAF9;             /* Light Grey */
   --color-surface: #FFFFFF;         /* White for cards/surfaces */
+  --color-main-content: #E8F5F0;    /* Light Green for main content sections */
   
   /* Text Colors */
   --color-text: #202122;            /* Dark Charcoal */
@@ -36,6 +37,248 @@
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
+}
+
+/* ===== MAIN CONTENT BACKGROUND ===== */
+.main-content-section {
+  background-color: var(--color-main-content) !important;
+}
+
+.main-content-white {
+  background-color: #fff !important;
+}
+
+.main-content-light {
+  background-color: #f8f9fa !important;
+}
+
+/* ===== SECTION BACKGROUNDS ===== */
+.section-bg-green {
+  background-color: var(--color-main-content) !important;
+}
+
+.section-bg-white {
+  background-color: #fff !important;
+}
+
+.section-bg-light {
+  background-color: #f8f9fa !important;
+}
+
+/* ===== IMAGE SIZING UTILITIES ===== */
+.logo-img {
+  max-height: 48px;
+  width: auto;
+}
+
+.service-icon {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.step-icon {
+  width: 64px;
+  height: 64px;
+}
+
+.professional-img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+}
+
+.testimonial-img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+}
+
+.blog-img {
+  height: 200px;
+  object-fit: cover;
+}
+
+/* ===== POSITION UTILITIES ===== */
+.position-relative-z1 {
+  position: relative;
+  z-index: 1;
+}
+
+.position-relative-z2 {
+  position: relative;
+  z-index: 2;
+}
+
+.position-relative-z3 {
+  position: relative;
+  z-index: 3;
+}
+
+/* ===== PROGRESS BAR UTILITIES ===== */
+.progress-thin {
+  height: 4px;
+}
+
+.progress-bar-animated {
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+/* ===== FORM UTILITIES ===== */
+.form-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.form-toggle-btn {
+  padding: 0.75rem 2rem;
+  border: 2px solid var(--color-primary);
+  background: transparent;
+  color: var(--color-primary);
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.form-toggle-btn.active {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.form-toggle-btn:hover:not(.active) {
+  background: rgba(36, 180, 126, 0.1);
+}
+
+.form-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.form-card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+
+.form-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.form-card-title i {
+  color: var(--color-primary);
+}
+
+/* ===== FLOATING LABEL STYLES ===== */
+.form-floating {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.form-floating > .form-control {
+  height: calc(3.5rem + 2px);
+  padding: 1rem 0.75rem;
+  padding-left: 3rem;
+}
+
+.form-floating > label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  padding: 1rem 0.75rem;
+  padding-left: 3rem;
+  pointer-events: none;
+  border: 1px solid transparent;
+  transform-origin: 0 0;
+  transition: opacity .1s ease-in-out,transform .1s ease-in-out;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label {
+  transform: scale(.85) translateY(-0.5rem) translateX(0.15rem);
+  background: #fff;
+  padding: 0 0.5rem;
+  color: var(--color-primary);
+}
+
+.form-floating > .form-control:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.25rem rgba(36, 180, 126, 0.25);
+  padding-left: 2.5rem;
+}
+
+.form-floating > .form-control-icon {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  color: #6c757d;
+  transition: color 0.2s ease;
+  pointer-events: none;
+}
+
+.form-floating > .form-control:focus ~ .form-control-icon {
+  color: var(--color-primary);
+}
+
+/* ===== VALIDATION STATES ===== */
+.form-floating > .form-control.is-valid {
+  border-color: #198754;
+  padding-right: calc(1.5em + 0.75rem);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right calc(0.375em + 0.1875rem) center;
+  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.form-floating > .form-control.is-invalid {
+  border-color: #dc3545;
+  padding-right: calc(1.5em + 0.75rem);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right calc(0.375em + 0.1875rem) center;
+  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.form-floating > .form-control.is-valid ~ .form-control-icon {
+  color: #198754;
+}
+
+.form-floating > .form-control.is-invalid ~ .form-control-icon {
+  color: #dc3545;
+}
+
+.form-floating > .form-control.is-valid ~ label {
+  color: #198754;
+}
+
+.form-floating > .form-control.is-invalid ~ label {
+  color: #dc3545;
+}
+
+/* ===== UTILITY VISIBILITY CLASSES ===== */
+.hidden {
+  display: none !important;
+}
+
+.visible {
+  display: block !important;
+}
+
+.invisible {
+  visibility: hidden !important;
 }
 
 /* ===== BUTTON OVERRIDES ===== */
@@ -147,8 +390,25 @@ a:focus {
 }
 
 /* ===== HERO SECTION OVERRIDES ===== */
-.hero-slide .overlay {
-  background: linear-gradient(135deg, rgba(24, 43, 58, 0.6), rgba(36, 180, 126, 0.4)) !important;
+/* Ensure hero headings are always below navbars */
+.hero-header .hero-content h1,
+.hero-carousel .hero-content h1 {
+  position: relative !important;
+  z-index: 10 !important; /* Much lower than navbar z-index */
+  margin-top: 15rem !important; /* Massively increased top margin for huge gap */
+}
+
+/* Ensure hero content has enough space */
+.hero-header .hero-content,
+.hero-carousel .hero-content {
+  padding-top: 450px !important; /* Massively increased padding to push content down */
+  z-index: 10 !important; /* Much lower than navbar z-index */
+}
+
+/* Ensure bottom navbar is properly positioned */
+#navbar-bottom,
+.bottom-navbar {
+  z-index: 1100 !important; /* Higher than hero content */
 }
 
 /* ===== STEP NUMBERS STYLING ===== */
@@ -326,8 +586,6 @@ a:focus {
 }
 
 /* ===== NAVBAR OVERRIDES ===== */
-/* Top navbar styles moved to dedicated top-navbar.css file */
-
 .navbar-brand {
   color: #fff !important;
 }
@@ -341,15 +599,161 @@ a:focus {
 }
 
 /* ===== SERVICE CARDS ===== */
-/* Service card icon colors moved to font-awesome-colors.css */
-
 .service-card:hover {
   border-color: var(--color-primary) !important;
 }
 
+/* ===== CLEAN NAVIGATION STYLES (CONSOLIDATED) ===== */
+.main-nav-spaced > .nav-item {
+  margin-left: 12px;
+  margin-right: 12px;
+  white-space: nowrap;
+}
+
+.navbar-section {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.navbar-logo {
+  min-width: 120px;
+}
+
+.navbar-center {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow-x: auto;
+}
+
+.navbar-actions {
+  min-width: 250px;
+}
+
+.navbar-actions .nav-link {
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.navbar-brand img {
+  max-height: 48px;
+  width: auto;
+}
+
+/* ===== FOOTER CLEAN STYLES ===== */
+.footer {
+  position: relative;
+  width: 100%;
+  background: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+}
+
+.footer .brand img { 
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.12)); 
+}
+
+.footer h2 { 
+  font-size: 1.1rem; 
+  font-weight: 700; 
+  letter-spacing: 0.02em; 
+}
+
+.footer ul { 
+  padding-left: 0; 
+}
+
+.footer li { 
+  margin-bottom: 0.5rem; 
+}
+
+.footer a { 
+  transition: color 0.2s; 
+}
+
+.footer a:hover { 
+  color: var(--color-primary) !important; 
+}
+
 /* ===== RESPONSIVE ADJUSTMENTS ===== */
+@media (max-width: 1200px) {
+  .main-nav-spaced > .nav-item {
+    margin-left: 6px;
+    margin-right: 6px;
+  }
+  .navbar-actions {
+    min-width: 180px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .main-nav-spaced > .nav-item {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .navbar-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .navbar-center {
+    justify-content: flex-start;
+    margin: 10px 0;
+  }
+  .navbar-actions {
+    justify-content: flex-end;
+    min-width: 0;
+  }
+  .bottom-navbar .container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .footer .row > div { 
+    margin-bottom: 2rem; 
+  }
+}
+
 @media (max-width: 768px) {
   .hero-slide .overlay {
     background: linear-gradient(135deg, rgba(24, 43, 58, 0.7), rgba(36, 180, 126, 0.5)) !important;
   }
+}
+
+@media (max-width: 767.98px) {
+  .main-nav-spaced > .nav-item {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .navbar-logo {
+    min-width: 80px;
+  }
+}
+
+/* ===== FINAL HERO SPACING OVERRIDES ===== */
+/* High priority rules to ensure proper spacing */
+body .hero-content,
+html .hero-content,
+.hero-header .hero-content,
+.hero-carousel .hero-content {
+  padding-top: 450px !important;
+  z-index: 10 !important;
+}
+
+body .hero-content h1,
+html .hero-content h1,
+.hero-header .hero-content h1,
+.hero-carousel .hero-content h1 {
+  margin-top: 15rem !important;
+  z-index: 10 !important;
+  position: relative !important;
+}
+
+/* Ensure navbar stays on top */
+body #navbar-bottom,
+html #navbar-bottom,
+body .bottom-navbar,
+html .bottom-navbar {
+  z-index: 1100 !important;
+  position: absolute !important;
+  top: 40px !important;
 } 

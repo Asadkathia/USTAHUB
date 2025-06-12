@@ -2,6 +2,7 @@
 /* Single source file for all top navbar styling */
 /* Eliminates all inline duplications across HTML files */
 
+/* ===== CSS CUSTOM PROPERTIES ===== */
 :root {
   /* Top Navbar specific variables */
   --top-navbar-bg: transparent;
@@ -13,13 +14,24 @@
   --top-navbar-transition: all 0.3s ease;
 }
 
+/* ===== CUSTOM NAVBAR BASE STYLES ===== */
+.custom-navbar {
+  position: absolute !important;
+  width: 100% !important;
+  left: 0 !important;
+  z-index: 1000 !important;
+}
+
 /* ===== MAIN TOP NAVBAR STYLES ===== */
 .top-navbar {
-  border-bottom: none;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
   background: var(--top-navbar-bg) !important;
-  padding: 12px 0;
-  position: relative;
-  z-index: 1050;
+  padding: 0.75rem 0 !important;
+  z-index: 1010 !important;
+  border-bottom: none !important;
 }
 
 /* ===== LAYOUT COMPONENTS ===== */
@@ -172,6 +184,17 @@
 
 /* ===== NAVBAR MOUNT POINTS ===== */
 #navbar-top {
+  position: relative;
+  z-index: 1050;
+}
+
+/* Ensure navbar mount points have proper z-index in all hero contexts */
+.hero-carousel #navbar-top,
+.hero-carousel #navbar-bottom,
+.hero-header #navbar-top,
+.hero-header #navbar-bottom,
+.hero #navbar-top,
+.hero #navbar-bottom {
   position: relative;
   z-index: 1050;
 }

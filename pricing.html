@@ -1,36 +1,62 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="author" content="ThemeStarz">
+    <meta name="author" content="ThemeStarz">
+
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Varela+Round" rel="stylesheet">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.css" type="text/css">
     <link rel="stylesheet" href="assets/css/selectize.css" type="text/css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/rtl.css" id="rtl-stylesheet" disabled>
     <link rel="stylesheet" href="assets/css/user.css">
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/page-hero.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+        });
+    </script>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
     <link rel="stylesheet" href="assets/css/bottom-navbar.css">
+    <link rel="stylesheet" href="assets/css/navbar-hero-spacing-fix.css">
     <link rel="stylesheet" href="assets/css/top-navbar.css">
     <link rel="stylesheet" href="assets/css/font-awesome-colors.css">
+    <link rel="stylesheet" href="assets/css/hero-carousel.css">
 
-	<title>UstaHub - Pricing Plans</title>
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script type="module" src="assets/js/supabase.js"></script>
+    <script src="assets/js/navbars.js"></script>
 
-    <style>
-    /* Bottom navbar styles moved to dedicated bottom-navbar.css file */
-}
-    /* Bottom navbar styles moved to dedicated bottom-navbar.css file */
-}
-    </style>
+    <title>UstaHub - Pricing Plans</title>
 
 </head>
 <body>
+
+    <!-- Mount point for detached dropdown list (for custom dropdown, must be outside all containers) -->
+    <div id="dropdown-mount"></div>
+    <!-- React Hero Section Mount Point -->
+    <div id="react-hero"></div>
+
     <div class="page sub-page">
         <!--*********************************************************************************************************-->
         <!--************ HERO ***************************************************************************************-->
@@ -417,8 +443,8 @@
     <!--end page-->
 
 	<script src="assets/js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="assets/js/popper.min.js"></script>
-	<script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
+    
+	
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
 	<script src="assets/js/selectize.min.js"></script>
 	<script src="assets/js/masonry.pkgd.min.js"></script>

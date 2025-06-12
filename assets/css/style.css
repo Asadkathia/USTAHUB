@@ -131,7 +131,6 @@ Headers:		'Varela Round', sans-serif;
     font-size: 10px;
     margin-left: 5px;
 }
-.alert {}
 .alert.alert-warning {
     background-color: #fffde3;
     border: none;

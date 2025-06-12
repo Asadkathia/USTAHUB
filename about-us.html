@@ -1,87 +1,44 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="author" content="UstaHub">
     <meta name="description" content="Learn about UstaHub - Your trusted platform for connecting with local service professionals.">
-    <meta name="keywords" content="about us, service marketplace, local services, professional services">
+    <meta name="author" content="UstaHub">
+
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Varela+Round" rel="stylesheet">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
     <link rel="stylesheet" href="assets/fonts/font-awesome.css" type="text/css">
     <link rel="stylesheet" href="assets/css/selectize.css" type="text/css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/rtl.css" id="rtl-stylesheet" disabled>
     <link rel="stylesheet" href="assets/css/user.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/page-hero.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="assets/css/custom-dropdown.css">
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+        });
+    </script>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
     <link rel="stylesheet" href="assets/css/bottom-navbar.css">
+    <link rel="stylesheet" href="assets/css/navbar-hero-spacing-fix.css">
     <link rel="stylesheet" href="assets/css/top-navbar.css">
     <link rel="stylesheet" href="assets/css/font-awesome-colors.css">
-    <style>
-    .hero-header {
-        position: relative;
-        width: 100%;
-        min-height: 520px;
-                    background-image: url('assets/img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.27 (2).jpeg');
-        background-size: cover;
-        background-position: center;
-        z-index: 1;
-    }
-    .hero-header .overlay {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0,0,0,0.45);
-        z-index: 2;
-    }
-    /* Top navbar styles moved to dedicated top-navbar.css file */.css file */
-    /* Top navbar styles moved to dedicated top-navbar.css file */
-    /* Top navbar styles moved to dedicated top-navbar.css file */
-    /* Bottom navbar styles moved to dedicated bottom-navbar.css file */
-    .hero-content {
-        position: relative;
-        z-index: 4;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 300px;
-        color: #fff;
-        text-align: center;
-        padding-top: 40px;
-        padding-bottom: 40px;
-    }
-    .hero-content h1 {
-        color: #fff;
-        font-size: 3.2rem;
-        font-weight: 700;
-        text-shadow: 0 2px 8px rgba(0,0,0,0.25);
-        margin-bottom: 1.5rem;
-        line-height: 1.2;
-        animation: fadeInDown 1s ease-out;
-    }
-    .hero-content .subtitle {
-        font-size: 1.4rem;
-        color: rgba(255,255,255,0.9);
-        margin-bottom: 2rem;
-        text-shadow: 0 1px 4px rgba(0,0,0,0.2);
-        animation: fadeInUp 1s ease-out 0.3s both;
-    }
-    /* Top navbar styles moved to dedicated top-navbar.css file */
-        to { opacity: 1; transform: translateY(0); }
-    }
-    /* Top navbar styles moved to dedicated top-navbar.css file */
-        to { opacity: 1; transform: translateY(0); }
-    }
-    @media (max-width: 767.98px) {
-        .hero-content h1 { font-size: 2rem; }
-        .hero-content .subtitle { font-size: 1.1rem; }
-    }
-    </style>
+    <link rel="stylesheet" href="assets/css/hero-carousel.css">
 
     <!-- Bootstrap JS and Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
@@ -91,16 +48,18 @@
     <script type="module" src="assets/js/supabase.js"></script>
     <script src="assets/js/navbars.js"></script>
 
-	<title>About Us - UstaHub</title>
+    <title>About Us - UstaHub</title>
 
 </head>
 <body>
     <!-- Mount point for detached dropdown list -->
     <div id="dropdown-mount"></div>
+    <!-- React Hero Section Mount Point -->
+    <div id="react-hero"></div>
     
     <div class="page">
         <!-- Hero Section -->
-        <div class="hero-header">
+        <div class="hero-header hero-about">
             <div class="overlay"></div>
             <!-- Modern JS NavBar Mount Points -->
             <div id="navbar-top"></div>
@@ -171,7 +130,7 @@
                     <div class="row">
                         <div class="col-md-5">
                             <a href="#" class="brand">
-                                <img src="assets/img/logo.png" alt="UstaHub Logo" style="max-height: 48px; width: auto;">
+                                <img src="assets/img/logo.png" alt="UstaHub Logo" class="logo-img">
                             </a>
                             <p>
                                 UstaHub connects customers with trusted local service professionals. Find, compare, and book services for all your needs.
@@ -237,15 +196,15 @@
     </div>
 
     <script src="assets/js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" src="assets/js/popper.min.js"></script>
-    <script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
+    
+    
     <script src="assets/js/selectize.min.js"></script>
     <script src="assets/js/masonry.pkgd.min.js"></script>
     <script src="assets/js/icheck.min.js"></script>
     <script src="assets/js/jquery.validate.min.js"></script>
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/custom-dropdown.js"></script>
-    <script src="assets/js/navbar.js"></script>
+    
 
     <!-- Inject sidebar HTML and load sidebar JS after HTML is present -->
     <script>

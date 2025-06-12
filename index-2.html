@@ -16,15 +16,29 @@
     <link rel="stylesheet" href="assets/css/rtl.css" id="rtl-stylesheet" disabled>
     <link rel="stylesheet" href="assets/css/user.css">
     <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/page-hero.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+        });
+    </script>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
     <link rel="stylesheet" href="assets/css/bottom-navbar.css">
     <link rel="stylesheet" href="assets/css/top-navbar.css">
     <link rel="stylesheet" href="assets/css/font-awesome-colors.css">
+    <link rel="stylesheet" href="assets/css/hero-carousel.css">
+    <link rel="stylesheet" href="assets/css/navbar-hero-spacing-fix.css">
     <!-- Internationalization Stylesheets -->
     
     <!-- RTL stylesheet will be loaded dynamically when Arabic is selected -->
@@ -57,7 +71,7 @@
             <!-- First Slide -->
             <div class="hero-slide active">
                 <img src="assets/img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.27.jpeg" class="w-100 h-100 object-fit-cover" alt="Professional services in action">
-                <div class="overlay" style="background:rgba(0,0,0,0.4)"></div>
+                <div class="overlay" ></div>
                 <div class="hero-content container position-absolute">
                     <h1 class="display-4 fw-bold text-white text-center mb-4">Find Trusted Local Services</h1>
                     <p class="lead text-white text-center mb-5">Connect with professional service providers in your area</p>
@@ -94,7 +108,7 @@
             <!-- Second Slide -->
             <div class="hero-slide">
                 <img src="assets/img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.27 (1).jpeg" class="w-100 h-100 object-fit-cover" alt="Quality service providers">
-                <div class="overlay" style="background:rgba(0,0,0,0.4)"></div>
+                <div class="overlay" ></div>
                 <div class="hero-content container position-absolute">
                     <h1 class="display-4 fw-bold text-white text-center mb-4">Professional Services at Your Doorstep</h1>
                     <p class="lead text-white text-center mb-5">Quality service providers for all your needs</p>
@@ -131,7 +145,7 @@
             <!-- Third Slide -->
             <div class="hero-slide">
                 <img src="assets/img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.27 (2).jpeg" class="w-100 h-100 object-fit-cover" alt="Professional service experts">
-                <div class="overlay" style="background:rgba(0,0,0,0.4)"></div>
+                <div class="overlay" ></div>
                 <div class="hero-content container position-absolute">
                     <h1 class="display-4 fw-bold text-white text-center mb-4">Expert Service Providers</h1>
                     <p class="lead text-white text-center mb-5">Skilled professionals ready to help you</p>
@@ -168,7 +182,7 @@
             <!-- Fourth Slide -->
             <div class="hero-slide">
                 <img src="assets/img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.26.jpeg" class="w-100 h-100 object-fit-cover" alt="Reliable service solutions">
-                <div class="overlay" style="background:rgba(0,0,0,0.4)"></div>
+                <div class="overlay" ></div>
                 <div class="hero-content container position-absolute">
                     <h1 class="display-4 fw-bold text-white text-center mb-4">Reliable Service Solutions</h1>
                     <p class="lead text-white text-center mb-5">Trusted professionals for all your service needs</p>
@@ -205,7 +219,7 @@
             <!-- Fifth Slide -->
             <div class="hero-slide">
                 <img src="assets/img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.26 (1).jpeg" class="w-100 h-100 object-fit-cover" alt="Community-focused services">
-                <div class="overlay" style="background:rgba(0,0,0,0.4)"></div>
+                <div class="overlay" ></div>
                 <div class="hero-content container position-absolute">
                     <h1 class="display-4 fw-bold text-white text-center mb-4">Community-Focused Services</h1>
                     <p class="lead text-white text-center mb-5">Supporting our local community with quality services</p>
@@ -242,7 +256,7 @@
             <!-- Sixth Slide -->
             <div class="hero-slide">
                 <img src="assets/img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.26 (2).jpeg" class="w-100 h-100 object-fit-cover" alt="Innovation and excellence">
-                <div class="overlay" style="background:rgba(0,0,0,0.4)"></div>
+                <div class="overlay" ></div>
                 <div class="hero-content container position-absolute">
                     <h1 class="display-4 fw-bold text-white text-center mb-4">Innovation & Excellence</h1>
                     <p class="lead text-white text-center mb-5">Modern solutions delivered with excellence</p>
@@ -298,17 +312,17 @@
         <!--*********************************************************************************************************-->
         <!--************ CONTENT ************************************************************************************-->
         <!--*********************************************************************************************************-->
-        <div id="main-content" style="position: relative; z-index: 1;">
+        <div id="main-content" class="position-relative-z1">
             <!-- Popular Service Categories -->
             <section class="block py-5">
                 <div class="container">
-                    <h2 class="text-center mb-5 text-secondary" style="font-weight:700;">Popular Service Categories</h2>
+                    <h2 class="text-center mb-5 text-secondary" >Popular Service Categories</h2>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                         <div class="col">
                             <a href="service-category.html?category=plumbing" class="text-decoration-none">
                             <div class="card h-100 border-0 shadow-sm hover-lift">
                                 <div class="card-body text-center p-4">
-                                    <img src="assets/img/plumbing.jpg" alt="Plumbing" class="mb-4" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px;">
+                                    <img src="assets/img/plumbing.jpg" alt="Plumbing" class="mb-4 service-icon">
                                         <h3 class="h5 mb-2 text-dark">Plumbing</h3>
                                     <p class="text-muted mb-0">Trusted local plumbers for home and office needs</p>
                                 </div>
@@ -319,7 +333,7 @@
                             <a href="service-category.html?category=cleaning" class="text-decoration-none">
                             <div class="card h-100 border-0 shadow-sm hover-lift">
                                 <div class="card-body text-center p-4">
-                                    <img src="assets/img/cleaning.png" alt="Cleaning" class="mb-4" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px;">
+                                    <img src="assets/img/cleaning.png" alt="Cleaning" class="mb-4 service-icon">
                                         <h3 class="h5 mb-2 text-dark">Cleaning</h3>
                                     <p class="text-muted mb-0">Professional cleaning services for your space</p>
                                 </div>
@@ -330,7 +344,7 @@
                             <a href="service-category.html?category=electrical" class="text-decoration-none">
                             <div class="card h-100 border-0 shadow-sm hover-lift">
                                 <div class="card-body text-center p-4">
-                                    <img src="assets/img/electrician.png" alt="Electrician" class="mb-4" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px;">
+                                    <img src="assets/img/electrician.png" alt="Electrician" class="mb-4 service-icon">
                                         <h3 class="h5 mb-2 text-dark">Electrical</h3>
                                     <p class="text-muted mb-0">Licensed electricians for all your needs</p>
                                 </div>
@@ -341,7 +355,7 @@
                             <a href="service-category.html?category=painting" class="text-decoration-none">
                             <div class="card h-100 border-0 shadow-sm hover-lift">
                                 <div class="card-body text-center p-4">
-                                    <img src="assets/img/painting.png" alt="Painting" class="mb-4" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px;">
+                                    <img src="assets/img/painting.png" alt="Painting" class="mb-4 service-icon">
                                         <h3 class="h5 mb-2 text-dark">Painting</h3>
                                     <p class="text-muted mb-0">Expert painters for interior and exterior</p>
                                 </div>
@@ -355,13 +369,13 @@
             <!-- How UstaHub Works -->
             <section class="block py-5">
                 <div class="container">
-                    <h2 class="text-center mb-5 text-secondary" style="font-weight:700;">How UstaHub Works</h2>
+                    <h2 class="text-center mb-5 text-secondary" >How UstaHub Works</h2>
                     <div class="row row-cols-1 row-cols-md-3 g-4">
                         <div class="col">
                             <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-body text-center p-4">
                                     <div class="step-number mb-4">1</div>
-                                    <img src="assets/img/icons/choose-service.png" alt="Choose Service" class="mb-4" style="width: 64px; height: 64px;">
+                                    <img src="assets/img/icons/choose-service.png" alt="Choose Service" class="mb-4 step-icon">
                                     <h3 class="h5 mb-3">Choose a Service</h3>
                                     <p class="text-muted mb-0">Select from our wide range of professional services</p>
                                 </div>
@@ -371,7 +385,7 @@
                             <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-body text-center p-4">
                                     <div class="step-number mb-4">2</div>
-                                    <img src="assets/img/icons/compare-pros.png" alt="Compare Pros" class="mb-4" style="width: 64px; height: 64px;">
+                                    <img src="assets/img/icons/compare-pros.png" alt="Compare Pros" class="mb-4 step-icon">
                                     <h3 class="h5 mb-3">Compare Local Pros</h3>
                                     <p class="text-muted mb-0">Review profiles, ratings, and prices</p>
                                 </div>
@@ -381,7 +395,7 @@
                             <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-body text-center p-4">
                                     <div class="step-number mb-4">3</div>
-                                    <img src="assets/img/icons/hire.png" alt="Hire" class="mb-4" style="width: 64px; height: 64px;">
+                                    <img src="assets/img/icons/hire.png" alt="Hire" class="mb-4 step-icon">
                                     <h3 class="h5 mb-3">Hire with Confidence</h3>
                                     <p class="text-muted mb-0">Book and pay securely through our platform</p>
                                 </div>
@@ -395,15 +409,15 @@
             </section>
 
             <!-- Featured Professionals -->
-            <section class="block py-5" style="background: #fff;">
+            <section class="block py-5 section-bg-green">
                 <div class="container">
-                    <h2 class="text-center mb-5" style="font-weight:700;">Featured Professionals</h2>
+                    <h2 class="text-center mb-5" >Featured Professionals</h2>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                         <div class="col">
                             <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-center mb-3">
-                                        <img src="assets/img/pro-1.jpg" alt="Professional" class="rounded-circle me-3" style="width: 64px; height: 64px; object-fit: cover;">
+                                        <img src="assets/img/pro-1.jpg" alt="Professional" class="rounded-circle me-3 professional-img">
                                         <div>
                                             <h3 class="h5 mb-1">John Smith</h3>
                                             <p class="text-muted mb-0">Plumbing Expert</p>
@@ -425,7 +439,7 @@
                             <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-center mb-3">
-                                        <img src="assets/img/pro-2.jpg" alt="Professional" class="rounded-circle me-3" style="width: 64px; height: 64px; object-fit: cover;">
+                                        <img src="assets/img/pro-2.jpg" alt="Professional" class="rounded-circle me-3 professional-img">
                                         <div>
                                             <h3 class="h5 mb-1">Sarah Johnson</h3>
                                             <p class="text-muted mb-0">Cleaning Specialist</p>
@@ -447,7 +461,7 @@
                             <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-center mb-3">
-                                        <img src="assets/img/pro-3.jpg" alt="Professional" class="rounded-circle me-3" style="width: 64px; height: 64px; object-fit: cover;">
+                                        <img src="assets/img/pro-3.jpg" alt="Professional" class="rounded-circle me-3 professional-img">
                                         <div>
                                             <h3 class="h5 mb-1">Mike Wilson</h3>
                                             <p class="text-muted mb-0">Electrical Engineer</p>
@@ -470,9 +484,9 @@
             </section>
 
             <!-- Customer Testimonials -->
-            <section class="block py-5" style="background: #f8f9fa;">
+            <section class="block py-5 section-bg-light">
                 <div class="container">
-                    <h2 class="text-center mb-5" style="font-weight:700;">What Our Customers Say</h2>
+                    <h2 class="text-center mb-5" >What Our Customers Say</h2>
                     <div class="row row-cols-1 row-cols-md-3 g-4">
                         <div class="col">
                             <div class="card h-100 border-0 shadow-sm">
@@ -486,7 +500,7 @@
                                     </div>
                                     <p class="mb-4">"UstaHub made finding a reliable plumber so easy. The service was professional and the price was fair. Will definitely use again!"</p>
                                     <div class="d-flex align-items-center">
-                                        <img src="assets/img/testimonial-1.jpg" alt="Customer" class="rounded-circle me-3" style="width: 48px; height: 48px; object-fit: cover;">
+                                        <img src="assets/img/testimonial-1.jpg" alt="Customer" class="rounded-circle me-3 testimonial-img">
                                         <div>
                                             <h4 class="h6 mb-1">Emily Chen</h4>
                                             <p class="text-muted mb-0">Karachi, Pakistan</p>
@@ -507,7 +521,7 @@
                                     </div>
                                     <p class="mb-4">"The cleaning service was exceptional. The team was thorough and professional. Highly recommend!"</p>
                                     <div class="d-flex align-items-center">
-                                        <img src="assets/img/testimonial-2.jpg" alt="Customer" class="rounded-circle me-3" style="width: 48px; height: 48px; object-fit: cover;">
+                                        <img src="assets/img/testimonial-2.jpg" alt="Customer" class="rounded-circle me-3 testimonial-img">
                                         <div>
                                             <h4 class="h6 mb-1">Ahmed Khan</h4>
                                             <p class="text-muted mb-0">Lahore, Pakistan</p>
@@ -528,7 +542,7 @@
                                     </div>
                                     <p class="mb-4">"Found an amazing electrician through UstaHub. The service was quick and the quality was outstanding."</p>
                                     <div class="d-flex align-items-center">
-                                        <img src="assets/img/testimonial-3.jpg" alt="Customer" class="rounded-circle me-3" style="width: 48px; height: 48px; object-fit: cover;">
+                                        <img src="assets/img/testimonial-3.jpg" alt="Customer" class="rounded-circle me-3 testimonial-img">
                                         <div>
                                             <h4 class="h6 mb-1">Fatima Ali</h4>
                                             <p class="text-muted mb-0">Islamabad, Pakistan</p>
@@ -542,13 +556,13 @@
             </section>
 
             <!-- Blog Preview -->
-            <section class="block py-5" style="background: #fff;">
+            <section class="block py-5 section-bg-green">
                 <div class="container">
-                    <h2 class="text-center mb-5" style="font-weight:700;">Latest from Our Blog</h2>
+                    <h2 class="text-center mb-5" >Latest from Our Blog</h2>
                     <div class="row row-cols-1 row-cols-md-3 g-4">
                         <div class="col">
                             <div class="card h-100 border-0 shadow-sm">
-                                <img src="assets/img/blog-1.jpg" class="card-img-top" alt="Blog Post" style="height: 200px; object-fit: cover;">
+                                <img src="assets/img/blog-1.jpg" class="card-img-top" alt="Blog Post" class="blog-img">
                                 <div class="card-body p-4">
                                     <h3 class="h5 mb-3">How to Choose the Right Service Professional</h3>
                                     <p class="text-muted mb-3">Learn the essential tips for finding and hiring the perfect service provider for your needs.</p>
@@ -558,7 +572,7 @@
                         </div>
                         <div class="col">
                             <div class="card h-100 border-0 shadow-sm">
-                                <img src="assets/img/blog-2.jpg" class="card-img-top" alt="Blog Post" style="height: 200px; object-fit: cover;">
+                                <img src="assets/img/blog-2.jpg" class="card-img-top" alt="Blog Post" class="blog-img">
                                 <div class="card-body p-4">
                                     <h3 class="h5 mb-3">Home Maintenance Tips for Every Season</h3>
                                     <p class="text-muted mb-3">Keep your home in top condition with these seasonal maintenance tips and tricks.</p>
@@ -568,7 +582,7 @@
                         </div>
                         <div class="col">
                             <div class="card h-100 border-0 shadow-sm">
-                                <img src="assets/img/blog-3.jpg" class="card-img-top" alt="Blog Post" style="height: 200px; object-fit: cover;">
+                                <img src="assets/img/blog-3.jpg" class="card-img-top" alt="Blog Post" class="blog-img">
                                 <div class="card-body p-4">
                                     <h3 class="h5 mb-3">The Future of Local Services</h3>
                                     <p class="text-muted mb-3">Discover how technology is transforming the local services industry.</p>
@@ -581,13 +595,13 @@
             </section>
 
             <!-- Newsletter -->
-            <section class="block py-5" style="background: #f8f9fa;">
+            <section class="block py-5 section-bg-light">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <div class="card border-0 shadow-sm">
                                 <div class="card-body p-4 p-md-5 text-center">
-                                    <h2 class="mb-3" style="font-weight:700;">Get Tips & Service Recommendations</h2>
+                                    <h2 class="mb-3" >Get Tips & Service Recommendations</h2>
                                     <p class="text-muted mb-4">Stay updated with the latest service trends and expert advice</p>
                                     <form class="row g-3 justify-content-center">
                                         <div class="col-md-8">
@@ -605,34 +619,6 @@
             </section>
         </div>
 
-        <style>
-        /* Custom styles for the new sections */
-        .hover-lift {
-            transition: transform 0.2s ease-in-out;
-        }
-        .hover-lift:hover {
-            transform: translateY(-5px);
-        }
-        .step-number {
-            width: 40px;
-            height: 40px;
-            background: #ff0000;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            margin: 0 auto;
-        }
-        .card {
-            transition: all 0.3s ease;
-        }
-        .card:hover {
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
-        }
-        /* Button and text primary colors moved to custom.css and font-awesome-colors.css */
-        </style>
     </div>
     <!--end content-->
 
@@ -687,7 +673,7 @@
               <div class="row gy-4">
                 <div class="col-md-5">
                   <a href="index-2.html" class="brand d-inline-block mb-2">
-                    <img src="assets/img/logo.png" alt="UstaHub Logo" style="max-height: 48px; width: auto;">
+                    <img src="assets/img/logo.png" alt="UstaHub Logo" class="logo-img">
                   </a>
                   <p class="text-muted mb-0">
                     UstaHub connects customers with trusted local service professionals. Find, compare, and book services for all your needs.
@@ -739,23 +725,6 @@
       document.getElementById('footer').innerHTML = renderFooter();
     });
     </script>
-    <style>
-    .footer {
-        position: relative;
-        width: 100%;
-        background: #f8f9fa;
-        border-top: 1px solid #e9ecef;
-    }
-    .footer .brand img { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.12)); }
-    .footer h2 { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.02em; }
-    .footer ul { padding-left: 0; }
-    .footer li { margin-bottom: 0.5rem; }
-    .footer a { transition: color 0.2s; }
-    .footer a:hover { color: var(--icon-color-primary, #24b47e) !important; }
-    @media (max-width: 991.98px) {
-        .footer .row > div { margin-bottom: 2rem; }
-    }
-    </style>
 </div>
 <!--end page-->
 
@@ -769,394 +738,8 @@
 <script src="assets/js/jquery.validate.min.js"></script>
 <script src="assets/js/custom.js"></script>
 <script src="assets/js/custom-dropdown.js"></script>
-<script src="assets/js/dashboard.js"></script>
-
-<style>
-/* Mega dropdown styles removed - using consolidated bottom-navbar.css instead */
-.main-nav-spaced > .nav-item {
-    margin-left: 12px;
-    margin-right: 12px;
-}
-@media (max-width: 1200px) {
-    .main-nav-spaced > .nav-item {
-        margin-left: 6px;
-        margin-right: 6px;
-    }
-}
-@media (max-width: 991.98px) {
-    .main-nav-spaced > .nav-item {
-        margin-left: 0;
-        margin-right: 0;
-    }
-}
-.navbar-section {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-}
-.navbar-logo {
-    min-width: 120px;
-}
-.navbar-center {
-    min-width: 0;
-    flex: 1 1 auto;
-    overflow-x: auto;
-}
-.navbar-actions {
-    min-width: 250px;
-}
-.navbar-actions .nav-link {
-    white-space: nowrap;
-    font-weight: 500;
-}
-@media (max-width: 1200px) {
-    .navbar-actions {
-        min-width: 180px;
-    }
-}
-@media (max-width: 991.98px) {
-    .navbar-section {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .navbar-center {
-        justify-content: flex-start;
-        margin: 10px 0;
-    }
-    .navbar-actions {
-        justify-content: flex-end;
-        min-width: 0;
-    }
-}
-@media (max-width: 767.98px) {
-    .main-nav-spaced > .nav-item {
-        margin-left: 0;
-        margin-right: 0;
-    }
-    .navbar-logo {
-        min-width: 80px;
-    }
-}
-/* Top navbar styles moved to dedicated top-navbar.css file */
-/* Bottom navbar main styles moved to dedicated bottom-navbar.css file */
-.main-nav-spaced > .nav-item {
-    margin-left: 12px;
-    margin-right: 12px;
-    white-space: nowrap;
-}
-/* Additional top navbar styles moved to top-navbar.css */
-/* Bottom navbar nav-link styles moved to dedicated bottom-navbar.css file */
-.navbar-brand img {
-    max-height: 48px;
-    width: auto;
-}
-@media (max-width: 991.98px) {
-    .main-nav-spaced > .nav-item {
-        margin-left: 6px;
-        margin-right: 6px;
-    }
-    /* Top navbar responsive styles moved to top-navbar.css */
-    .bottom-navbar .container {
-        flex-direction: column;
-        align-items: stretch;
-    }
-}
-@media (max-width: 767.98px) {
-    .main-nav-spaced > .nav-item {
-        margin-left: 0;
-        margin-right: 0;
-    }
-    /* Top navbar responsive styles moved to top-navbar.css */
-}
-.hero-header {
-    position: relative;
-    width: 100%;
-    min-height: 520px;
-    background-image: url('assets/img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.27 (2).jpeg');
-    background-size: cover;
-    background-position: center;
-    z-index: 1;
-}
-.hero-carousel {
-    position: relative;
-    z-index: 1;
-}
-.hero-header .overlay {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.45);
-    z-index: 2;
-}
-/* Top navbar background styles moved to top-navbar.css */
-/* Navbar mount points positioning */
-#navbar-top, #navbar-bottom {
-    position: relative;
-    z-index: 1050;
-}
-/* Bottom navbar overlay styles moved to dedicated bottom-navbar.css file */
-.hero-content {
-    position: relative;
-    z-index: 4;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 300px;
-    color: #fff;
-    text-align: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
-}
-.hero-content h1 {
-    color: #fff;
-    font-size: 3.2rem;
-    font-weight: 700;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.25);
-    margin-bottom: 1.5rem;
-    line-height: 1.2;
-    animation: fadeInDown 1s ease-out;
-}
-.hero-content h1 a {
-    color: #fff;
-    text-decoration: none;
-    position: relative;
-    transition: all 0.3s ease;
-}
-.hero-content h1 a:hover {
-    color: #e00707;
-    text-shadow: 0 2px 12px rgba(224,7,7,0.3);
-}
-.hero-content h1 a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: #e00707;
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
-.hero-content h1 a:hover::after {
-    transform: scaleX(1);
-}
-.hero-content .subtitle {
-    font-size: 1.4rem;
-    color: rgba(255,255,255,0.9);
-    margin-bottom: 2rem;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.2);
-    animation: fadeInUp 1s ease-out 0.3s both;
-}
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-@media (max-width: 767.98px) {
-    .hero-content h1 {
-        font-size: 2rem;
-    }
-    .hero-content .subtitle {
-        font-size: 1.1rem;
-    }
-}
-.search-bar {
-    margin-top: 24px;
-    background: transparent;
-    border-radius: 8px;
-    box-shadow: none;
-}
-.hero-content .form-control, .hero-content .form-group label, .hero-content select {
-    background: rgba(255,255,255,0.95);
-    color: #222;
-    border: none;
-    box-shadow: none;
-}
-.hero-content .form-group label {
-    color: #fff;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-}
-.hero-content .btn-primary {
-    background: #e00707;
-    border: none;
-    font-weight: 600;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-}
-.navbar-brand img {
-    max-height: 48px;
-    width: auto;
-    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.12));
-}
-/* Duplicate responsive styles removed - moved to top-navbar.css */
-@media (max-width: 767.98px) {
-    .main-nav-spaced > .nav-item {
-        margin-left: 0;
-        margin-right: 0;
-    }
-    .navbar-brand img {
-        max-height: 36px;
-    }
-    .hero-content h1 {
-        font-size: 1.5rem;
-    }
-}
-.yelp-style-search {
-    background: rgba(255,255,255,0.98);
-    border-radius: 32px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.10);
-    padding: 8px 16px;
-    max-width: 600px;
-    min-width: 320px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-}
-.custom-dropdown-input,
-.yelp-style-search input.yelp-search-input {
-    cursor: pointer;
-    background: rgba(255,255,255,0.95);
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 28px !important;
-    color: #222 !important;
-    font-size: 1.18rem !important;
-    height: 60px !important;
-    min-width: 180px;
-    max-width: 220px;
-    flex: 1 1 0;
-    padding-left: 20px;
-    margin-right: 12px;
-}
-.yelp-style-search select.yelp-search-input {
-    font-size: 1.18rem !important;
-    height: 60px !important;
-    min-width: 180px;
-    max-width: 220px;
-    border-radius: 28px !important;
-    padding-left: 20px;
-    flex: 1 1 0;
-    margin-right: 12px;
-}
-.yelp-search-btn {
-    height: 60px;
-    border-radius: 28px;
-    background: #e00707;
-    border: none;
-    font-weight: 600;
-    font-size: 1.18rem;
-    padding: 0 32px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-    color: #fff;
-    transition: background 0.2s;
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.yelp-search-btn:hover, .yelp-search-btn:focus {
-    background: #b00606;
-    color: #fff;
-}
-@media (max-width: 991.98px) {
-    .yelp-style-search {
-        flex-direction: column;
-        max-width: 100%;
-        padding: 8px 4px;
-    }
-    .custom-dropdown-input,
-    .yelp-style-search input.yelp-search-input,
-    .yelp-style-search select.yelp-search-input {
-        min-width: 100%;
-        max-width: 100%;
-        margin-right: 0;
-        margin-bottom: 12px;
-        height: 54px !important;
-        font-size: 1.1rem !important;
-        border-radius: 18px !important;
-        padding-left: 18px;
-    }
-    .yelp-search-btn {
-        width: 100%;
-        height: 54px;
-        font-size: 1.1rem;
-        border-radius: 18px;
-        padding: 0 12px;
-    }
-}
-.custom-dropdown-input {
-    cursor: pointer;
-    background: rgba(255,255,255,0.95);
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 24px !important;
-    color: #222 !important;
-    font-size: 1.18rem !important;
-    height: 56px !important;
-    min-width: 240px;
-    max-width: 320px;
-    padding-left: 22px;
-}
-.custom-dropdown-list {
-    display: none;
-    position: absolute;
-    /* top, left, right are set by JS, so remove here */
-    /* top: 110%; */
-    /* left: 0; */
-    /* right: 0; */
-    background: #fff;
-    border-radius: 18px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.10);
-    z-index: 2000;
-    max-height: 220px;
-    overflow-y: auto;
-}
-.custom-dropdown-item {
-    padding: 12px 18px;
-    cursor: pointer;
-    color: #222;
-    border-radius: 18px;
-    transition: background 0.15s;
-}
-.custom-dropdown-item:hover {
-    background: #f5f5f5;
-}
-/* Modern NavBar Styles (Yelp-like) */
-.custom-navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(255,255,255,0.98);
-    padding: 0 32px;
-    min-height: 56px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    position: relative;
-    z-index: 100;
-}
-/* Top navbar border styles moved to top-navbar.css */
-/* Bottom navbar styles moved to dedicated bottom-navbar.css file */
-</style>
-
-<!-- Internationalization Script -->
-
+  <script src="assets/js/dashboard.js"></script>
+  <script src="assets/js/hero-carousel.js"></script>
 
 <!-- For integrating with Mobile Sidebar -->
 <script>
@@ -1179,7 +762,6 @@
         var sidebarScript = document.createElement('script');
         sidebarScript.src = 'assets/js/mobile-sidebar.js';
         document.body.appendChild(sidebarScript);
-        
 
       })
       .catch(error => {

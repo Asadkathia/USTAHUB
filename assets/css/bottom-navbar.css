@@ -4,30 +4,44 @@
 
 /* ===== JOBBER-INSPIRED COLOR VARIABLES ===== */
 :root {
-  --navbar-bg: var(--color-secondary, #182B3A);
+  --navbar-bg: transparent; /* Changed to transparent for camouflage */
   --navbar-text: #fff;
   --navbar-text-hover: var(--color-primary, #24B47E);
-  --dropdown-bg: #fff;
+  --dropdown-bg: rgba(255, 255, 255, 0.95);
   --dropdown-text: #222;
   --dropdown-hover-bg: rgba(36, 180, 126, 0.1);
   --dropdown-hover-text: var(--color-primary, #24B47E);
   --dropdown-icon-color: var(--icon-color-primary, #24b47e);
   --dropdown-icon-hover: #1366B8;
   --dropdown-shadow: 0 8px 32px rgba(0,0,0,0.18);
-  --border-color: #e0e0e0;
+  --border-color: transparent; /* Removed border for seamless blend */
+}
+
+/* ===== CUSTOM NAVBAR BASE STYLES ===== */
+.custom-navbar {
+  position: absolute !important;
+  width: 100% !important;
+  left: 0 !important;
+  z-index: 1050 !important; /* Increased z-index to ensure it's above hero content */
 }
 
 /* ===== BOTTOM NAVBAR MAIN STYLES ===== */
-.bottom-navbar {
-  border-bottom: none;
-  background: transparent !important;
-  z-index: 1100;
-  min-height: 56px;
-  box-shadow: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+.bottom-navbar,
+body .bottom-navbar,
+.hero-header .bottom-navbar,
+.hero-carousel .bottom-navbar {
+  position: absolute !important;
+  top: 40px !important; /* Moved even higher - reduced from 60px to 40px */
+  left: 0 !important;
+  width: 100% !important;
+  background: transparent !important; /* Completely transparent for camouflage */
+  z-index: 1100 !important; /* Increased z-index even higher */
+  padding: 2rem 0 !important; /* Increased padding for better visibility */
+  font-weight: 500 !important;
+  border-bottom: none !important; /* Remove border for seamless blend */
+  box-shadow: none !important; /* Remove shadow for seamless blend */
+  transition: all 0.3s ease !important;
+  backdrop-filter: blur(2px) !important; /* Very subtle blur for text readability */
 }
 
 /* Completely transparent - no fallback background needed */
@@ -66,18 +80,23 @@
   line-height: 56px;
   color: var(--navbar-text);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600; /* Increased font weight for better visibility */
   display: block;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8), 0 1px 3px rgba(0,0,0,0.6) !important; /* Enhanced text shadow for better readability */
   background: transparent !important;
-  transition: color 0.2s ease, opacity 0.2s ease;
+  transition: all 0.3s ease;
   white-space: nowrap;
+  letter-spacing: 0.5px; /* Slight letter spacing for better readability */
+  font-size: 1.05rem; /* Slightly larger font for better visibility */
 }
 
 .bottom-navbar .nav-item > a:hover {
   color: var(--navbar-text-hover);
-  background: transparent !important;
-  opacity: 0.9;
+  background: rgba(255, 255, 255, 0.05) !important; /* Very subtle background on hover */
+  opacity: 1;
+  transform: translateY(-1px); /* Subtle lift effect */
+  text-shadow: 0 3px 12px rgba(0,0,0,0.9), 0 1px 4px rgba(36, 180, 126, 0.4) !important; /* Enhanced shadow with brand color */
+  border-radius: 8px; /* Subtle rounded corners on hover */
 }
 
 /* ===== GRID DROPDOWN STYLES ===== */
@@ -330,4 +349,16 @@
   .bottom-navbar {
     display: none !important;
   }
+}
+
+/* ===== NAVBAR MOUNT POINTS Z-INDEX ===== */
+/* Ensure navbar mount points have proper z-index in all hero contexts */
+.hero-carousel #navbar-top,
+.hero-carousel #navbar-bottom,
+.hero-header #navbar-top,
+.hero-header #navbar-bottom,
+.hero #navbar-top,
+.hero #navbar-bottom {
+  position: relative;
+  z-index: 1050;
 } 

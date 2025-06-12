@@ -1,189 +1,55 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="author" content="UstaHub">
-  <meta name="description" content="Manage your UstaHub consumer profile, bookings, and preferences.">
-  <meta name="keywords" content="consumer profile, service marketplace, local services, professional services">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Manage your UstaHub consumer profile, bookings, and preferences.">
+    <meta name="author" content="UstaHub">
 
-  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Varela+Round" rel="stylesheet">
-  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
-  <link rel="stylesheet" href="assets/fonts/font-awesome.css" type="text/css">
-  <link rel="stylesheet" href="assets/css/selectize.css" type="text/css">
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/user.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Varela+Round" rel="stylesheet">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/selectize.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/rtl.css" id="rtl-stylesheet" disabled>
+    <link rel="stylesheet" href="assets/css/user.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/page-hero.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+        });
+    </script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
     <link rel="stylesheet" href="assets/css/bottom-navbar.css">
+    <link rel="stylesheet" href="assets/css/navbar-hero-spacing-fix.css">
     <link rel="stylesheet" href="assets/css/top-navbar.css">
     <link rel="stylesheet" href="assets/css/font-awesome-colors.css">
+    <link rel="stylesheet" href="assets/css/hero-carousel.css">
 
-  <!-- Bootstrap JS and Popper.js -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-  
-  <!-- Load Supabase first -->
-  <script type="module" src="assets/js/supabase.js"></script>
-  
-  <!-- Custom JS -->
-  <script src="assets/js/navbars.js"></script>
-  <script src="assets/js/profile.js"></script>
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script type="module" src="assets/js/supabase.js"></script>
+    <script src="assets/js/navbars.js"></script>
 
-  <title>My Profile - UstaHub</title>
+    <title>My Profile - UstaHub</title>
 
-  <style>
-    :root {
-      --primary-color: #e00707;
-      --hover-shadow: 0 8px 32px rgba(224,7,7,0.15);
-      --card-shadow: 0 4px 24px rgba(0,0,0,0.08);
-      --transition: 0.3s ease;
-    }
-    /* Top navbar styles moved to dedicated top-navbar.css file */
-
-    /* Hero Section Styles */
-    .hero-header {
-      position: relative;
-      width: 100%;
-      min-height: 520px;
-      background-image: url('assets/img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.27 (1).jpeg');
-      background-size: cover;
-      background-position: center;
-      z-index: 1;
-    }
-    .hero-header .overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.45);
-      z-index: 2;
-    }
-    .hero-content {
-      position: relative;
-      z-index: 4;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 300px;
-      color: #fff;
-      text-align: center;
-      padding-top: 40px;
-      padding-bottom: 40px;
-    }
-    .hero-content h1 {
-      color: #fff;
-      font-size: 3.2rem;
-      font-weight: 700;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.25);
-      margin-bottom: 1.5rem;
-      line-height: 1.2;
-      animation: fadeInDown 1s ease-out;
-    }
-    .hero-content .subtitle {
-      font-size: 1.4rem;
-      color: rgba(255,255,255,0.9);
-      margin-bottom: 2rem;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.2);
-      animation: fadeInUp 1s ease-out 0.3s both;
-    }
-    @keyframes fadeInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    @media (max-width: 991.98px) {
-      .hero-content h1 {
-        font-size: 2.5rem;
-      }
-      .hero-content .subtitle {
-        font-size: 1.2rem;
-      }
-    }
-    @media (max-width: 767.98px) {
-      .hero-content h1 {
-        font-size: 2rem;
-      }
-      .hero-content .subtitle {
-        font-size: 1.1rem;
-      }
-    }
-
-    /* Bottom Navbar Styles */
-    /* Bottom navbar styles moved to dedicated bottom-navbar.css file */
-    .custom-navbar.bottom-navbar .nav-center {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-    }
-    .nav-menu {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .nav-item {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-    .nav-item > a {
-      color: #333;
-      font-weight: 500;
-      font-size: 1.08rem;
-      padding: 12px 18px;
-      border-radius: 22px;
-      text-decoration: none;
-      transition: background 0.2s, color 0.2s;
-      display: flex;
-      align-items: center;
-    }
-    .nav-item > a:hover, .nav-item > a.active {
-      background: #e00707;
-      color: #fff;
-    }
-    /* Bottom navbar styles moved to dedicated bottom-navbar.css file */
-    /* Existing Profile Styles */
-    .profile-card { border: none; border-radius: 16px; box-shadow: var(--card-shadow); transition: all var(--transition); }
-    .profile-card:hover { box-shadow: var(--hover-shadow); }
-    .profile-avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid white; box-shadow: var(--card-shadow); }
-    .nav-tabs { border: none; margin-bottom: 2rem; }
-    .nav-tabs .nav-link { border: none; color: #6c757d; font-weight: 500; padding: 1rem 1.5rem; border-radius: 8px; transition: all var(--transition); }
-    .nav-tabs .nav-link:hover { background: #f8f9fa; color: var(--primary-color); }
-    .nav-tabs .nav-link.active { background: var(--primary-color); color: white; }
-    .list-group-item { border: none; border-radius: 12px !important; margin-bottom: 1rem; box-shadow: var(--card-shadow); transition: all var(--transition); }
-    .list-group-item:hover { transform: translateY(-2px); box-shadow: var(--hover-shadow); }
-    .form-control:focus { border-color: var(--primary-color); box-shadow: 0 0 0 0.2rem rgba(224,7,7,0.15); }
-    .form-control.is-valid { border-color: #28a745; padding-right: calc(1.5em + 0.75rem); background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right calc(0.375em + 0.1875rem) center; background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem); }
-    .form-switch .form-check-input:checked { background-color: var(--primary-color); border-color: var(--primary-color); }
-    .empty-state { text-align: center; padding: 3rem 1rem; color: #6c757d; }
-    .empty-state i { font-size: 4rem; margin-bottom: 1rem; opacity: 0.5; }
-    .fade-in { animation: fadeIn 0.3s ease-out; }
-    .slide-down { animation: slideDown 0.3s ease-out; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes slideDown { from { transform: translateY(-10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    @media (max-width: 767.98px) { .profile-card { margin-bottom: 2rem; } .nav-tabs .nav-link { padding: 0.75rem 1rem; } }
-  </style>
 </head>
 <body>
   <!-- Mount point for detached dropdown list (for custom dropdown, must be outside all containers) -->
@@ -192,7 +58,7 @@
   <div id="react-hero"></div>
   <div class="page">
     <!-- Hero Section -->
-    <div class="hero-header">
+    <div class="hero-header hero-profile">
         <div class="overlay"></div>
         <!-- Modern JS NavBar Mount Points -->
         <div id="navbar-top"></div>
@@ -331,5 +197,46 @@
         document.body.appendChild(script);
       });
   </script>
+<script src="assets/js/jquery-3.3.1.min.js"></script>
+
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBEDfNcQRmKQEyulDN8nGWjLYPm8s4YB58&libraries=places"></script>
+<script src="assets/js/selectize.min.js"></script>
+<script src="assets/js/masonry.pkgd.min.js"></script>
+<script src="assets/js/icheck.min.js"></script>
+<script src="assets/js/jquery.validate.min.js"></script>
+<script src="assets/js/custom.js"></script>
+<script src="assets/js/custom-dropdown.js"></script>
+<script src="assets/js/dashboard.js"></script>
+<script src="assets/js/hero-carousel.js"></script>
+
+<!-- For integrating with Mobile Sidebar -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Load mobile sidebar with absolute path
+    fetch('components/mobile-sidebar.html')
+      .then(res => {
+        if (!res.ok) {
+          // Try with a different path if the first attempt fails
+          return fetch('/components/mobile-sidebar.html');
+        }
+        return res;
+      })
+      .then(res => res.text())
+      .then(html => {
+        // Insert sidebar HTML
+        document.body.insertAdjacentHTML('beforeend', html);
+        
+        // Load mobile sidebar script
+        var sidebarScript = document.createElement('script');
+        sidebarScript.src = 'assets/js/mobile-sidebar.js';
+        document.body.appendChild(sidebarScript);
+
+      })
+      .catch(error => {
+        console.error('Error loading mobile sidebar:', error);
+      });
+  });
+</script>
 </body>
 </html> 
