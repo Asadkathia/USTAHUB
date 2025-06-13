@@ -5,747 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="UstaHub - Find Local Services">
     <meta name="author" content="UstaHub">
-    <title>Service Category - UstaHub</title>
-
-    <!-- Favicon-->
     <link rel="shortcut icon" href="assets/img/favicon.ico">
 
-    <!-- Google Fonts-->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-    <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-
-    <!-- AOS CSS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-    <!-- Custom styles -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Varela+Round" rel="stylesheet">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/selectize.css" type="text/css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/rtl.css" id="rtl-stylesheet" disabled>
     <link rel="stylesheet" href="assets/css/user.css">
-    <link rel="stylesheet" href="assets/css/booking-modal.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/page-hero.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+        });
+    </script>
     <!-- Font Awesome for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
+    <link rel="stylesheet" href="assets/css/bottom-navbar.css">
 
-    <style>
-        /* Top Navbar Styles */
-        .top-navbar {
-            border-bottom: none;
-            background: transparent !important;
-            padding: 12px 0;
-            position: relative;
-            z-index: 5;
-        }
-        .top-navbar .nav-left {
-            display: flex;
-            align-items: center;
-        }
-        .top-navbar .nav-right {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 24px;
-        }
-        .top-navbar .nav-link {
-            color: #fff !important;
-            font-weight: 500;
-            font-size: 1.1rem;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 24px;
-            transition: all 0.3s ease;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-        }
-        .top-navbar .nav-link:hover {
-            background: rgba(255,255,255,0.15);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        .top-navbar .brand img {
-            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
-            transition: transform 0.3s ease;
-        }
-        .top-navbar .brand:hover img {
-            transform: scale(1.05);
-        }
-        @media (max-width: 991.98px) {
-            .top-navbar .nav-right {
-                gap: 12px;
-            }
-            .top-navbar .nav-link {
-                font-size: 1rem;
-                padding: 6px 12px;
-            }
-        }
-        @media (max-width: 767.98px) {
-            .top-navbar {
-                padding: 8px 0;
-            }
-            .top-navbar .nav-right {
-                gap: 8px;
-            }
-            .top-navbar .nav-link {
-                font-size: 0.9rem;
-                padding: 4px 8px;
-            }
-        }
+    <link rel="stylesheet" href="assets/css/top-navbar.css">
+    <link rel="stylesheet" href="assets/css/font-awesome-colors.css">
+    <link rel="stylesheet" href="assets/css/hero-carousel.css">
 
-        /* Hero Section Styles */
-        .hero-header {
-            position: relative;
-            width: 100%;
-            min-height: 520px;
-            background-image: url('assets/img/hero-background-image-01.jpg');
-            background-size: cover;
-            background-position: center;
-            z-index: 1;
-        }
-        .hero-header .overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.45);
-            z-index: 2;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 4;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 300px;
-            color: #fff;
-            text-align: center;
-            padding-top: 140px;
-            padding-bottom: 40px;
-        }
-        .hero-content h1 {
-            color: #fff;
-            font-size: 3.2rem;
-            font-weight: 700;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.25);
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            animation: fadeInDown 1s ease-out;
-        }
-        .hero-content .subtitle {
-            font-size: 1.4rem;
-            color: rgba(255,255,255,0.9);
-            margin-bottom: 2rem;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.2);
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script type="module" src="assets/js/supabase.js"></script>
+    <script src="assets/js/navbars.js"></script>
+    
+    <!-- Booking Modal CSS - Load last to override other styles -->
+    <link rel="stylesheet" href="assets/css/booking-modal.css">
+    
+    <!-- Enhanced Service Listings CSS -->
+    <link rel="stylesheet" href="assets/css/service-listings.css">
 
-        /* Service Grid Styles */
-        .services-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            padding: 4rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        .service-card {
-            background: #fff;
-            border-radius: 16px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            position: relative;
-            overflow: hidden;
-        }
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-        }
-        .service-card i {
-            font-size: 3rem;
-            color: #e00707;
-            margin-bottom: 1.5rem;
-        }
-        .service-card h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #222;
-        }
-        .service-card p {
-            color: #666;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-        .service-card .subcategories {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-            justify-content: center;
-        }
-        .service-card .subcategories span {
-            background: #f5f5f5;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: #555;
-            transition: all 0.3s ease;
-        }
-        .service-card .subcategories span:hover {
-            background: #e00707;
-            color: #fff;
-        }
-        .service-card .btn-primary {
-            background: #e00707;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 25px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        .service-card .btn-primary:hover {
-            background: #b00606;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(224,7,7,0.2);
-        }
+    <title>Service Category - UstaHub</title>
 
-        /* Loading Spinner */
-        .loading-spinner {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
-        }
-        .loading-spinner i {
-            font-size: 3rem;
-            color: #e00707;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 991.98px) {
-            .services-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                padding: 3rem 1.5rem;
-            }
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-            .hero-content .subtitle {
-                font-size: 1.2rem;
-            }
-        }
-        @media (max-width: 767.98px) {
-            .services-grid {
-                grid-template-columns: 1fr;
-                padding: 2rem 1rem;
-            }
-            .hero-content h1 {
-                font-size: 2rem;
-            }
-            .hero-content .subtitle {
-                font-size: 1.1rem;
-            }
-            .service-card {
-                padding: 1.5rem;
-            }
-        }
-
-        /* Bottom Navbar Styles */
-        .bottom-navbar {
-            border-bottom: 1px solid #e0e0e0;
-            background: transparent !important;
-            z-index: 1040;
-            min-height: 56px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        .custom-navbar.bottom-navbar .nav-center {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        .nav-item {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        .nav-item > a {
-            color: #333;
-            font-weight: 500;
-            font-size: 1.08rem;
-            padding: 12px 18px;
-            border-radius: 22px;
-            text-decoration: none;
-            transition: background 0.2s, color 0.2s;
-            display: flex;
-            align-items: center;
-        }
-        .nav-item > a:hover, .nav-item > a.active {
-            background: #e00707;
-            color: #fff;
-        }
-        .grid-dropdown {
-            display: none;
-            position: absolute;
-            left: 50%;
-            top: 100%;
-            transform: translateX(-50%);
-            grid-template-columns: 1fr 1fr;
-            gap: 0 32px;
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-            padding: 24px 32px;
-            min-width: 520px;
-            color: #222;
-            z-index: 1000;
-        }
-        .grid-dropdown .dropdown-col {
-            display: flex;
-            flex-direction: column;
-        }
-        .grid-dropdown a {
-            display: flex;
-            align-items: center;
-            padding: 8px 0;
-            color: #222;
-            font-size: 1.08rem;
-            border-radius: 8px;
-            transition: background 0.15s, color 0.15s;
-            text-decoration: none;
-        }
-        .grid-dropdown a i {
-            font-size: 1.2em;
-            margin-right: 12px;
-            color: #e00707;
-            min-width: 22px;
-            text-align: center;
-            transition: color 0.15s;
-        }
-        .grid-dropdown a:hover {
-            background: #fbeaec;
-            color: #e00707;
-        }
-        .grid-dropdown a:hover i {
-            color: #b00606;
-        }
-        .bottom-navbar .nav-item.dropdown > a {
-            padding: 0 18px;
-            line-height: 56px;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-            display: block;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-            background: transparent !important;
-            transition: color 0.2s;
-        }
-        .bottom-navbar .nav-item.dropdown > a:hover {
-            color: #fff;
-            background: transparent !important;
-            opacity: 0.9;
-        }
-        .nav-item.dropdown:hover > .grid-dropdown {
-            display: grid;
-        }
-        @media (max-width: 991.98px) {
-            .bottom-navbar {
-                min-height: 48px;
-                padding: 0 8px;
-            }
-            .nav-menu {
-                gap: 1rem;
-            }
-            .grid-dropdown {
-                min-width: 320px;
-                padding: 1rem 0.5rem;
-                grid-template-columns: 1fr;
-            }
-        }
-        @media (max-width: 767.98px) {
-            .bottom-navbar {
-                min-height: 40px;
-                padding: 0 2px;
-            }
-            .nav-menu {
-                gap: 0.5rem;
-            }
-            .grid-dropdown {
-                min-width: 220px;
-                padding: 0.5rem 0.2rem;
-            }
-        }
-
-        /* Service List Item Styles */
-        .service-list-item {
-            display: flex;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            padding: 2.5rem;
-            transition: box-shadow 0.3s ease;
-            border: 1px solid #e0e0e0;
-        }
-
-        .service-list-item:hover {
-            box-shadow: 0 6px 20px rgba(0,0,0,0.18);
-        }
-
-        .service-list-item__main {
-            display: flex;
-            flex-grow: 1;
-            gap: 2.5rem;
-        }
-
-        .service-list-item__image {
-            flex-shrink: 0;
-            width: 160px;
-            height: 160px;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .service-list-item__image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .service-list-item__details {
-            flex-grow: 1;
-        }
-
-        .service-list-item__name {
-            font-size: 1.7rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        .service-list-item__badges {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 0.9rem;
-        }
-
-        .service-list-item__badges .badge {
-            font-size: 0.9rem;
-            padding: 0.4em 0.8em;
-            border-radius: 6px;
-        }
-
-        .service-list-item__badges .top-pro {
-            background-color: #e6f7ff;
-            color: #096dd9;
-            border: 1px solid #91d5ff;
-        }
-        .service-list-item__badges .top-pro i {
-            color: #096dd9;
-        }
-
-        .service-list-item__badges .rating {
-            font-size: 1rem;
-            color: #555;
-        }
-        .service-list-item__badges .rating i {
-            color: #fadb14;
-            margin-right: 0.1rem;
-        }
-
-        .service-list-item__licensed {
-            margin-bottom: 0.95rem;
-        }
-        .service-list-item__licensed .badge.licensed-pro {
-            font-size: 0.9rem;
-            padding: 0.4em 0.8em;
-        }
-         .service-list-item__licensed .badge.licensed-pro i {
-            color: #389e0d;
-        }
-
-        .service-list-item__meta {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 1rem 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.7rem 1.4rem;
-            font-size: 1rem;
-            color: #777;
-        }
-
-        .service-list-item__meta li {
-            display: flex;
-            align-items: center;
-        }
-
-        .service-list-item__meta li i {
-            margin-right: 0.5rem;
-            color: #888;
-        }
-
-        .service-list-item__review {
-            font-size: 1rem;
-            color: #555;
-            margin-bottom: 0;
-            line-height: 1.65;
-        }
-
-        .service-list-item__review a {
-            color: #e00707;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .service-list-item__review a:hover {
-            text-decoration: underline;
-        }
-
-        .service-list-item__actions {
-            flex-shrink: 0;
-            text-align: right;
-            margin-left: 2.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            justify-content: space-between;
-        }
-
-        .service-list-item__pricing {
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .service-list-item__pricing .price-label {
-            display: block;
-            font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 0.2rem;
-        }
-
-        .service-list-item__pricing .price-value {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #e00707;
-        }
-
-        .service-list-item__buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            width: 100%;
-            min-width: 160px;
-        }
-
-        .service-list-item__buttons .btn {
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            text-align: center;
-            white-space: nowrap;
-        }
-
-        .service-list-item__buttons .view-details-btn {
-            color: #e00707;
-            border-color: #e00707;
-        }
-
-        .service-list-item__buttons .view-details-btn:hover {
-            background-color: #e00707;
-            border-color: #e00707;
-            color: #fff;
-        }
-
-        .service-list-item__buttons .book-now-btn {
-            background-color: #e00707;
-            border-color: #e00707;
-            color: #fff;
-        }
-
-        .service-list-item__buttons .book-now-btn:hover {
-            background-color: #b00606;
-            border-color: #b00606;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(224,7,7,0.25);
-        }
-
-        .service-list-item__provider {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-            color: #666;
-        }
-
-        .service-list-item__provider i {
-            margin-right: 0.5rem;
-            color: #e00707;
-        }
-
-        .service-list-item__estimate {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 1.2rem;
-        }
-
-        .service-list-item__actions .btn.view-profile-btn {
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            background-color: #e00707;
-            border-color: #e00707;
-            min-width: 150px;
-            font-weight: 600;
-        }
-        .service-list-item__actions .btn.view-profile-btn:hover {
-            background-color: #b00606;
-            border-color: #b00606;
-        }
-
-        /* New styles for rating and reviews */
-        .service-list-item__rating-reviews {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.75rem;
-            gap: 0.5rem;
-        }
-
-        .service-list-item__rating-reviews .stars {
-            color: #fadb14;
-            font-size: 1.1rem;
-        }
-        .service-list-item__rating-reviews .stars i {
-            margin-right: 1px;
-        }
-
-        .service-list-item__rating-reviews .rating-value {
-            font-weight: 600;
-            color: #333;
-            font-size: 1rem;
-        }
-
-        .service-list-item__rating-reviews .review-count {
-            font-size: 0.95rem;
-            color: #666;
-        }
-        
-        .service-list-item__description {
-            font-size: 1rem;
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 0.8rem;
-        }
-
-        .service-list-item__feedback {
-            background-color: #f8f9fa;
-            padding: 0.8rem 1rem;
-            border-radius: 6px;
-            margin-top: 0.5rem; 
-        }
-
-        .service-list-item__feedback .feedback-text {
-            font-size: 0.95rem;
-            color: #444;
-            font-style: italic;
-            margin-bottom: 0.4rem;
-            line-height: 1.5;
-        }
-
-        .service-list-item__feedback .read-more-reviews {
-            font-size: 0.9rem;
-            color: #e00707;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .service-list-item__feedback .read-more-reviews:hover {
-            text-decoration: underline;
-        }
-        /* End of new styles for rating and reviews */
-
-        /* Responsive adjustments for the list view */
-        @media (max-width: 767.98px) {
-            .service-list-item {
-                flex-direction: column;
-                padding: 1.75rem;
-            }
-            .service-list-item__main {
-                flex-direction: column;
-                gap: 1.25rem;
-            }
-            .service-list-item__image {
-                width: 120px;
-                height: 120px;
-                margin-bottom: 1.25rem;
-            }
-            .service-list-item__name {
-                font-size: 1.5rem;
-            }
-            .service-list-item__review,
-            .service-list-item__meta,
-            .service-list-item__badges .rating,
-            .service-list-item__badges .badge,
-            .service-list-item__licensed .badge.licensed-pro {
-                font-size: 0.95rem;
-            }
-            .service-list-item__estimate {
-                font-size: 0.95rem;
-                margin-top: 0.5rem;
-            }
-             .service-list-item__actions .btn.view-profile-btn {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.95rem;
-            }
-        }
-    </style>
 </head>
 <body>
-    <div class="hero-header">
+
+    <!-- Mount point for detached dropdown list (for custom dropdown, must be outside all containers) -->
+    <div id="dropdown-mount"></div>
+    <!-- React Hero Section Mount Point -->
+    <div id="react-hero"></div>
+
+    <div class="hero-header hero-services">
         <div class="overlay"></div>
         <div id="navbar-top"></div>
         <div id="navbar-bottom"></div>
@@ -756,27 +76,20 @@
             </div>
         </div>
     </div>
-
-    <main class="service-category-container">
+    <main class="service-category-container section-bg-green">
         <div class="loading-spinner" id="loadingSpinner">
             <i class="fas fa-spinner"></i>
         </div>
         <div class="services-grid" id="servicesGrid"></div>
     </main>
-
     <!-- JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="assets/js/supabase.js"></script>
-    <script src="assets/js/navbars.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    
+    
+    
+    
     <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true
-        });
+        // AOS initialization is now handled in the head section
 
         const categoryHierarchy = {
             "home-garden": [
@@ -804,7 +117,6 @@
             ]
         };
         const mainCategories = Object.keys(categoryHierarchy);
-
         // Function to get URL parameters
         function getUrlParameter(name) {
             name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -812,14 +124,13 @@
             var results = regex.exec(location.search);
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
-
-        // Function to create service list item with animation (Enhanced with booking)
+        // Function to create service list item with enhanced layout (Provider Icon, Description, Location, Price)
         function createServiceListItem(service, index) {
             const listItem = document.createElement('div');
             listItem.className = 'service-list-item';
             listItem.setAttribute('data-aos', 'fade-up');
             listItem.setAttribute('data-aos-delay', index * 50);
-
+            
             // Mock data/placeholders for fields not directly in current 'service' object
             const rating = service.rating || (Math.random() * (5 - 3.5) + 3.5).toFixed(1);
             const reviewCount = service.review_count || Math.floor(Math.random() * 200) + 10;
@@ -829,12 +140,15 @@
             const providerName = service.provider ? `${service.provider.first_name} ${service.provider.last_name}` : 'Professional Provider';
             const servicePrice = service.price ? `$${service.price}/hr` : 'Contact for pricing';
             
+            // Location information (mock data for now, can be enhanced with real location)
+            const serviceLocation = service.location || service.address || 'Local Area';
+            const distance = service.distance || (Math.random() * 10 + 1).toFixed(1);
+            
             // Generate star icons based on rating
             let starsHTML = '';
             const fullStars = Math.floor(rating);
             const halfStar = rating % 1 >= 0.5;
             const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
-
             for (let i = 0; i < fullStars; i++) {
                 starsHTML += '<i class="fas fa-star"></i>';
             }
@@ -844,22 +158,33 @@
             for (let i = 0; i < emptyStars; i++) {
                 starsHTML += '<i class="far fa-star"></i>';
             }
-
-            // Create a simple SVG placeholder as base64 data URI
+            
+            // Enhanced provider image placeholder with better design
             const placeholderImage = 'data:image/svg+xml;base64,' + btoa(`
                 <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="160" height="160" fill="#e0e0e0"/>
-                    <text x="80" y="85" font-family="Arial, sans-serif" font-size="14" fill="#666" text-anchor="middle">Service</text>
+                    <defs>
+                        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#24B47E;stop-opacity:0.8" />
+                            <stop offset="100%" style="stop-color:#4BDB97;stop-opacity:0.6" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="160" height="160" fill="url(#grad)"/>
+                    <circle cx="80" cy="60" r="25" fill="white" opacity="0.9"/>
+                    <path d="M 55 60 Q 55 45 80 45 Q 105 45 105 60 Q 105 70 95 75 L 95 85 Q 95 95 80 95 Q 65 95 65 85 L 65 75 Q 55 70 55 60 Z" fill="white" opacity="0.7"/>
+                    <text x="80" y="130" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle" font-weight="bold">${providerName.split(' ').map(n => n[0]).join('').toUpperCase()}</text>
                 </svg>
             `);
-
+            
+            // Create the enhanced listing structure
             listItem.innerHTML = `
                 <div class="service-list-item__main">
                     <div class="service-list-item__image">
-                        <img src="${service.image_url || placeholderImage}" alt="${service.title || 'Service Image'}" onerror="this.src='${placeholderImage}'">
+                        <img src="${service.image_url || service.provider_image || placeholderImage}" 
+                             alt="${providerName}" 
+                             onerror="this.src='${placeholderImage}'">
                     </div>
                     <div class="service-list-item__details">
-                        <h3 class="service-list-item__name">${index + 1}. ${service.title || 'Service Title'}</h3>
+                        <h3 class="service-list-item__name">${service.title || 'Service Title'}</h3>
                         <div class="service-list-item__provider">
                             <i class="fas fa-user-tie"></i>
                             <span>by ${providerName}</span>
@@ -869,10 +194,14 @@
                             <span class="rating-value">${rating}</span>
                             <span class="review-count">(${reviewCount} reviews)</span>
                         </div>
-                        <p class="service-list-item__description">${service.description || "Service description."}</p>
+                        <p class="service-list-item__description">${service.description || "Professional service tailored to your needs. Our experienced provider ensures quality results and customer satisfaction."}</p>
+                        <div class="service-list-item__location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${serviceLocation} • ${distance} km away</span>
+                        </div>
                         <div class="service-list-item__feedback">
                             <p class="feedback-text">"${sampleReview.substring(0, 100)}${sampleReview.length > 100 ? '...' : ''}"</p>
-                            ${sampleReview.length > 100 ? `<a href="service-details.html?serviceId=${service.id}#reviews" class="read-more-reviews">Read more</a>` : ''}
+                            ${sampleReview.length > 100 ? `<a href="service-details.html?serviceId=${service.id}#reviews" class="read-more-reviews">Read more reviews</a>` : ''}
                         </div>
                     </div>
                 </div>
@@ -882,33 +211,36 @@
                         <span class="price-value">${servicePrice}</span>
                     </div>
                     <div class="service-list-item__buttons">
-                        <a href="service-details.html?serviceId=${service.id}" class="btn btn-outline-primary view-details-btn">View Details</a>
-                        <button class="btn btn-primary book-now-btn" data-service-id="${service.id}" data-provider-id="${service.provider_id}" data-service-title="${service.title}">
-                            <i class="fas fa-calendar-check me-2"></i>Book Now
+                        <a href="service-details.html?serviceId=${service.id}" class="btn btn-outline-primary view-details-btn">
+                            <i class="fas fa-info-circle"></i>View Details
+                        </a>
+                        <button class="btn btn-primary book-now-btn" 
+                                data-service-id="${service.id}" 
+                                data-provider-id="${service.provider_id}" 
+                                data-service-title="${service.title}"
+                                data-service-image="${service.image_url || service.provider_image || placeholderImage}"
+                                data-provider-name="${providerName}">
+                            <i class="fas fa-calendar-check"></i>Book Now
                         </button>
                     </div>
                 </div>
             `;
             return listItem;
         }
-
         // Function to show loading spinner
         function showLoading() {
             document.getElementById('loadingSpinner').style.display = 'block';
             document.getElementById('servicesGrid').style.display = 'none';
         }
-
         // Function to hide loading spinner
         function hideLoading() {
             document.getElementById('loadingSpinner').style.display = 'none';
             document.getElementById('servicesGrid').style.display = 'grid';
         }
-
         // Function to load and display services with animations
         async function loadServices() {
             const categoryNameFromUrl = getUrlParameter('category');
             showLoading();
-            
             try {
                 if (!categoryNameFromUrl) {
                     document.getElementById('categoryTitle').textContent = 'No Category Specified';
@@ -917,11 +249,9 @@
                     hideLoading();
                     return;
                 }
-
                 let servicesToDisplay = [];
                 let supabaseError = null;
                 let pageTitleCategoryName = categoryNameFromUrl.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-
                 if (mainCategories.includes(categoryNameFromUrl)) {
                     const subCategoriesToFetch = categoryHierarchy[categoryNameFromUrl];
                     if (subCategoriesToFetch && subCategoriesToFetch.length > 0) {
@@ -953,45 +283,40 @@
                     servicesToDisplay = data;
                     supabaseError = error;
                 }
-
                 if (supabaseError) throw supabaseError;
-
                 const titleElement = document.getElementById('categoryTitle');
                 const descriptionElement = document.getElementById('categoryDescription');
-                
                 titleElement.textContent = pageTitleCategoryName + ' Services';
                 descriptionElement.textContent = 'Explore our wide range of ' + pageTitleCategoryName.toLowerCase() + ' services offered by trusted professionals.';
                 document.title = pageTitleCategoryName + ' Services - UstaHub';
-                
                 const servicesGrid = document.getElementById('servicesGrid');
                 servicesGrid.innerHTML = '';
-                
                 if (servicesToDisplay && servicesToDisplay.length > 0) {
                     servicesToDisplay.forEach((service, index) => {
                         const serviceItem = createServiceListItem(service, index);
                         servicesGrid.appendChild(serviceItem);
                     });
-                    
-                    // Add event listeners for Book Now buttons
+                    // Add event listeners for Book Now buttons with enhanced data
                     document.querySelectorAll('.book-now-btn').forEach(button => {
                         button.addEventListener('click', function(e) {
                             e.preventDefault();
                             const serviceId = this.getAttribute('data-service-id');
                             const providerId = this.getAttribute('data-provider-id');
                             const serviceTitle = this.getAttribute('data-service-title');
+                            const serviceImage = this.getAttribute('data-service-image');
+                            const providerName = this.getAttribute('data-provider-name');
                             
-                            // For now, show a placeholder modal (we'll implement the full modal next)
+                            // Open the enhanced booking modal with complete information
                             if (window.openBookingModal) {
-                                window.openBookingModal(serviceId, providerId, serviceTitle);
+                                window.openBookingModal(serviceId, providerId, serviceTitle, serviceImage, providerName);
                             } else {
-                                alert(`Booking functionality coming soon!\nService: ${serviceTitle}\nService ID: ${serviceId}`);
+                                alert(`Booking functionality coming soon!\nService: ${serviceTitle}\nProvider: ${providerName}\nService ID: ${serviceId}`);
                             }
                         });
                     });
                 } else {
                     servicesGrid.innerHTML = '<div class="col-12 text-center py-5"><i class="fas fa-search-dollar fa-3x text-muted mb-3"></i><h4>No Services Found</h4><p class="text-muted">There are currently no services listed in the "' + pageTitleCategoryName.toLowerCase() + '" category. Check back later or explore other categories.</p></div>';
                 }
-
                 hideLoading();
             } catch (error) {
                 console.error('Error loading services:', error);
@@ -1002,55 +327,101 @@
                 hideLoading();
             }
         }
-
         document.addEventListener('DOMContentLoaded', loadServices);
     </script>
-
     <!-- Include Booking Modal Component -->
     <div id="bookingModalContainer"></div>
-
-    <!-- Include Booking Modal JavaScript -->
-    <script src="assets/js/booking-modal.js"></script>
-    
     <script>
-        // Load booking modal component
+        // Load modern booking modal component and initialize
         fetch('assets/components/booking-modal.html')
             .then(response => response.text())
             .then(html => {
                 document.getElementById('bookingModalContainer').innerHTML = html;
+                console.log('Booking modal HTML loaded successfully');
                 
-                // Wait for Supabase to be loaded before initializing BookingModal
+                // Now load the JavaScript
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = 'assets/js/booking-modal.js';
+                    script.onload = () => {
+                        console.log('Booking modal JavaScript loaded successfully');
+                        resolve();
+                    };
+                    script.onerror = () => reject(new Error('Failed to load booking modal JavaScript'));
+                    document.head.appendChild(script);
+                });
+            })
+            .then(() => {
+                // Wait for Supabase and then initialize BookingModal
                 function initializeBookingModal() {
-                    if (typeof BookingModal !== 'undefined' && window.supabase) {
+                    console.log('Attempting to initialize BookingModal...');
+                    console.log('BookingModal available:', typeof window.BookingModal !== 'undefined');
+                    console.log('Supabase available:', typeof window.supabase !== 'undefined');
+                    
+                    if (typeof window.BookingModal !== 'undefined' && window.supabase) {
                         try {
-                            window.bookingModal = new BookingModal();
+                            window.bookingModal = new window.BookingModal();
                             
-                            // Global function to open booking modal
-                            window.openBookingModal = function(serviceId, providerId, serviceTitle) {
-                                console.log('Opening booking modal for:', serviceTitle);
-                                window.bookingModal.openModal(serviceId, providerId, serviceTitle);
+                            // Enhanced global function to open booking modal
+                            window.openBookingModal = function(serviceId, providerId, serviceTitle, serviceImage = '', providerName = '') {
+                                console.log('Opening modern booking modal for:', serviceTitle);
+                                if (window.bookingModal) {
+                                    window.bookingModal.openModal(serviceId, providerId, serviceTitle, serviceImage, providerName);
+                                } else {
+                                    alert('Booking modal is not yet initialized. Please try again in a moment.');
+                                }
                             };
                             
-                            console.log('Booking modal initialized successfully');
+                            console.log('Modern booking modal initialized successfully');
+                            return true;
                         } catch (error) {
                             console.error('Error initializing booking modal:', error);
+                            return false;
                         }
-                    } else if (typeof BookingModal === 'undefined') {
-                        console.error('BookingModal class not found');
                     } else {
-                        // Supabase not loaded yet, wait a bit more
-                        setTimeout(initializeBookingModal, 100);
+                        if (typeof window.BookingModal === 'undefined') {
+                            console.log('BookingModal class not yet available, retrying...');
+                        }
+                        if (!window.supabase) {
+                            console.log('Supabase not yet available, retrying...');
+                        }
+                        return false;
                     }
                 }
                 
-                // Start trying to initialize after a short delay
-                setTimeout(initializeBookingModal, 100);
+                // Try to initialize immediately
+                if (!initializeBookingModal()) {
+                    // If initialization fails, retry periodically
+                    let retryCount = 0;
+                    const maxRetries = 50; // Try for up to 5 seconds
+                    
+                    const retryInterval = setInterval(() => {
+                        retryCount++;
+                        console.log(`Retry attempt ${retryCount}/${maxRetries}`);
+                        
+                        if (initializeBookingModal()) {
+                            clearInterval(retryInterval);
+                        } else if (retryCount >= maxRetries) {
+                            clearInterval(retryInterval);
+                            console.error('Failed to initialize booking modal after maximum retries');
+                            
+                            // Fallback: Create a simple openBookingModal function
+                            window.openBookingModal = function(serviceId, providerId, serviceTitle) {
+                                alert(`Booking system is loading...\n\nService: ${serviceTitle}\nService ID: ${serviceId}\n\nPlease refresh the page and try again.`);
+                            };
+                        }
+                    }, 100);
+                }
             })
             .catch(error => {
                 console.error('Error loading booking modal:', error);
+                
+                // Fallback: Create a simple openBookingModal function
+                window.openBookingModal = function(serviceId, providerId, serviceTitle) {
+                    alert(`Booking system failed to load.\n\nService: ${serviceTitle}\nService ID: ${serviceId}\n\nPlease refresh the page and try again.`);
+                };
             });
     </script>
-
     <!-- Inject sidebar HTML and load sidebar JS after HTML is present -->
     <script>
         fetch('/components/mobile-sidebar.html')
@@ -1060,6 +431,47 @@
                 var script = document.createElement('script');
                 script.src = '/assets/js/mobile-sidebar.js';
                 document.body.appendChild(script);
+            });
+    </script>
+<script src="assets/js/jquery-3.3.1.min.js"></script>
+
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBEDfNcQRmKQEyulDN8nGWjLYPm8s4YB58&libraries=places"></script>
+<script src="assets/js/selectize.min.js"></script>
+<script src="assets/js/masonry.pkgd.min.js"></script>
+<script src="assets/js/icheck.min.js"></script>
+<script src="assets/js/jquery.validate.min.js"></script>
+<script src="assets/js/custom.js"></script>
+<script src="assets/js/custom-dropdown.js"></script>
+<script src="assets/js/dashboard.js"></script>
+<script src="assets/js/hero-carousel.js"></script>
+
+<!-- For integrating with Mobile Sidebar -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Load mobile sidebar with absolute path
+    fetch('components/mobile-sidebar.html')
+      .then(res => {
+        if (!res.ok) {
+          // Try with a different path if the first attempt fails
+          return fetch('/components/mobile-sidebar.html');
+        }
+        return res;
+      })
+      .then(res => res.text())
+      .then(html => {
+        // Insert sidebar HTML
+        document.body.insertAdjacentHTML('beforeend', html);
+        
+        // Load mobile sidebar script
+        var sidebarScript = document.createElement('script');
+        sidebarScript.src = 'assets/js/mobile-sidebar.js';
+        document.body.appendChild(sidebarScript);
+
+      })
+      .catch(error => {
+        console.error('Error loading mobile sidebar:', error);
+      });
             });
     </script>
 </body>

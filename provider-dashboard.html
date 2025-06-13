@@ -5,285 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="UstaHub - Service Provider Dashboard">
     <meta name="author" content="UstaHub">
-    <title>Service Provider Dashboard - UstaHub</title>
-
-    <!-- Favicon-->
     <link rel="shortcut icon" href="assets/img/favicon.ico">
 
-    <!-- Google Fonts-->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-    <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-
-    <!-- AOS CSS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-    <!-- Custom styles -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Varela+Round" rel="stylesheet">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/selectize.css" type="text/css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/rtl.css" id="rtl-stylesheet" disabled>
     <link rel="stylesheet" href="assets/css/user.css">
     <link rel="stylesheet" href="assets/css/custom.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/css/page-hero.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+        });
+    </script>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
+    <link rel="stylesheet" href="assets/css/bottom-navbar.css">
 
-    <style>
-        /* Top Navbar Styles */
-        .top-navbar {
-            border-bottom: none;
-            background: transparent !important;
-            padding: 12px 0;
-            position: relative;
-            z-index: 5;
-        }
-        .top-navbar .nav-left {
-            display: flex;
-            align-items: center;
-        }
-        .top-navbar .nav-right {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 24px;
-        }
-        .top-navbar .nav-link {
-            color: #fff !important;
-            font-weight: 500;
-            font-size: 1.1rem;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 24px;
-            transition: all 0.3s ease;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-        }
-        .top-navbar .nav-link:hover {
-            background: rgba(255,255,255,0.15);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        .top-navbar .brand img {
-            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
-            transition: transform 0.3s ease;
-        }
-        .top-navbar .brand:hover img {
-            transform: scale(1.05);
-        }
-        @media (max-width: 991.98px) {
-            .top-navbar .nav-right {
-                gap: 12px;
-            }
-            .top-navbar .nav-link {
-                font-size: 1rem;
-                padding: 6px 12px;
-            }
-        }
-        @media (max-width: 767.98px) {
-            .top-navbar {
-                padding: 8px 0;
-            }
-            .top-navbar .nav-right {
-                gap: 8px;
-            }
-            .top-navbar .nav-link {
-                font-size: 0.9rem;
-                padding: 4px 8px;
-            }
-        }
-        /* Hero Section Styles */
-        .hero-header {
-            position: relative;
-            width: 100%;
-            min-height: 520px;
-            background-image: url('assets/img/hero-background-image-01.jpg');
-            background-size: cover;
-            background-position: center;
-            z-index: 1;
-        }
-        .hero-header .overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.45);
-            z-index: 2;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 4;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 300px;
-            color: #fff;
-            text-align: center;
-            padding-top: 140px;
-            padding-bottom: 40px;
-        }
-        .hero-content h1 {
-            color: #fff;
-            font-size: 3.2rem;
-            font-weight: 700;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.25);
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            animation: fadeInDown 1s ease-out;
-        }
-        .hero-content .subtitle {
-            font-size: 1.4rem;
-            color: rgba(255,255,255,0.9);
-            margin-bottom: 2rem;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.2);
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
-        /* Bottom Navbar Styles */
-        .bottom-navbar {
-            border-bottom: 1px solid #e0e0e0;
-            background: transparent !important;
-            z-index: 1040;
-            min-height: 56px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        .custom-navbar.bottom-navbar .nav-center {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        .nav-item {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        .nav-item > a {
-            color: #333;
-            font-weight: 500;
-            font-size: 1.08rem;
-            padding: 12px 18px;
-            border-radius: 22px;
-            text-decoration: none;
-            transition: background 0.2s, color 0.2s;
-            display: flex;
-            align-items: center;
-        }
-        .nav-item > a:hover, .nav-item > a.active {
-            background: #e00707;
-            color: #fff;
-        }
-        .grid-dropdown {
-            display: none;
-            position: absolute;
-            left: 50%;
-            top: 100%;
-            transform: translateX(-50%);
-            grid-template-columns: 1fr 1fr;
-            gap: 0 32px;
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-            padding: 24px 32px;
-            min-width: 520px;
-            color: #222;
-            z-index: 1000;
-        }
-        .grid-dropdown .dropdown-col {
-            display: flex;
-            flex-direction: column;
-        }
-        .grid-dropdown a {
-            display: flex;
-            align-items: center;
-            padding: 8px 0;
-            color: #222;
-            font-size: 1.08rem;
-            border-radius: 8px;
-            transition: background 0.15s, color 0.15s;
-            text-decoration: none;
-        }
-        .grid-dropdown a i {
-            font-size: 1.2em;
-            margin-right: 12px;
-            color: #e00707;
-            min-width: 22px;
-            text-align: center;
-            transition: color 0.15s;
-        }
-        .grid-dropdown a:hover {
-            background: #fbeaec;
-            color: #e00707;
-        }
-        .grid-dropdown a:hover i {
-            color: #b00606;
-        }
-        .bottom-navbar .nav-item.dropdown > a {
-            padding: 0 18px;
-            line-height: 56px;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-            display: block;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-            background: transparent !important;
-            transition: color 0.2s;
-        }
-        .bottom-navbar .nav-item.dropdown > a:hover {
-            color: #fff;
-            background: transparent !important;
-            opacity: 0.9;
-        }
-        .nav-item.dropdown:hover > .grid-dropdown {
-            display: grid;
-        }
-        @media (max-width: 991.98px) {
-            .bottom-navbar {
-                min-height: 48px;
-                padding: 0 8px;
-            }
-            .nav-menu {
-                gap: 1rem;
-            }
-            .grid-dropdown {
-                min-width: 320px;
-                padding: 1rem 0.5rem;
-                grid-template-columns: 1fr;
-            }
-        }
-        @media (max-width: 767.98px) {
-            .bottom-navbar {
-                min-height: 40px;
-                padding: 0 2px;
-            }
-            .nav-menu {
-                gap: 0.5rem;
-            }
-            .grid-dropdown {
-                min-width: 220px;
-                padding: 0.5rem 0.2rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/top-navbar.css">
+    <link rel="stylesheet" href="assets/css/font-awesome-colors.css">
+    <link rel="stylesheet" href="assets/css/hero-carousel.css">
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script type="module" src="assets/js/supabase.js"></script>
+    <script src="assets/js/navbars.js"></script>
+
+    <title>Service Provider Dashboard - UstaHub</title>
+
 </head>
 <body class="provider-dashboard">
     <!-- Mount point for detached dropdown list -->
     <div id="dropdown-mount"></div>
+    <!-- React Hero Section Mount Point -->
+    <div id="react-hero"></div>
     
     <div class="page">
         <!-- Hero Section -->
-        <div class="hero-header">
+        <div class="hero-header hero-dashboard">
             <div class="overlay"></div>
             <div id="navbar-top"></div>
             <div id="navbar-bottom"></div>
@@ -339,8 +116,8 @@
                                 <div class="card shadow-sm text-center p-3">
                                     <h6>New Requests</h6>
                                     <h2 id="stat-requests">0</h2>
-                                    <div class="progress mt-2" style="height: 4px;">
-                                        <div class="progress-bar bg-primary" id="requests-progress" style="width: 0%"></div>
+                                    <div class="progress mt-2 progress-thin">
+                                        <div class="progress-bar bg-primary" id="requests-progress" class="progress-bar-animated"></div>
                                     </div>
                                     <small class="text-muted">Last 7 days</small>
                                 </div>
@@ -349,8 +126,8 @@
                                 <div class="card shadow-sm text-center p-3">
                                     <h6>Upcoming Bookings</h6>
                                     <h2 id="stat-bookings">0</h2>
-                                    <div class="progress mt-2" style="height: 4px;">
-                                        <div class="progress-bar bg-success" id="bookings-progress" style="width: 0%"></div>
+                                    <div class="progress mt-2 progress-thin">
+                                        <div class="progress-bar bg-success" id="bookings-progress" class="progress-bar-animated"></div>
                                     </div>
                                     <small class="text-muted">Next 7 days</small>
                                 </div>
@@ -359,8 +136,8 @@
                                 <div class="card shadow-sm text-center p-3">
                                     <h6>Jobs Completed</h6>
                                     <h2 id="stat-completed">0</h2>
-                                    <div class="progress mt-2" style="height: 4px;">
-                                        <div class="progress-bar bg-info" id="completed-progress" style="width: 0%"></div>
+                                    <div class="progress mt-2 progress-thin">
+                                        <div class="progress-bar bg-info" id="completed-progress" class="progress-bar-animated"></div>
                                     </div>
                                     <small class="text-muted">This month</small>
                                 </div>
@@ -479,7 +256,7 @@
                     <div class="row">
                         <div class="col-md-5">
                             <a href="#" class="brand">
-                                <img src="assets/img/logo.png" alt="UstaHub Logo" style="max-height: 48px; width: auto;">
+                                <img src="assets/img/logo.png" alt="UstaHub Logo" class="logo-img">
                             </a>
                             <p>
                                 UstaHub connects customers with trusted local service professionals. Find, compare, and book services for all your needs.
@@ -556,21 +333,22 @@
     <!-- JavaScript -->
     <script src="assets/js/jquery-3.3.1.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    
     <script src="assets/js/selectize.min.js"></script>
     <script src="assets/js/masonry.pkgd.min.js"></script>
     <script src="assets/js/icheck.min.js"></script>
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/custom-dropdown.js"></script>
-    <script type="module" src="assets/js/supabase.js"></script>
-    <script src="assets/js/navbars.js"></script>
+    
+    
     
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <!-- Then load dashboard and initialize -->
     <script src="assets/js/dashboard.js"></script>
+  <script src="assets/js/hero-carousel.js"></script>
     <script>
         // Wait for Supabase to be initialized
         window.addEventListener('load', async () => {

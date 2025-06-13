@@ -5,539 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="UstaHub - Service Details">
     <meta name="author" content="UstaHub">
-    <title>Service Details - UstaHub</title>
-
-    <!-- Favicon-->
     <link rel="shortcut icon" href="assets/img/favicon.ico">
 
-    <!-- Google Fonts-->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
-    <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-
-    <!-- AOS CSS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-    <!-- Custom styles -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Varela+Round" rel="stylesheet">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/selectize.css" type="text/css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/rtl.css" id="rtl-stylesheet" disabled>
+    <link rel="stylesheet" href="assets/css/user.css">
     <link rel="stylesheet" href="assets/css/custom.css">
-    <link rel="stylesheet" href="assets/css/booking-modal.css">
+    <link rel="stylesheet" href="assets/css/page-hero.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+        });
+    </script>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
+    <link rel="stylesheet" href="assets/css/bottom-navbar.css">
 
-    <style>
-        /* Top Navbar Styles */
-        .top-navbar {
-            border-bottom: none;
-            background: transparent !important;
-            padding: 12px 0;
-            position: relative;
-            z-index: 3;
-        }
-        .top-navbar .nav-left {
-            display: flex;
-            align-items: center;
-        }
-        .top-navbar .nav-right {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 24px;
-        }
-        .top-navbar .nav-link {
-            color: #fff !important;
-            font-weight: 500;
-            font-size: 1.1rem;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 24px;
-            transition: all 0.3s ease;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-        }
-        .top-navbar .nav-link:hover {
-            background: rgba(255,255,255,0.15);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        .top-navbar .brand img {
-            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
-            transition: transform 0.3s ease;
-        }
-        .top-navbar .brand:hover img {
-            transform: scale(1.05);
-        }
-        @media (max-width: 991.98px) {
-            .top-navbar .nav-right {
-                gap: 12px;
-            }
-            .top-navbar .nav-link {
-                font-size: 1rem;
-                padding: 6px 12px;
-            }
-        }
-        @media (max-width: 767.98px) {
-            .top-navbar {
-                padding: 8px 0;
-            }
-            .top-navbar .nav-right {
-                gap: 8px;
-            }
-            .top-navbar .nav-link {
-                font-size: 0.9rem;
-                padding: 4px 8px;
-            }
-        }
+    <link rel="stylesheet" href="assets/css/top-navbar.css">
+    <link rel="stylesheet" href="assets/css/font-awesome-colors.css">
+    <link rel="stylesheet" href="assets/css/hero-carousel.css">
 
-        /* Hero Section Styles */
-        .hero-header {
-            position: relative;
-            width: 100%;
-            min-height: 520px;
-            background-image: url('assets/img/hero-background-image-01.jpg');
-            background-size: cover;
-            background-position: center;
-            z-index: 1;
-        }
-        .hero-header .overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.45);
-            z-index: 2;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 4;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 300px;
-            color: #fff;
-            text-align: center;
-            padding-top: 40px;
-            padding-bottom: 40px;
-        }
-        .hero-content h1 {
-            color: #fff;
-            font-size: 3.2rem;
-            font-weight: 700;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.25);
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            animation: fadeInDown 1s ease-out;
-        }
-        .hero-content .subtitle {
-            font-size: 1.4rem;
-            color: rgba(255,255,255,0.9);
-            margin-bottom: 2rem;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.2);
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script type="module" src="assets/js/supabase.js"></script>
+    <script src="assets/js/navbars.js"></script>
+    
+    <!-- Booking Modal CSS - Load last to override other styles -->
+    <link rel="stylesheet" href="assets/css/booking-modal.css">
+    
+    <!-- Enhanced Service Listings CSS -->
+    <link rel="stylesheet" href="assets/css/service-listings.css">
 
-        /* Service Details Styles */
-        .service-details-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-        .service-section {
-            background: #fff;
-            border-radius: 16px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-        .service-section h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #222;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-        .service-section h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: #e00707;
-        }
-        .service-section p {
-            color: #666;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-        .subcategories-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-        .subcategories-list span {
-            background: #f5f5f5;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            font-size: 1rem;
-            color: #555;
-            transition: all 0.3s ease;
-        }
-        .subcategories-list span:hover {
-            background: #e00707;
-            color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(224,7,7,0.2);
-        }
-        .service-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        .feature-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1.5rem;
-            padding: 1.5rem;
-            background: #f8f8f8;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
-        .feature-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-        }
-        .feature-item i {
-            font-size: 2rem;
-            color: #e00707;
-        }
-        .feature-item h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #222;
-            margin-bottom: 0.5rem;
-        }
-        .feature-item p {
-            color: #666;
-            margin: 0;
-            line-height: 1.6;
-        }
-        .cta-section {
-            background: #fff;
-            border-radius: 16px;
-            padding: 3rem;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-        .cta-buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-        .cta-buttons .btn {
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            min-width: 200px;
-        }
-        .cta-buttons .btn-primary {
-            background: #e00707;
-            border-color: #e00707;
-            box-shadow: 0 4px 15px rgba(224,7,7,0.2);
-        }
-        .cta-buttons .btn-primary:hover {
-            background: #b00606;
-            border-color: #b00606;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(224,7,7,0.3);
-        }
-        .cta-buttons .btn-outline-primary {
-            color: #e00707;
-            border-color: #e00707;
-        }
-        .cta-buttons .btn-outline-primary:hover {
-            background: #e00707;
-            border-color: #e00707;
-            color: #fff;
-        }
-        .service-provider-info {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #eee;
-        }
-        .provider-card {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 1.5rem;
-            display: inline-block;
-        }
-        .provider-details h4 {
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-        .provider-details p {
-            color: #666;
-            margin-bottom: 1rem;
-        }
-        .provider-rating {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .provider-rating .stars {
-            color: #ffc107;
-        }
-        .provider-rating .rating-text {
-            color: #666;
-            font-size: 0.9rem;
-        }
-        @media (max-width: 768px) {
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            .cta-buttons .btn {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
+    <title>Service Details - UstaHub</title>
 
-        /* Loading Spinner */
-        .loading-spinner {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
-        }
-        .loading-spinner i {
-            font-size: 3rem;
-            color: #e00707;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 991.98px) {
-            .service-details-container {
-                padding: 3rem 1.5rem;
-            }
-            .service-section {
-                padding: 2rem;
-            }
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-            .hero-content .subtitle {
-                font-size: 1.2rem;
-            }
-        }
-        @media (max-width: 767.98px) {
-            .service-details-container {
-                padding: 2rem 1rem;
-            }
-            .service-section {
-                padding: 1.5rem;
-            }
-            .hero-content h1 {
-                font-size: 2rem;
-            }
-            .hero-content .subtitle {
-                font-size: 1.1rem;
-            }
-            .service-section h2 {
-                font-size: 1.5rem;
-            }
-            .feature-item {
-                padding: 1rem;
-            }
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            .cta-buttons .btn {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-
-        /* Bottom Navbar Styles */
-        .bottom-navbar {
-            border-bottom: 1px solid #e0e0e0;
-            background: transparent !important;
-            z-index: 1040;
-            min-height: 56px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-        .custom-navbar.bottom-navbar .nav-center {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        .nav-item {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        .nav-item > a {
-            color: #333;
-            font-weight: 500;
-            font-size: 1.08rem;
-            padding: 12px 18px;
-            border-radius: 22px;
-            text-decoration: none;
-            transition: background 0.2s, color 0.2s;
-            display: flex;
-            align-items: center;
-        }
-        .nav-item > a:hover, .nav-item > a.active {
-            background: #e00707;
-            color: #fff;
-        }
-        .grid-dropdown {
-            display: none;
-            position: absolute;
-            left: 50%;
-            top: 100%;
-            transform: translateX(-50%);
-            grid-template-columns: 1fr 1fr;
-            gap: 0 32px;
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-            padding: 24px 32px;
-            min-width: 520px;
-            color: #222;
-            z-index: 1000;
-        }
-        .grid-dropdown .dropdown-col {
-            display: flex;
-            flex-direction: column;
-        }
-        .grid-dropdown a {
-            display: flex;
-            align-items: center;
-            padding: 8px 0;
-            color: #222;
-            font-size: 1.08rem;
-            border-radius: 8px;
-            transition: background 0.15s, color 0.15s;
-            text-decoration: none;
-        }
-        .grid-dropdown a i {
-            font-size: 1.2em;
-            margin-right: 12px;
-            color: #e00707;
-            min-width: 22px;
-            text-align: center;
-            transition: color 0.15s;
-        }
-        .grid-dropdown a:hover {
-            background: #fbeaec;
-            color: #e00707;
-        }
-        .grid-dropdown a:hover i {
-            color: #b00606;
-        }
-        .bottom-navbar .nav-item.dropdown > a {
-            padding: 0 18px;
-            line-height: 56px;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-            display: block;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-            background: transparent !important;
-            transition: color 0.2s;
-        }
-        .bottom-navbar .nav-item.dropdown > a:hover {
-            color: #fff;
-            background: transparent !important;
-            opacity: 0.9;
-        }
-        .nav-item.dropdown:hover > .grid-dropdown {
-            display: grid;
-        }
-        @media (max-width: 991.98px) {
-            .bottom-navbar {
-                min-height: 48px;
-                padding: 0 8px;
-            }
-            .nav-menu {
-                gap: 1rem;
-            }
-            .grid-dropdown {
-                min-width: 320px;
-                padding: 1rem 0.5rem;
-                grid-template-columns: 1fr;
-            }
-        }
-        @media (max-width: 767.98px) {
-            .bottom-navbar {
-                min-height: 40px;
-                padding: 0 2px;
-            }
-            .nav-menu {
-                gap: 0.5rem;
-            }
-            .grid-dropdown {
-                min-width: 220px;
-                padding: 0.5rem 0.2rem;
-            }
-        }
-    </style>
 </head>
 <body>
-    <div class="hero-header">
+
+    <!-- Mount point for detached dropdown list (for custom dropdown, must be outside all containers) -->
+    <div id="dropdown-mount"></div>
+    <!-- React Hero Section Mount Point -->
+    <div id="react-hero"></div>
+
+    <div class="page">
+        <div class="hero-header hero-service-details">
         <div class="overlay"></div>
         <div id="navbar-top"></div>
         <div id="navbar-bottom"></div>
@@ -548,7 +77,6 @@
             </div>
         </div>
     </div>
-
     <main class="service-details-container">
         <div class="loading-spinner" id="loadingSpinner">
             <i class="fas fa-spinner"></i>
@@ -575,17 +103,30 @@
                 <div class="service-provider-info" id="providerInfo" style="display: none;">
                     <div class="provider-card">
                         <div class="provider-details">
-                            <h4 id="providerName">Provider Name</h4>
-                            <p id="providerSpecialty">Specialty</p>
-                            <div class="provider-rating">
-                                <span class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half"></i>
-                                </span>
-                                <span class="rating-text">4.8 (120+ reviews)</span>
+                            <div class="provider-avatar" id="providerAvatar">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="provider-info-text">
+                                <h4 id="providerName">Provider Name</h4>
+                                <p id="providerSpecialty">Specialty</p>
+                                <div class="provider-location" id="providerLocation">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Local Area</span>
+                                </div>
+                                <div class="provider-rating">
+                                    <span class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half"></i>
+                                    </span>
+                                    <span class="rating-text">4.8 (120+ reviews)</span>
+                                </div>
+                                <div class="provider-contact" id="providerContact">
+                                    <i class="fas fa-phone"></i>
+                                    <span>Contact available after booking</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -593,21 +134,17 @@
             </div>
         </div>
     </main>
-
     <!-- JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="assets/js/supabase.js"></script>
-    <script src="assets/js/navbars.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true
-        });
+    </div>
+    <!--end page-->
 
+
+    
+    
+    
+    
+    
+    <script>
         // Function to get URL parameters
         function getUrlParameter(name) {
             name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -615,14 +152,12 @@
             var results = regex.exec(location.search);
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
-
         // Function to create feature item with animation
         function createFeatureItem(feature, index) {
             const item = document.createElement('div');
             item.className = 'feature-item';
             item.setAttribute('data-aos', 'fade-up');
             item.setAttribute('data-aos-delay', index * 100);
-            
             item.innerHTML = `
                 <i class="fa ${feature.icon}"></i>
                 <div>
@@ -632,24 +167,20 @@
             `;
             return item;
         }
-
         // Function to show loading spinner
         function showLoading() {
             document.getElementById('loadingSpinner').style.display = 'block';
             document.querySelector('.service-content').style.display = 'none';
         }
-
         // Function to hide loading spinner
         function hideLoading() {
             document.getElementById('loadingSpinner').style.display = 'none';
             document.querySelector('.service-content').style.display = 'block';
         }
-
         // Function to load and display service details with animations
         async function loadServiceDetails() {
             const serviceId = getUrlParameter('serviceId');
             showLoading();
-            
             try {
                 const { data: service, error } = await window.supabase
                     .from('services')
@@ -661,23 +192,17 @@
                     `)
                     .eq('id', serviceId)
                     .single();
-
                 if (error || !service) throw error || new Error('Service not found');
-
                 // Update service header with animation
                 const title = document.getElementById('serviceTitle');
                 const description = document.getElementById('serviceDescription');
-                
                 title.textContent = service.title || service.name;
                 description.textContent = service.description;
-                
                 // Update page title
                 document.title = `${service.title || service.name} - UstaHub`;
-                
                 // Update about section
                 document.getElementById('serviceAbout').textContent = 
                     `Welcome to our ${service.title || service.name} service. We provide professional ${(service.title || service.name).toLowerCase()} solutions tailored to your needs. Our team of experts is dedicated to delivering high-quality service and ensuring your complete satisfaction.`;
-                
                 // Populate subcategories with animation (if available)
                 const subcategoriesList = document.getElementById('subcategoriesList');
                 if (service.subcategories && Array.isArray(service.subcategories)) {
@@ -687,7 +212,6 @@
                 } else {
                     subcategoriesList.innerHTML = `<span data-aos="fade-up">${service.category}</span>`;
                 }
-                
                 // Populate features with staggered animation
                 const serviceFeatures = document.getElementById('serviceFeatures');
                 const features = [
@@ -712,35 +236,60 @@
                         description: 'Trusted by thousands of customers'
                     }
                 ];
-                
                 serviceFeatures.innerHTML = '';
                 features.forEach((feature, index) => {
                     const featureItem = createFeatureItem(feature, index);
                     serviceFeatures.appendChild(featureItem);
                 });
-                
                 // Update contact button
                 document.getElementById('contactButton').href = `contact.html?service=${service.id}`;
-
-                // Update provider info if available
+                // Update enhanced provider info if available
                 if (service.provider) {
                     const providerName = `${service.provider.first_name} ${service.provider.last_name}`;
+                    const providerInitials = providerName.split(' ').map(n => n[0]).join('').toUpperCase();
+                    
                     document.getElementById('providerName').textContent = providerName;
-                    document.getElementById('providerSpecialty').textContent = service.category || 'Professional Service Provider';
+                    document.getElementById('providerSpecialty').textContent = service.category.charAt(0).toUpperCase() + service.category.slice(1) + ' Specialist';
+                    
+                    // Update provider avatar with initials
+                    const avatarElement = document.getElementById('providerAvatar');
+                    if (service.provider.avatar_url || service.provider.image_url) {
+                        avatarElement.innerHTML = `<img src="${service.provider.avatar_url || service.provider.image_url}" alt="${providerName}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                    } else {
+                        avatarElement.innerHTML = `<span style="font-weight: bold; font-size: 1.2rem;">${providerInitials}</span>`;
+                    }
+                    
+                    // Update location info (mock data for now)
+                    const locationElement = document.getElementById('providerLocation');
+                    const distance = (Math.random() * 10 + 1).toFixed(1);
+                    locationElement.innerHTML = `<i class="fas fa-map-marker-alt"></i><span>Local Area • ${distance} km away</span>`;
+                    
+                    // Update contact info
+                    const contactElement = document.getElementById('providerContact');
+                    if (service.provider.phone) {
+                        contactElement.innerHTML = `<i class="fas fa-phone"></i><span>Phone available after booking</span>`;
+                    }
+                    
                     document.getElementById('providerInfo').style.display = 'block';
                 }
-
-                // Add booking button functionality
+                // Add enhanced booking button functionality
                 const bookButton = document.getElementById('bookServiceButton');
+                const providerName = service.provider ? `${service.provider.first_name} ${service.provider.last_name}` : 'Professional Provider';
+                const serviceImage = service.image_url || service.provider_image || '';
+                
                 bookButton.setAttribute('data-service-id', service.id);
                 bookButton.setAttribute('data-provider-id', service.provider_id);
                 bookButton.setAttribute('data-service-title', service.title || service.name);
+                bookButton.setAttribute('data-service-image', serviceImage);
+                bookButton.setAttribute('data-provider-name', providerName);
                 
                 bookButton.addEventListener('click', async function(e) {
                     e.preventDefault();
                     const serviceId = this.getAttribute('data-service-id');
                     const providerId = this.getAttribute('data-provider-id');
                     const serviceTitle = this.getAttribute('data-service-title');
+                    const serviceImage = this.getAttribute('data-service-image');
+                    const providerName = this.getAttribute('data-provider-name');
                     
                     // Check if user is logged in
                     const { data: { user }, error } = await window.supabase.auth.getUser();
@@ -750,14 +299,13 @@
                         return;
                     }
                     
-                    // Open booking modal
+                    // Open enhanced booking modal with complete information
                     if (window.openBookingModal) {
-                        window.openBookingModal(serviceId, providerId, serviceTitle);
+                        window.openBookingModal(serviceId, providerId, serviceTitle, serviceImage, providerName);
                     } else {
-                        alert(`Booking functionality coming soon!\nService: ${serviceTitle}\nService ID: ${serviceId}`);
+                        alert(`Booking functionality coming soon!\nService: ${serviceTitle}\nProvider: ${providerName}\nService ID: ${serviceId}`);
                     }
                 });
-
                 hideLoading();
             } catch (error) {
                 console.error('Error loading service details:', error);
@@ -767,193 +315,102 @@
                 hideLoading();
             }
         }
-
         // Load service details when the page loads
         document.addEventListener('DOMContentLoaded', loadServiceDetails);
     </script>
-
     <!-- Include Booking Modal Component -->
     <div id="bookingModalContainer"></div>
-
-    <!-- Include Booking Modal JavaScript -->
-    <script src="assets/js/booking-modal.js"></script>
-    
     <script>
-        // Load booking modal component
+        // Load modern booking modal component and initialize
         fetch('assets/components/booking-modal.html')
             .then(response => response.text())
             .then(html => {
                 document.getElementById('bookingModalContainer').innerHTML = html;
+                console.log('Booking modal HTML loaded successfully');
                 
-                // Wait a moment for DOM to update
-                setTimeout(() => {
-                    // Initialize booking modal after HTML is loaded
-                    if (typeof BookingModal !== 'undefined') {
+                // Now load the JavaScript
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = 'assets/js/booking-modal.js';
+                    script.onload = () => {
+                        console.log('Booking modal JavaScript loaded successfully');
+                        resolve();
+                    };
+                    script.onerror = () => reject(new Error('Failed to load booking modal JavaScript'));
+                    document.head.appendChild(script);
+                });
+            })
+            .then(() => {
+                // Wait for Supabase and then initialize BookingModal
+                function initializeBookingModal() {
+                    console.log('Attempting to initialize BookingModal...');
+                    console.log('BookingModal available:', typeof window.BookingModal !== 'undefined');
+                    console.log('Supabase available:', typeof window.supabase !== 'undefined');
+                    
+                    if (typeof window.BookingModal !== 'undefined' && window.supabase) {
                         try {
-                            window.bookingModal = new BookingModal();
+                            window.bookingModal = new window.BookingModal();
                             
-                            // Global function to open booking modal
-                            window.openBookingModal = function(serviceId, providerId, serviceTitle) {
-                                console.log('Opening booking modal for:', serviceTitle);
-                                window.bookingModal.openModal(serviceId, providerId, serviceTitle);
+                            // Enhanced global function to open booking modal with more parameters
+                            window.openBookingModal = function(serviceId, providerId, serviceTitle, serviceImage = '', providerName = '') {
+                                console.log('Opening modern booking modal for:', serviceTitle);
+                                if (window.bookingModal) {
+                                    window.bookingModal.openModal(serviceId, providerId, serviceTitle, serviceImage, providerName);
+                                } else {
+                                    alert('Booking modal is not yet initialized. Please try again in a moment.');
+                                }
                             };
                             
-                            console.log('Booking modal initialized successfully');
+                            console.log('Modern booking modal initialized successfully');
+                            return true;
                         } catch (error) {
                             console.error('Error initializing booking modal:', error);
+                            return false;
                         }
                     } else {
-                        console.error('BookingModal class not found');
+                        if (typeof window.BookingModal === 'undefined') {
+                            console.log('BookingModal class not yet available, retrying...');
+                        }
+                        if (!window.supabase) {
+                            console.log('Supabase not yet available, retrying...');
+                        }
+                        return false;
                     }
-                }, 100);
+                }
+                
+                // Try to initialize immediately
+                if (!initializeBookingModal()) {
+                    // If initialization fails, retry periodically
+                    let retryCount = 0;
+                    const maxRetries = 50; // Try for up to 5 seconds
+                    
+                    const retryInterval = setInterval(() => {
+                        retryCount++;
+                        console.log(`Retry attempt ${retryCount}/${maxRetries}`);
+                        
+                        if (initializeBookingModal()) {
+                            clearInterval(retryInterval);
+                        } else if (retryCount >= maxRetries) {
+                            clearInterval(retryInterval);
+                            console.error('Failed to initialize booking modal after maximum retries');
+                            
+                            // Fallback: Create a simple openBookingModal function
+                            window.openBookingModal = function(serviceId, providerId, serviceTitle) {
+                                alert(`Booking system is loading...\n\nService: ${serviceTitle}\nService ID: ${serviceId}\n\nPlease refresh the page and try again.`);
+                            };
+                        }
+                    }, 100);
+                }
             })
             .catch(error => {
                 console.error('Error loading booking modal:', error);
+                
+                // Fallback: Create a simple openBookingModal function
+                window.openBookingModal = function(serviceId, providerId, serviceTitle) {
+                    alert(`Booking system failed to load.\n\nService: ${serviceTitle}\nService ID: ${serviceId}\n\nPlease refresh the page and try again.`);
+                };
             });
     </script>
-
-    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="bookingModalLabel">Book Service</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="bookingForm" class="needs-validation" novalidate>
-                        <input type="hidden" id="serviceId" name="serviceId">
-                        <input type="hidden" id="providerId" name="providerId">
-                        
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="bookingDate" class="form-label">Date</label>
-                                <input type="date" class="form-control" id="bookingDate" name="date" required>
-                                <div class="invalid-feedback">Please select a date</div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="bookingTime" class="form-label">Time</label>
-                                <input type="time" class="form-control" id="bookingTime" name="time" required>
-                                <div class="invalid-feedback">Please select a time</div>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="duration" class="form-label">Duration (hours)</label>
-                            <input type="number" class="form-control" id="duration" name="duration" min="1" max="24" step="0.5" required>
-                            <div class="invalid-feedback">Please enter a valid duration (1-24 hours)</div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="address" class="form-label">Service Location</label>
-                            <textarea class="form-control" id="address" name="address" rows="2" required></textarea>
-                            <div class="invalid-feedback">Please enter the service location</div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="phone" class="form-label">Phone Number</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" pattern="[0-9]{10}" required>
-                                <div class="invalid-feedback">Please enter a valid 10-digit phone number</div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                                <div class="invalid-feedback">Please enter a valid email</div>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="instructions" class="form-label">Special Instructions (Optional)</label>
-                            <textarea class="form-control" id="instructions" name="instructions" rows="3"></textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="paymentMethod" class="form-label">Preferred Payment Method</label>
-                            <select class="form-select" id="paymentMethod" name="paymentMethod" required>
-                                <option value="">Select payment method</option>
-                                <option value="cash">Cash</option>
-                                <option value="online">Online</option>
-                                <option value="card">Card</option>
-                            </select>
-                            <div class="invalid-feedback">Please select a payment method</div>
-                        </div>
-
-                        <div class="alert alert-info">
-                            <small>
-                                <strong>Note:</strong>
-                                <ul class="mb-0">
-                                    <li>The final price will be confirmed by the service provider after reviewing your requirements.</li>
-                                    <li>Your booking reference will be generated automatically.</li>
-                                    <li>You will receive a confirmation email once the booking is confirmed.</li>
-                                </ul>
-                            </small>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="submitBooking">Book Now</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const bookingForm = document.getElementById('bookingForm');
-        const submitButton = document.getElementById('submitBooking');
-
-        // Set minimum date to today
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('bookingDate').min = today;
-
-        submitButton.addEventListener('click', async function() {
-            if (!bookingForm.checkValidity()) {
-                bookingForm.classList.add('was-validated');
-                return;
-            }
-
-            try {
-                submitButton.disabled = true;
-                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...';
-
-                const formData = new FormData(bookingForm);
-                const bookingData = Object.fromEntries(formData.entries());
-                
-                // Add service and provider IDs
-                bookingData.serviceId = document.getElementById('serviceId').value;
-                bookingData.providerId = document.getElementById('providerId').value;
-
-                const result = await submitBooking(bookingData);
-                
-                // Show success message
-                const modal = bootstrap.Modal.getInstance(document.getElementById('bookingModal'));
-                modal.hide();
-                
-                // Show success alert
-                const alertDiv = document.createElement('div');
-                alertDiv.className = 'alert alert-success alert-dismissible fade show';
-                alertDiv.innerHTML = `
-                    <strong>Success!</strong> Your booking has been submitted successfully.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                `;
-                document.querySelector('.container').insertBefore(alertDiv, document.querySelector('.container').firstChild);
-
-                // Reset form
-                bookingForm.reset();
-                bookingForm.classList.remove('was-validated');
-
-            } catch (error) {
-                console.error('Booking error:', error);
-                alert('Failed to submit booking: ' + error.message);
-            } finally {
-                submitButton.disabled = false;
-                submitButton.innerHTML = 'Book Now';
-            }
-        });
-    });
-    </script>
-
     <!-- Inject sidebar HTML and load sidebar JS after HTML is present -->
     <script>
         fetch('/components/mobile-sidebar.html')
@@ -963,6 +420,47 @@
                 var script = document.createElement('script');
                 script.src = '/assets/js/mobile-sidebar.js';
                 document.body.appendChild(script);
+            });
+    </script>
+<script src="assets/js/jquery-3.3.1.min.js"></script>
+
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBEDfNcQRmKQEyulDN8nGWjLYPm8s4YB58&libraries=places"></script>
+<script src="assets/js/selectize.min.js"></script>
+<script src="assets/js/masonry.pkgd.min.js"></script>
+<script src="assets/js/icheck.min.js"></script>
+<script src="assets/js/jquery.validate.min.js"></script>
+<script src="assets/js/custom.js"></script>
+<script src="assets/js/custom-dropdown.js"></script>
+<script src="assets/js/dashboard.js"></script>
+<script src="assets/js/hero-carousel.js"></script>
+
+<!-- For integrating with Mobile Sidebar -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Load mobile sidebar with absolute path
+    fetch('components/mobile-sidebar.html')
+      .then(res => {
+        if (!res.ok) {
+          // Try with a different path if the first attempt fails
+          return fetch('/components/mobile-sidebar.html');
+        }
+        return res;
+      })
+      .then(res => res.text())
+      .then(html => {
+        // Insert sidebar HTML
+        document.body.insertAdjacentHTML('beforeend', html);
+        
+        // Load mobile sidebar script
+        var sidebarScript = document.createElement('script');
+        sidebarScript.src = 'assets/js/mobile-sidebar.js';
+        document.body.appendChild(sidebarScript);
+
+      })
+      .catch(error => {
+        console.error('Error loading mobile sidebar:', error);
+      });
             });
     </script>
 </body>

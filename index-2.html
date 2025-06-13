@@ -8,24 +8,49 @@
     <meta name="keywords" content="service marketplace, local services, professional services, home services, business services">
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Varela+Round" rel="stylesheet">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
+    <!-- Using Bootstrap 5.3.0 only - removed local Bootstrap 4.0.0 to prevent conflicts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/fonts/font-awesome.css" type="text/css">
     <link rel="stylesheet" href="assets/css/selectize.css" type="text/css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/rtl.css" id="rtl-stylesheet" disabled>
     <link rel="stylesheet" href="assets/css/user.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/page-hero.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+        });
+    </script>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
+    <link rel="stylesheet" href="assets/css/bottom-navbar.css">
+    <link rel="stylesheet" href="assets/css/top-navbar.css">
+    <link rel="stylesheet" href="assets/css/font-awesome-colors.css">
+    <link rel="stylesheet" href="assets/css/hero-carousel.css">
 
-    <!-- Bootstrap JS and Popper.js -->
+    <!-- Internationalization Stylesheets -->
+    
+    <!-- RTL stylesheet will be loaded dynamically when Arabic is selected -->
+
+    <!-- Bootstrap JS and Popper.js - Using only Bootstrap 5.3.0 -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     
     <!-- Custom JS -->
     <script type="module" src="assets/js/supabase.js"></script>
-    <script src="assets/js/navbars.js"></script>
+    <!-- Moved navbars.js to end of body to ensure it loads after all other scripts -->
 
 	<title>UstaHub - Find Local Service Professionals</title>
 
@@ -46,8 +71,8 @@
             
             <!-- First Slide -->
             <div class="hero-slide active">
-                <img src="assets/img/20250602_2128_Plumber at Work_simple_compose_01jwrqfajwempr63t4c7jej4q2.png" class="w-100 h-100 object-fit-cover" alt="Professional plumber at work">
-                <div class="overlay" style="background:rgba(0,0,0,0.4)"></div>
+                <img src="assets/img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.27.jpeg" class="w-100 h-100 object-fit-cover" alt="Professional services in action">
+                <div class="overlay" ></div>
                 <div class="hero-content container position-absolute">
                     <h1 class="display-4 fw-bold text-white text-center mb-4">Find Trusted Local Services</h1>
                     <p class="lead text-white text-center mb-5">Connect with professional service providers in your area</p>
@@ -83,8 +108,8 @@
             
             <!-- Second Slide -->
             <div class="hero-slide">
-                <img src="assets/img/20250602_2131_Modern Clinic Reception_simple_compose_01jwrqkzgset2a0b21ftwz02dc.png" class="w-100 h-100 object-fit-cover" alt="Modern clinic reception">
-                <div class="overlay" style="background:rgba(0,0,0,0.4)"></div>
+                <img src="assets/img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.27 (1).jpeg" class="w-100 h-100 object-fit-cover" alt="Quality service providers">
+                <div class="overlay" ></div>
                 <div class="hero-content container position-absolute">
                     <h1 class="display-4 fw-bold text-white text-center mb-4">Professional Services at Your Doorstep</h1>
                     <p class="lead text-white text-center mb-5">Quality service providers for all your needs</p>
@@ -117,6 +142,154 @@
                     </nav>
                 </div>
             </div>
+
+            <!-- Third Slide -->
+            <div class="hero-slide">
+                <img src="assets/img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.27 (2).jpeg" class="w-100 h-100 object-fit-cover" alt="Professional service experts">
+                <div class="overlay" ></div>
+                <div class="hero-content container position-absolute">
+                    <h1 class="display-4 fw-bold text-white text-center mb-4">Expert Service Providers</h1>
+                    <p class="lead text-white text-center mb-5">Skilled professionals ready to help you</p>
+                    
+                    <div class="row g-0 justify-content-center align-items-stretch">
+                        <div class="col-md-10">
+                            <form id="hero-search-form-3" class="d-flex">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0" placeholder="Repair, Maintenance, Installation...">
+                                    <span class="input-group-text bg-white border-start-0 border-end-0">
+                                        <i class="fa fa-map-marker"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0" placeholder="Enter location">
+                                    <button type="submit" class="btn btn-danger px-4">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <nav class="mt-4">
+                        <ul class="list-inline text-center mb-0">
+                            <li class="list-inline-item mx-3"><a href="service-category.html?category=home-garden">Home & Garden</a></li>
+                            <li class="list-inline-item mx-3"><a href="service-category.html?category=auto-transport">Auto & Transport</a></li>
+                            <li class="list-inline-item mx-3"><a href="service-category.html?category=business">Business Services</a></li>
+                            <li class="list-inline-item mx-3"><a href="service-category.html?category=lifestyle">Lifestyle</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Fourth Slide -->
+            <div class="hero-slide">
+                <img src="assets/img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.26.jpeg" class="w-100 h-100 object-fit-cover" alt="Reliable service solutions">
+                <div class="overlay" ></div>
+                <div class="hero-content container position-absolute">
+                    <h1 class="display-4 fw-bold text-white text-center mb-4">Reliable Service Solutions</h1>
+                    <p class="lead text-white text-center mb-5">Trusted professionals for all your service needs</p>
+                    
+                    <div class="row g-0 justify-content-center align-items-stretch">
+                        <div class="col-md-10">
+                            <form id="hero-search-form-4" class="d-flex">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0" placeholder="Consultation, Support, Training...">
+                                    <span class="input-group-text bg-white border-start-0 border-end-0">
+                                        <i class="fa fa-map-marker"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0" placeholder="Enter location">
+                                    <button type="submit" class="btn btn-danger px-4">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <nav class="mt-4">
+                        <ul class="list-inline text-center mb-0">
+                            <li class="list-inline-item mx-3"><a href="service-category.html?category=health-beauty">Healthcare</a></li>
+                            <li class="list-inline-item mx-3"><a href="service-category.html?category=health-beauty">Beauty</a></li>
+                            <li class="list-inline-item mx-3"><a href="service-category.html?category=business">Education</a></li>
+                            <li class="list-inline-item mx-3"><a href="service-category.html?category=lifestyle">Fitness</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Fifth Slide -->
+            <div class="hero-slide">
+                <img src="assets/img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.26 (1).jpeg" class="w-100 h-100 object-fit-cover" alt="Community-focused services">
+                <div class="overlay" ></div>
+                <div class="hero-content container position-absolute">
+                    <h1 class="display-4 fw-bold text-white text-center mb-4">Community-Focused Services</h1>
+                    <p class="lead text-white text-center mb-5">Supporting our local community with quality services</p>
+                    
+                    <div class="row g-0 justify-content-center align-items-stretch">
+                        <div class="col-md-10">
+                            <form id="hero-search-form-5" class="d-flex">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0" placeholder="Local services, Community support...">
+                                    <span class="input-group-text bg-white border-start-0 border-end-0">
+                                        <i class="fa fa-map-marker"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0" placeholder="Enter location">
+                                    <button type="submit" class="btn btn-danger px-4">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <nav class="mt-4">
+                        <ul class="list-inline text-center mb-0">
+                            <li class="list-inline-item mx-3"><a href="service-category.html?category=health-beauty">Healthcare</a></li>
+                            <li class="list-inline-item mx-3"><a href="service-category.html?category=health-beauty">Beauty</a></li>
+                            <li class="list-inline-item mx-3"><a href="service-category.html?category=business">Education</a></li>
+                            <li class="list-inline-item mx-3"><a href="service-category.html?category=lifestyle">Fitness</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Sixth Slide -->
+            <div class="hero-slide">
+                <img src="assets/img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.26 (2).jpeg" class="w-100 h-100 object-fit-cover" alt="Innovation and excellence">
+                <div class="overlay" ></div>
+                <div class="hero-content container position-absolute">
+                    <h1 class="display-4 fw-bold text-white text-center mb-4">Innovation & Excellence</h1>
+                    <p class="lead text-white text-center mb-5">Modern solutions delivered with excellence</p>
+                    
+                    <div class="row g-0 justify-content-center align-items-stretch">
+                        <div class="col-md-10">
+                            <form id="hero-search-form-6" class="d-flex">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0">
+                                        <i class="fa fa-search"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0" placeholder="Innovation, Technology, Design...">
+                                    <span class="input-group-text bg-white border-start-0 border-end-0">
+                                        <i class="fa fa-map-marker"></i>
+                                    </span>
+                                    <input type="text" class="form-control border-start-0" placeholder="Enter location">
+                                    <button type="submit" class="btn btn-danger px-4">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <nav class="mt-4">
+                        <ul class="list-inline text-center mb-0">
+                            <li class="list-inline-item mx-3"><a href="service-category.html?category=home-garden">Home & Garden</a></li>
+                            <li class="list-inline-item mx-3"><a href="service-category.html?category=auto-transport">Auto & Transport</a></li>
+                            <li class="list-inline-item mx-3"><a href="service-category.html?category=business">Business Services</a></li>
+                            <li class="list-inline-item mx-3"><a href="service-category.html?category=lifestyle">Lifestyle</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
             
             <!-- Carousel Controls -->
             <button class="carousel-control-prev" aria-label="Previous slide">
@@ -130,23 +303,27 @@
             <div class="carousel-dots text-center position-absolute w-100">
                 <span class="dot active" data-index="0"></span>
                 <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+                <span class="dot" data-index="3"></span>
+                <span class="dot" data-index="4"></span>
+                <span class="dot" data-index="5"></span>
             </div>
         </section>
 
         <!--*********************************************************************************************************-->
         <!--************ CONTENT ************************************************************************************-->
         <!--*********************************************************************************************************-->
-        <div id="main-content">
+        <div id="main-content" class="position-relative-z1">
             <!-- Popular Service Categories -->
-            <section class="block py-5" style="background: #fff;">
+            <section class="block py-5">
                 <div class="container">
-                    <h2 class="text-center mb-5" style="font-weight:700;">Popular Service Categories</h2>
+                    <h2 class="text-center mb-5 text-secondary" >Popular Service Categories</h2>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                         <div class="col">
                             <a href="service-category.html?category=plumbing" class="text-decoration-none">
                             <div class="card h-100 border-0 shadow-sm hover-lift">
                                 <div class="card-body text-center p-4">
-                                    <img src="assets/img/plumbing.jpg" alt="Plumbing" class="mb-4" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px;">
+                                    <img src="assets/img/plumbing.jpg" alt="Plumbing" class="mb-4 service-icon">
                                         <h3 class="h5 mb-2 text-dark">Plumbing</h3>
                                     <p class="text-muted mb-0">Trusted local plumbers for home and office needs</p>
                                 </div>
@@ -157,7 +334,7 @@
                             <a href="service-category.html?category=cleaning" class="text-decoration-none">
                             <div class="card h-100 border-0 shadow-sm hover-lift">
                                 <div class="card-body text-center p-4">
-                                    <img src="assets/img/cleaning.png" alt="Cleaning" class="mb-4" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px;">
+                                    <img src="assets/img/cleaning.png" alt="Cleaning" class="mb-4 service-icon">
                                         <h3 class="h5 mb-2 text-dark">Cleaning</h3>
                                     <p class="text-muted mb-0">Professional cleaning services for your space</p>
                                 </div>
@@ -168,7 +345,7 @@
                             <a href="service-category.html?category=electrical" class="text-decoration-none">
                             <div class="card h-100 border-0 shadow-sm hover-lift">
                                 <div class="card-body text-center p-4">
-                                    <img src="assets/img/electrician.png" alt="Electrician" class="mb-4" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px;">
+                                    <img src="assets/img/electrician.png" alt="Electrician" class="mb-4 service-icon">
                                         <h3 class="h5 mb-2 text-dark">Electrical</h3>
                                     <p class="text-muted mb-0">Licensed electricians for all your needs</p>
                                 </div>
@@ -179,7 +356,7 @@
                             <a href="service-category.html?category=painting" class="text-decoration-none">
                             <div class="card h-100 border-0 shadow-sm hover-lift">
                                 <div class="card-body text-center p-4">
-                                    <img src="assets/img/painting.png" alt="Painting" class="mb-4" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px;">
+                                    <img src="assets/img/painting.png" alt="Painting" class="mb-4 service-icon">
                                         <h3 class="h5 mb-2 text-dark">Painting</h3>
                                     <p class="text-muted mb-0">Expert painters for interior and exterior</p>
                                 </div>
@@ -191,15 +368,15 @@
             </section>
 
             <!-- How UstaHub Works -->
-            <section class="block py-5" style="background: #f8f9fa;">
+            <section class="block py-5">
                 <div class="container">
-                    <h2 class="text-center mb-5" style="font-weight:700;">How UstaHub Works</h2>
+                    <h2 class="text-center mb-5 text-secondary" >How UstaHub Works</h2>
                     <div class="row row-cols-1 row-cols-md-3 g-4">
                         <div class="col">
                             <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-body text-center p-4">
                                     <div class="step-number mb-4">1</div>
-                                    <img src="assets/img/icons/choose-service.png" alt="Choose Service" class="mb-4" style="width: 64px; height: 64px;">
+                                    <img src="assets/img/icons/choose-service.png" alt="Choose Service" class="mb-4 step-icon">
                                     <h3 class="h5 mb-3">Choose a Service</h3>
                                     <p class="text-muted mb-0">Select from our wide range of professional services</p>
                                 </div>
@@ -209,7 +386,7 @@
                             <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-body text-center p-4">
                                     <div class="step-number mb-4">2</div>
-                                    <img src="assets/img/icons/compare-pros.png" alt="Compare Pros" class="mb-4" style="width: 64px; height: 64px;">
+                                    <img src="assets/img/icons/compare-pros.png" alt="Compare Pros" class="mb-4 step-icon">
                                     <h3 class="h5 mb-3">Compare Local Pros</h3>
                                     <p class="text-muted mb-0">Review profiles, ratings, and prices</p>
                                 </div>
@@ -219,7 +396,7 @@
                             <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-body text-center p-4">
                                     <div class="step-number mb-4">3</div>
-                                    <img src="assets/img/icons/hire.png" alt="Hire" class="mb-4" style="width: 64px; height: 64px;">
+                                    <img src="assets/img/icons/hire.png" alt="Hire" class="mb-4 step-icon">
                                     <h3 class="h5 mb-3">Hire with Confidence</h3>
                                     <p class="text-muted mb-0">Book and pay securely through our platform</p>
                                 </div>
@@ -233,15 +410,15 @@
             </section>
 
             <!-- Featured Professionals -->
-            <section class="block py-5" style="background: #fff;">
+            <section class="block py-5 section-bg-green">
                 <div class="container">
-                    <h2 class="text-center mb-5" style="font-weight:700;">Featured Professionals</h2>
+                    <h2 class="text-center mb-5" >Featured Professionals</h2>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                         <div class="col">
                             <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-center mb-3">
-                                        <img src="assets/img/pro-1.jpg" alt="Professional" class="rounded-circle me-3" style="width: 64px; height: 64px; object-fit: cover;">
+                                        <img src="assets/img/pro-1.jpg" alt="Professional" class="rounded-circle me-3 professional-img">
                                         <div>
                                             <h3 class="h5 mb-1">John Smith</h3>
                                             <p class="text-muted mb-0">Plumbing Expert</p>
@@ -263,7 +440,7 @@
                             <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-center mb-3">
-                                        <img src="assets/img/pro-2.jpg" alt="Professional" class="rounded-circle me-3" style="width: 64px; height: 64px; object-fit: cover;">
+                                        <img src="assets/img/pro-2.jpg" alt="Professional" class="rounded-circle me-3 professional-img">
                                         <div>
                                             <h3 class="h5 mb-1">Sarah Johnson</h3>
                                             <p class="text-muted mb-0">Cleaning Specialist</p>
@@ -285,7 +462,7 @@
                             <div class="card h-100 border-0 shadow-sm">
                                 <div class="card-body p-4">
                                     <div class="d-flex align-items-center mb-3">
-                                        <img src="assets/img/pro-3.jpg" alt="Professional" class="rounded-circle me-3" style="width: 64px; height: 64px; object-fit: cover;">
+                                        <img src="assets/img/pro-3.jpg" alt="Professional" class="rounded-circle me-3 professional-img">
                                         <div>
                                             <h3 class="h5 mb-1">Mike Wilson</h3>
                                             <p class="text-muted mb-0">Electrical Engineer</p>
@@ -308,9 +485,9 @@
             </section>
 
             <!-- Customer Testimonials -->
-            <section class="block py-5" style="background: #f8f9fa;">
+            <section class="block py-5 section-bg-light">
                 <div class="container">
-                    <h2 class="text-center mb-5" style="font-weight:700;">What Our Customers Say</h2>
+                    <h2 class="text-center mb-5" >What Our Customers Say</h2>
                     <div class="row row-cols-1 row-cols-md-3 g-4">
                         <div class="col">
                             <div class="card h-100 border-0 shadow-sm">
@@ -324,7 +501,7 @@
                                     </div>
                                     <p class="mb-4">"UstaHub made finding a reliable plumber so easy. The service was professional and the price was fair. Will definitely use again!"</p>
                                     <div class="d-flex align-items-center">
-                                        <img src="assets/img/testimonial-1.jpg" alt="Customer" class="rounded-circle me-3" style="width: 48px; height: 48px; object-fit: cover;">
+                                        <img src="assets/img/testimonial-1.jpg" alt="Customer" class="rounded-circle me-3 testimonial-img">
                                         <div>
                                             <h4 class="h6 mb-1">Emily Chen</h4>
                                             <p class="text-muted mb-0">Karachi, Pakistan</p>
@@ -345,7 +522,7 @@
                                     </div>
                                     <p class="mb-4">"The cleaning service was exceptional. The team was thorough and professional. Highly recommend!"</p>
                                     <div class="d-flex align-items-center">
-                                        <img src="assets/img/testimonial-2.jpg" alt="Customer" class="rounded-circle me-3" style="width: 48px; height: 48px; object-fit: cover;">
+                                        <img src="assets/img/testimonial-2.jpg" alt="Customer" class="rounded-circle me-3 testimonial-img">
                                         <div>
                                             <h4 class="h6 mb-1">Ahmed Khan</h4>
                                             <p class="text-muted mb-0">Lahore, Pakistan</p>
@@ -366,7 +543,7 @@
                                     </div>
                                     <p class="mb-4">"Found an amazing electrician through UstaHub. The service was quick and the quality was outstanding."</p>
                                     <div class="d-flex align-items-center">
-                                        <img src="assets/img/testimonial-3.jpg" alt="Customer" class="rounded-circle me-3" style="width: 48px; height: 48px; object-fit: cover;">
+                                        <img src="assets/img/testimonial-3.jpg" alt="Customer" class="rounded-circle me-3 testimonial-img">
                                         <div>
                                             <h4 class="h6 mb-1">Fatima Ali</h4>
                                             <p class="text-muted mb-0">Islamabad, Pakistan</p>
@@ -380,13 +557,13 @@
             </section>
 
             <!-- Blog Preview -->
-            <section class="block py-5" style="background: #fff;">
+            <section class="block py-5 section-bg-green">
                 <div class="container">
-                    <h2 class="text-center mb-5" style="font-weight:700;">Latest from Our Blog</h2>
+                    <h2 class="text-center mb-5" >Latest from Our Blog</h2>
                     <div class="row row-cols-1 row-cols-md-3 g-4">
                         <div class="col">
                             <div class="card h-100 border-0 shadow-sm">
-                                <img src="assets/img/blog-1.jpg" class="card-img-top" alt="Blog Post" style="height: 200px; object-fit: cover;">
+                                <img src="assets/img/blog-1.jpg" class="card-img-top" alt="Blog Post" class="blog-img">
                                 <div class="card-body p-4">
                                     <h3 class="h5 mb-3">How to Choose the Right Service Professional</h3>
                                     <p class="text-muted mb-3">Learn the essential tips for finding and hiring the perfect service provider for your needs.</p>
@@ -396,7 +573,7 @@
                         </div>
                         <div class="col">
                             <div class="card h-100 border-0 shadow-sm">
-                                <img src="assets/img/blog-2.jpg" class="card-img-top" alt="Blog Post" style="height: 200px; object-fit: cover;">
+                                <img src="assets/img/blog-2.jpg" class="card-img-top" alt="Blog Post" class="blog-img">
                                 <div class="card-body p-4">
                                     <h3 class="h5 mb-3">Home Maintenance Tips for Every Season</h3>
                                     <p class="text-muted mb-3">Keep your home in top condition with these seasonal maintenance tips and tricks.</p>
@@ -406,7 +583,7 @@
                         </div>
                         <div class="col">
                             <div class="card h-100 border-0 shadow-sm">
-                                <img src="assets/img/blog-3.jpg" class="card-img-top" alt="Blog Post" style="height: 200px; object-fit: cover;">
+                                <img src="assets/img/blog-3.jpg" class="card-img-top" alt="Blog Post" class="blog-img">
                                 <div class="card-body p-4">
                                     <h3 class="h5 mb-3">The Future of Local Services</h3>
                                     <p class="text-muted mb-3">Discover how technology is transforming the local services industry.</p>
@@ -419,13 +596,13 @@
             </section>
 
             <!-- Newsletter -->
-            <section class="block py-5" style="background: #f8f9fa;">
+            <section class="block py-5 section-bg-light">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <div class="card border-0 shadow-sm">
                                 <div class="card-body p-4 p-md-5 text-center">
-                                    <h2 class="mb-3" style="font-weight:700;">Get Tips & Service Recommendations</h2>
+                                    <h2 class="mb-3" >Get Tips & Service Recommendations</h2>
                                     <p class="text-muted mb-4">Stay updated with the latest service trends and expert advice</p>
                                     <form class="row g-3 justify-content-center">
                                         <div class="col-md-8">
@@ -443,52 +620,6 @@
             </section>
         </div>
 
-        <style>
-        /* Custom styles for the new sections */
-        .hover-lift {
-            transition: transform 0.2s ease-in-out;
-        }
-        .hover-lift:hover {
-            transform: translateY(-5px);
-        }
-        .step-number {
-            width: 40px;
-            height: 40px;
-            background: #ff0000;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            margin: 0 auto;
-        }
-        .card {
-            transition: all 0.3s ease;
-        }
-        .card:hover {
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
-        }
-        .btn-primary {
-            background-color: #ff0000;
-            border-color: #ff0000;
-        }
-        .btn-primary:hover {
-            background-color: #cc0000;
-            border-color: #cc0000;
-        }
-        .btn-outline-primary {
-            color: #ff0000;
-            border-color: #ff0000;
-        }
-        .btn-outline-primary:hover {
-            background-color: #ff0000;
-            border-color: #ff0000;
-        }
-        .text-primary {
-            color: #ff0000 !important;
-        }
-        </style>
     </div>
     <!--end content-->
 
@@ -543,7 +674,7 @@
               <div class="row gy-4">
                 <div class="col-md-5">
                   <a href="index-2.html" class="brand d-inline-block mb-2">
-                    <img src="assets/img/logo.png" alt="UstaHub Logo" style="max-height: 48px; width: auto;">
+                    <img src="assets/img/logo.png" alt="UstaHub Logo" class="logo-img">
                   </a>
                   <p class="text-muted mb-0">
                     UstaHub connects customers with trusted local service professionals. Find, compare, and book services for all your needs.
@@ -595,29 +726,12 @@
       document.getElementById('footer').innerHTML = renderFooter();
     });
     </script>
-    <style>
-    .footer {
-        position: relative;
-        width: 100%;
-        background: #f8f9fa;
-        border-top: 1px solid #e9ecef;
-    }
-    .footer .brand img { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.12)); }
-    .footer h2 { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.02em; }
-    .footer ul { padding-left: 0; }
-    .footer li { margin-bottom: 0.5rem; }
-    .footer a { transition: color 0.2s; }
-    .footer a:hover { color: #e00707 !important; }
-    @media (max-width: 991.98px) {
-        .footer .row > div { margin-bottom: 2rem; }
-    }
-    </style>
 </div>
 <!--end page-->
 
 <script src="assets/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="assets/js/popper.min.js"></script>
-<script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
+<!-- Bootstrap 4.0.0 removed - using Bootstrap 5.3.0 from CDN instead -->
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBEDfNcQRmKQEyulDN8nGWjLYPm8s4YB58&libraries=places"></script>
 <script src="assets/js/selectize.min.js"></script>
 <script src="assets/js/masonry.pkgd.min.js"></script>
@@ -625,742 +739,38 @@
 <script src="assets/js/jquery.validate.min.js"></script>
 <script src="assets/js/custom.js"></script>
 <script src="assets/js/custom-dropdown.js"></script>
+<script src="assets/js/hero-carousel.js"></script>
+<!-- Navbar script loaded last to ensure it overrides any conflicting behaviors -->
 <script src="assets/js/dashboard.js"></script>
+<script src="assets/js/navbars.js"></script>
 
-<style>
-/* Add this CSS to your style.css or in a <style> block */
-.mega-dropdown .dropdown-menu.mega-menu {
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    top: 100% !important;
-    border-radius: 8px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-    min-width: 600px;
-    max-width: 900px;
-}
-.mega-dropdown .dropdown-item {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-    white-space: nowrap;
-}
-.mega-dropdown .dropdown-item i {
-    font-size: 1.2em;
-    min-width: 22px;
-    text-align: center;
-}
-.main-nav-spaced > .nav-item {
-    margin-left: 12px;
-    margin-right: 12px;
-}
-@media (max-width: 1200px) {
-    .main-nav-spaced > .nav-item {
-        margin-left: 6px;
-        margin-right: 6px;
-    }
-}
-@media (max-width: 991.98px) {
-    .main-nav-spaced > .nav-item {
-        margin-left: 0;
-        margin-right: 0;
-    }
-}
-.navbar-section {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-}
-.navbar-logo {
-    min-width: 120px;
-}
-.navbar-center {
-    min-width: 0;
-    flex: 1 1 auto;
-    overflow-x: auto;
-}
-.navbar-actions {
-    min-width: 250px;
-}
-.navbar-actions .nav-link {
-    white-space: nowrap;
-    font-weight: 500;
-}
-@media (max-width: 1200px) {
-    .navbar-actions {
-        min-width: 180px;
-    }
-}
-@media (max-width: 991.98px) {
-    .navbar-section {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .navbar-center {
-        justify-content: flex-start;
-        margin: 10px 0;
-    }
-    .navbar-actions {
-        justify-content: flex-end;
-        min-width: 0;
-    }
-}
-@media (max-width: 767.98px) {
-    .main-nav-spaced > .nav-item {
-        margin-left: 0;
-        margin-right: 0;
-    }
-    .navbar-logo {
-        min-width: 80px;
-    }
-}
-.top-navbar {
-    border-bottom: none;
-    background: transparent !important;
-    padding: 12px 0;
-}
-.top-navbar .nav-left {
-    display: flex;
-    align-items: center;
-}
-.top-navbar .nav-right {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 24px;
-}
-.top-navbar .nav-link {
-    color: #fff !important;
-    font-weight: 500;
-    font-size: 1.1rem;
-    text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 24px;
-    transition: all 0.3s ease;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-}
-.top-navbar .nav-link:hover {
-    background: rgba(255,255,255,0.15);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-.top-navbar .brand img {
-    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
-    transition: transform 0.3s ease;
-}
-.top-navbar .brand:hover img {
-    transform: scale(1.05);
-}
-@media (max-width: 991.98px) {
-    .top-navbar .nav-right {
-        gap: 12px;
-    }
-    .top-navbar .nav-link {
-        font-size: 1rem;
-        padding: 6px 12px;
-    }
-}
-@media (max-width: 767.98px) {
-    .top-navbar {
-        padding: 8px 0;
-    }
-    .top-navbar .nav-right {
-        gap: 8px;
-    }
-    .top-navbar .nav-link {
-        font-size: 0.9rem;
-        padding: 4px 8px;
-    }
-}
-.bottom-navbar {
-    border-bottom: 1px solid #e0e0e0;
-    background: #fafafa !important;
-    z-index: 1040;
-}
-.main-nav-spaced > .nav-item {
-    margin-left: 12px;
-    margin-right: 12px;
-    white-space: nowrap;
-}
-.top-navbar .navbar-nav .nav-link {
-    font-weight: 500;
-    color: #222;
-}
-.bottom-navbar .nav-link {
-    font-weight: 500;
-    color: #333;
-}
-.navbar-brand img {
-    max-height: 48px;
-    width: auto;
-}
-@media (max-width: 991.98px) {
-    .main-nav-spaced > .nav-item {
-        margin-left: 6px;
-        margin-right: 6px;
-    }
-    .top-navbar .container, .bottom-navbar .container {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .top-navbar .navbar-nav {
-        justify-content: center;
-        margin-top: 10px;
-    }
-}
-@media (max-width: 767.98px) {
-    .main-nav-spaced > .nav-item {
-        margin-left: 0;
-        margin-right: 0;
-    }
-    .navbar-brand img {
-        max-height: 36px;
-    }
-}
-.hero-header {
-    position: relative;
-    width: 100%;
-    min-height: 520px;
-    background-image: url('assets/img/hero-background-image-01.jpg');
-    background-size: cover;
-    background-position: center;
-    z-index: 1;
-}
-.hero-header .overlay {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.45);
-    z-index: 2;
-}
-.top-navbar, .bottom-navbar {
-    background: transparent !important;
-    position: relative;
-    z-index: 3;
-    border-bottom: none;
-}
-.hero-content {
-    position: relative;
-    z-index: 4;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 300px;
-    color: #fff;
-    text-align: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
-}
-.hero-content h1 {
-    color: #fff;
-    font-size: 3.2rem;
-    font-weight: 700;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.25);
-    margin-bottom: 1.5rem;
-    line-height: 1.2;
-    animation: fadeInDown 1s ease-out;
-}
-.hero-content h1 a {
-    color: #fff;
-    text-decoration: none;
-    position: relative;
-    transition: all 0.3s ease;
-}
-.hero-content h1 a:hover {
-    color: #e00707;
-    text-shadow: 0 2px 12px rgba(224,7,7,0.3);
-}
-.hero-content h1 a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: #e00707;
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
-.hero-content h1 a:hover::after {
-    transform: scaleX(1);
-}
-.hero-content .subtitle {
-    font-size: 1.4rem;
-    color: rgba(255,255,255,0.9);
-    margin-bottom: 2rem;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.2);
-    animation: fadeInUp 1s ease-out 0.3s both;
-}
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-@media (max-width: 767.98px) {
-    .hero-content h1 {
-        font-size: 2rem;
-    }
-    .hero-content .subtitle {
-        font-size: 1.1rem;
-    }
-}
-.search-bar {
-    margin-top: 24px;
-    background: transparent;
-    border-radius: 8px;
-    box-shadow: none;
-}
-.hero-content .form-control, .hero-content .form-group label, .hero-content select {
-    background: rgba(255,255,255,0.95);
-    color: #222;
-    border: none;
-    box-shadow: none;
-}
-.hero-content .form-group label {
-    color: #fff;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-}
-.hero-content .btn-primary {
-    background: #e00707;
-    border: none;
-    font-weight: 600;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-}
-.navbar-brand img {
-    max-height: 48px;
-    width: auto;
-    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.12));
-}
-@media (max-width: 991.98px) {
-    .main-nav-spaced > .nav-item {
-        margin-left: 6px;
-        margin-right: 6px;
-    }
-    .top-navbar .container, .bottom-navbar .container {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .top-navbar .navbar-nav {
-        justify-content: center;
-        margin-top: 10px;
-    }
-}
-@media (max-width: 767.98px) {
-    .main-nav-spaced > .nav-item {
-        margin-left: 0;
-        margin-right: 0;
-    }
-    .navbar-brand img {
-        max-height: 36px;
-    }
-    .hero-content h1 {
-        font-size: 1.5rem;
-    }
-}
-.yelp-style-search {
-    background: rgba(255,255,255,0.98);
-    border-radius: 32px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.10);
-    padding: 8px 16px;
-    max-width: 600px;
-    min-width: 320px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-}
-.custom-dropdown-input,
-.yelp-style-search input.yelp-search-input {
-    cursor: pointer;
-    background: rgba(255,255,255,0.95);
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 28px !important;
-    color: #222 !important;
-    font-size: 1.18rem !important;
-    height: 60px !important;
-    min-width: 180px;
-    max-width: 220px;
-    flex: 1 1 0;
-    padding-left: 20px;
-    margin-right: 12px;
-}
-.yelp-style-search select.yelp-search-input {
-    font-size: 1.18rem !important;
-    height: 60px !important;
-    min-width: 180px;
-    max-width: 220px;
-    border-radius: 28px !important;
-    padding-left: 20px;
-    flex: 1 1 0;
-    margin-right: 12px;
-}
-.yelp-search-btn {
-    height: 60px;
-    border-radius: 28px;
-    background: #e00707;
-    border: none;
-    font-weight: 600;
-    font-size: 1.18rem;
-    padding: 0 32px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-    color: #fff;
-    transition: background 0.2s;
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.yelp-search-btn:hover, .yelp-search-btn:focus {
-    background: #b00606;
-    color: #fff;
-}
-@media (max-width: 991.98px) {
-    .yelp-style-search {
-        flex-direction: column;
-        max-width: 100%;
-        padding: 8px 4px;
-    }
-    .custom-dropdown-input,
-    .yelp-style-search input.yelp-search-input,
-    .yelp-style-search select.yelp-search-input {
-        min-width: 100%;
-        max-width: 100%;
-        margin-right: 0;
-        margin-bottom: 12px;
-        height: 54px !important;
-        font-size: 1.1rem !important;
-        border-radius: 18px !important;
-        padding-left: 18px;
-    }
-    .yelp-search-btn {
-        width: 100%;
-        height: 54px;
-        font-size: 1.1rem;
-        border-radius: 18px;
-        padding: 0 12px;
-    }
-}
-.custom-dropdown-input {
-    cursor: pointer;
-    background: rgba(255,255,255,0.95);
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 24px !important;
-    color: #222 !important;
-    font-size: 1.18rem !important;
-    height: 56px !important;
-    min-width: 240px;
-    max-width: 320px;
-    padding-left: 22px;
-}
-.custom-dropdown-list {
-    display: none;
-    position: absolute;
-    /* top, left, right are set by JS, so remove here */
-    /* top: 110%; */
-    /* left: 0; */
-    /* right: 0; */
-    background: #fff;
-    border-radius: 18px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.10);
-    z-index: 2000;
-    max-height: 220px;
-    overflow-y: auto;
-}
-.custom-dropdown-item {
-    padding: 12px 18px;
-    cursor: pointer;
-    color: #222;
-    border-radius: 18px;
-    transition: background 0.15s;
-}
-.custom-dropdown-item:hover {
-    background: #f5f5f5;
-}
-/* Modern NavBar Styles (Yelp-like) */
-.custom-navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(255,255,255,0.98);
-    padding: 0 32px;
-    min-height: 56px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    position: relative;
-    z-index: 100;
-}
-.top-navbar {
-    border-bottom: 1px solid #eee;
-}
-.bottom-navbar {
-    border-bottom: 1px solid #e0e0e0;
-    background: #fafafa;
-    justify-content: center;
-}
-.custom-navbar .brand img { height: 40px; }
-.custom-navbar .nav-right .nav-link {
-    margin-left: 24px;
-    color: #e00707;
-    font-weight: 600;
-    text-decoration: none;
-}
-.custom-navbar .nav-center {
-    flex: 1 1 0;
-    display: flex;
-    justify-content: center;
-}
-.custom-navbar .nav-menu {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-.custom-navbar .nav-item {
-    position: relative;
-}
-.custom-navbar .nav-item > a {
-    padding: 0 18px;
-    line-height: 56px;
-    color: #222;
-    text-decoration: none;
-    font-weight: 500;
-    display: block;
-}
-.custom-navbar .dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-    border-radius: 8px;
-    min-width: 200px;
-    z-index: 10;
-}
-.custom-navbar .nav-item.dropdown:hover .dropdown-menu,
-.custom-navbar .nav-item.dropdown:focus-within .dropdown-menu {
-    display: block;
-}
-.custom-navbar .dropdown-menu a {
-    display: block;
-    padding: 12px 18px;
-    color: #222;
-    text-decoration: none;
-    white-space: nowrap;
-}
-.custom-navbar .dropdown-menu a:hover {
-    background: #f5f5f5;
-}
-@media (max-width: 900px) {
-    .custom-navbar { flex-wrap: wrap; min-height: auto; }
-    .custom-navbar .nav-center { width: 100%; }
-    .custom-navbar .nav-menu { flex-direction: column; }
-    .custom-navbar .nav-item > a { line-height: 48px; }
-}
-.grid-dropdown {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0 32px;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-    padding: 24px 32px;
-    min-width: 420px;
-    color: #222;
-}
-.grid-dropdown .dropdown-col {
-    display: flex;
-    flex-direction: column;
-}
-.grid-dropdown a {
-    display: flex;
-    align-items: center;
-    padding: 8px 0;
-    color: #222;
-    font-size: 1.08rem;
-    border-radius: 8px;
-    transition: background 0.15s, color 0.15s;
-    text-decoration: none;
-}
-.grid-dropdown a i {
-    font-size: 1.2em;
-    margin-right: 12px;
-    color: #e00707;
-    min-width: 22px;
-    text-align: center;
-    transition: color 0.15s;
-}
-.grid-dropdown a:hover {
-    background: #fbeaec;
-    color: #e00707;
-}
-.grid-dropdown a:hover i {
-    color: #b00606;
-}
-.bottom-navbar .grid-dropdown {
-    display: none;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 100%;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-    padding: 24px 32px;
-    min-width: 520px;
-    z-index: 1000;
-    grid-template-columns: 1fr 1fr;
-    gap: 0 32px;
-}
-.bottom-navbar .nav-item.dropdown:hover .grid-dropdown {
-    display: grid;
-}
-.bottom-navbar .grid-dropdown .dropdown-col {
-    display: flex;
-    flex-direction: column;
-}
-.bottom-navbar .grid-dropdown a {
-    display: flex;
-    align-items: center;
-    padding: 8px 0;
-    color: #222;
-    font-size: 1.08rem;
-    border-radius: 8px;
-    transition: background 0.15s, color 0.15s;
-    text-decoration: none;
-}
-.bottom-navbar .grid-dropdown a i {
-    font-size: 1.2em;
-    margin-right: 12px;
-    color: #e00707;
-    min-width: 22px;
-    text-align: center;
-    transition: color 0.15s;
-}
-.bottom-navbar .grid-dropdown a:hover {
-    background: #fbeaec;
-    color: #e00707;
-}
-.bottom-navbar .grid-dropdown a:hover i {
-    color: #b00606;
-}
-.bottom-navbar .nav-item.dropdown {
-    position: relative;
-}
-.bottom-navbar .nav-item.dropdown > a {
-    padding: 0 18px;
-    line-height: 56px;
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
-    display: block;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
-}
-.bottom-navbar .nav-item.dropdown > a:hover {
-    color: #fff;
-    opacity: 0.9;
-}
-.bottom-navbar .dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-    border-radius: 8px;
-    min-width: 200px;
-    z-index: 1000;
-}
-.bottom-navbar .nav-item.dropdown:hover .dropdown-menu {
-    display: block;
-}
-.bottom-navbar .dropdown-menu a {
-    display: block;
-    padding: 12px 18px;
-    color: #222;
-    text-decoration: none;
-    white-space: nowrap;
-}
-.bottom-navbar .dropdown-menu a:hover {
-    background: #f5f5f5;
-}
-.bottom-navbar .grid-dropdown {
-    display: none;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 100%;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-    padding: 24px 32px;
-    min-width: 520px;
-    z-index: 1000;
-    grid-template-columns: 1fr 1fr;
-    gap: 0 32px;
-}
-.bottom-navbar .nav-item.dropdown:hover .grid-dropdown {
-    display: grid;
-}
-.bottom-navbar .grid-dropdown .dropdown-col {
-    display: flex;
-    flex-direction: column;
-}
-.bottom-navbar .grid-dropdown a {
-    display: flex;
-    align-items: center;
-    padding: 8px 0;
-    color: #222;
-    font-size: 1.08rem;
-    border-radius: 8px;
-    transition: background 0.15s, color 0.15s;
-    text-decoration: none;
-}
-.bottom-navbar .grid-dropdown a i {
-    font-size: 1.2em;
-    margin-right: 12px;
-    color: #e00707;
-    min-width: 22px;
-    text-align: center;
-    transition: color 0.15s;
-}
-.bottom-navbar .grid-dropdown a:hover {
-    background: #fbeaec;
-    color: #e00707;
-}
-.bottom-navbar .grid-dropdown a:hover i {
-    color: #b00606;
-}
-</style>
-
-<!-- Inject sidebar HTML and load sidebar JS after HTML is present -->
+<!-- For integrating with Mobile Sidebar -->
 <script>
-  fetch('/components/mobile-sidebar.html')
-    .then(res => res.text())
-    .then(html => {
-      document.body.insertAdjacentHTML('beforeend', html);
-      var script = document.createElement('script');
-      script.src = '/assets/js/mobile-sidebar.js';
-      document.body.appendChild(script);
-    });
+  document.addEventListener('DOMContentLoaded', function() {
+    // Load mobile sidebar with absolute path
+    fetch('components/mobile-sidebar.html')
+      .then(res => {
+        if (!res.ok) {
+          // Try with a different path if the first attempt fails
+          return fetch('/components/mobile-sidebar.html');
+        }
+        return res;
+      })
+      .then(res => res.text())
+      .then(html => {
+        // Insert sidebar HTML
+        document.body.insertAdjacentHTML('beforeend', html);
+        
+        // Load mobile sidebar script
+        var sidebarScript = document.createElement('script');
+        sidebarScript.src = 'assets/js/mobile-sidebar.js';
+        document.body.appendChild(sidebarScript);
+        
+      })
+      .catch(error => {
+        console.error('Error loading mobile sidebar:', error);
+      });
+  });
 </script>
 </body>
 </html>

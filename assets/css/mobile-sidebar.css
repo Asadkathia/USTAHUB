@@ -14,7 +14,7 @@
   width: 320px;
   max-width: 90vw;
   height: 100vh;
-  background: #222;
+  background: #182B3A;
   color: #fff;
   box-shadow: 0 0 20px rgba(0,0,0,0.15);
   z-index: 1200;
@@ -35,7 +35,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 1.5rem 1rem 1.5rem;
-  background: #e00707;
+  background: #24B47E;
   border-radius: 0 12px 0 0;
 }
 .sidebar-logo-link {
@@ -103,7 +103,7 @@
 
 .sidebar-signin,
 .sidebar-logout {
-  background-color: #e00707;
+  background-color: #24B47E;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -118,7 +118,7 @@
 
 .sidebar-signin:hover,
 .sidebar-logout:hover {
-  background-color: #cc0606;
+  background-color: #1e9c6d;
   color: #fff;
   text-decoration: none;
 }
@@ -189,10 +189,10 @@
   text-decoration: none;
 }
 .sidebar-menu li.active > a {
-  background: rgba(224, 7, 7, 0.2);
+  background: rgba(36, 180, 126, 0.2);
   color: #fff;
   font-weight: 600;
-  border-left: 4px solid #e00707;
+  border-left: 4px solid #24B47E;
 }
 .sidebar-menu a:hover, 
 .sidebar-menu button.submenu-toggle:hover,
@@ -318,21 +318,28 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  opacity: 1;
+  visibility: visible;
 }
 .sidebar-trigger .fas.fa-bars {
   font-size: 1.3rem;
   color: #e00707;
 }
 
-/* Responsive: Hide navbars, show sidebar trigger on mobile */
+/* Force trigger visibility on mobile with higher specificity */
 @media (max-width: 991px) {
-  .top-navbar, .bottom-navbar {
+  /* Top navbar styles moved to dedicated top-navbar.css file */
+  .bottom-navbar {
     display: none !important;
   }
   .sidebar-trigger {
     display: flex !important;
     left: 1.1rem !important;
     right: auto !important;
+    position: fixed !important;
+    z-index: 1300 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
   /* Prevent body scroll when sidebar is open */
   body.sidebar-open {

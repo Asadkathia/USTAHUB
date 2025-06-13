@@ -1,0 +1,158 @@
+/* ===== FONT AWESOME ICON COLORS - CONSOLIDATED ===== */
+/* Single source file for all Font Awesome icon color styling */
+/* Changes all icons from blue/red to consistent green theme */
+
+:root {
+  /* Green color scheme variables for icons */
+  --icon-color-primary: #24b47e; /* Main green color matching color-primary */
+  --icon-color-accent: #4DB97A;  /* Accent green */
+  --icon-color-light: #6BD396;   /* Light green for hover states */
+  --icon-color-dark: #1a8c61;    /* Dark green for active states */
+  --icon-hover-bg: rgba(36, 180, 126, 0.1); /* Light green background for hover */
+}
+
+/* ===== GENERAL ICON COLORS ===== */
+i, .fa {
+  color: var(--icon-color-primary) !important;
+}
+
+/* ===== SPECIFIC ICON CONTEXTS ===== */
+
+/* Service card icons */
+.service-card i {
+  color: var(--icon-color-primary) !important;
+}
+
+/* Navigation icons */
+a.icon i {
+  color: var(--icon-color-primary) !important;
+  margin-right: 1rem;
+  font-size: 1.2rem;
+}
+
+a.nav-link i {
+  color: inherit;
+  opacity: .3;
+}
+
+a.nav-link.active i {
+  color: var(--icon-color-primary) !important;
+  opacity: 1;
+}
+
+/* Feature box icons */
+figure.with-icon i {
+  color: var(--icon-color-primary) !important;
+  position: absolute;
+  line-height: 2rem;
+  left: 0;
+}
+
+/* Rating icons */
+.rating i.active {
+  color: var(--icon-color-accent) !important;
+}
+
+/* List feature checkboxes */
+ul.features-checkboxes li:before,
+ol.features-checkboxes li:before,
+dl.features-checkboxes li:before {
+  background-color: var(--icon-color-primary) !important;
+}
+
+/* Button icons */
+.btn.icon i {
+  color: inherit !important;
+}
+
+/* Pricing list icons */
+.pricing ul li i {
+  color: var(--icon-color-primary) !important;
+}
+
+/* Location icons */
+h4.location:before {
+  color: var(--icon-color-primary) !important;
+}
+
+/* ===== DROPDOWN AND NAVBAR SPECIFIC ===== */
+
+/* Bottom navbar dropdown icons */
+.dropdown-menu .fa,
+.grid-dropdown .fa {
+  color: var(--icon-color-primary) !important;
+}
+
+/* Dropdown icon color variable override */
+:root {
+  --dropdown-icon-color: var(--icon-color-primary) !important;
+}
+
+/* ===== INTERACTIVE STATES ===== */
+
+/* Hover effects for icons */
+i:hover, .fa:hover {
+  color: var(--icon-color-light) !important;
+  transition: color 0.3s ease;
+}
+
+/* Active state for icons */
+i.active, .fa.active {
+  color: var(--icon-color-dark) !important;
+}
+
+/* Icon containers with hover background */
+.icon-container:hover i,
+.service-card:hover i {
+  color: var(--icon-color-accent) !important;
+}
+
+/* ===== FORM AND UI ELEMENT ICONS ===== */
+
+/* Form status icons */
+.form .status .status-icon.valid {
+  color: var(--icon-color-primary) !important;
+}
+
+/* File upload icons */
+.file-upload span i {
+  color: var(--icon-color-primary) !important;
+}
+
+/* Admin control icons */
+.admin-controls a i {
+  color: var(--icon-color-primary) !important;
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+
+@media (max-width: 768px) {
+  /* Ensure mobile icons maintain green color */
+  .mobile-sidebar i,
+  .navbar-toggler i {
+    color: var(--icon-color-primary) !important;
+  }
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --icon-color-primary: #6BD396;
+    --icon-color-accent: #4DB97A;
+    --icon-color-light: #8CE5A8;
+    --icon-color-dark: #24b47e;
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+/* Ensure sufficient contrast for accessibility */
+.high-contrast i,
+.high-contrast .fa {
+  color: var(--icon-color-dark) !important;
+}
+
+/* Focus states for keyboard navigation */
+i:focus, .fa:focus {
+  outline: 2px solid var(--icon-color-primary);
+  outline-offset: 2px;
+} 

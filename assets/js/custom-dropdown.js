@@ -14,16 +14,16 @@
     'Food & Drink'
   ];
 
-  // Create dropdown element
+  // Create dropdown element with more specific ID
   var dropdown = document.createElement('div');
-  dropdown.className = 'custom-dropdown-list';
+  dropdown.className = 'custom-dropdown-list category-dropdown-list';
   dropdown.id = 'categoryDropdown';
   dropdown.style.position = 'fixed'; // Use fixed to avoid parent clipping
   dropdown.style.display = 'none';
   dropdown.style.zIndex = 3000;
   options.forEach(function(opt) {
     var item = document.createElement('div');
-    item.className = 'custom-dropdown-item';
+    item.className = 'custom-dropdown-item category-dropdown-item';
     item.setAttribute('data-value', opt);
     item.textContent = opt;
     item.addEventListener('click', function(e) {
