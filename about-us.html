@@ -47,6 +47,9 @@
     <!-- Custom JS -->
     <script type="module" src="assets/js/supabase.js"></script>
     <script src="assets/js/navbars.js"></script>
+    
+    <!-- Page Layouts CSS - Single Source of Truth -->
+    <link rel="stylesheet" href="assets/css/page-layouts.css">
 
     <title>About Us - UstaHub</title>
 
@@ -76,45 +79,199 @@
         <!-- Main Content -->
         <section class="content">
             <div class="container">
+                <!-- Company Overview Section -->
                 <div class="row">
-                    <div class="col-md-8 mx-auto">
+                    <div class="col-12">
                         <div class="block">
-                            <h2>Our Story</h2>
-                            <p>UstaHub was founded with a simple mission: to make it easier for people to find and connect with trusted local service professionals. We understand that finding reliable service providers can be challenging, and we're here to change that.</p>
-                            
-                            <h3>Our Mission</h3>
-                            <p>To create a trusted marketplace where service providers can showcase their expertise and customers can find the perfect professional for their needs.</p>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h2>Our Story</h2>
+                                    <p>UstaHub was founded in 2023 with a simple yet powerful mission: to revolutionize how people connect with local service professionals. Born from the frustration of finding reliable service providers, our platform bridges the gap between skilled professionals and customers who need their expertise.</p>
+                                    
+                                    <p>What started as a small initiative to help neighbors find trusted contractors has grown into a comprehensive marketplace serving thousands of customers and professionals across multiple service categories. We believe that every community deserves access to quality services, and every skilled professional deserves a platform to showcase their talents.</p>
+                                    
+                                    <h3>Our Mission</h3>
+                                    <p>To create a trusted marketplace where service providers can showcase their expertise and customers can find the perfect professional for their needs. We're committed to building lasting relationships, ensuring quality standards, and making professional services accessible to everyone.</p>
 
-                            <h3>Our Vision</h3>
-                            <p>To become the most trusted platform for local services, connecting communities with skilled professionals across various industries.</p>
-
-                            <div class="row mt-5">
-                                <div class="col-md-4">
-                                    <div class="feature-box text-center">
-                                        <figure>
-                                            <i class="fa fa-users fa-3x text-primary"></i>
-                                        </figure>
-                                        <h3>Trusted Community</h3>
-                                        <p>Verified professionals and satisfied customers</p>
-                                    </div>
+                                    <h3>Our Vision</h3>
+                                    <p>To become the most trusted platform for local services globally, connecting communities with skilled professionals across various industries while fostering economic growth and professional development in local markets.</p>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="feature-box text-center">
-                                        <figure>
-                                            <i class="fa fa-star fa-3x text-primary"></i>
-                                        </figure>
-                                        <h3>Quality Service</h3>
-                                        <p>High standards and reliable service delivery</p>
+                                    <div class="stats-section">
+                                        <h3>Our Impact</h3>
+                                        <div class="stat-item">
+                                            <div class="stat-number">5,000+</div>
+                                            <div class="stat-label">Verified Professionals</div>
+                                        </div>
+                                        <div class="stat-item">
+                                            <div class="stat-number">15,000+</div>
+                                            <div class="stat-label">Completed Projects</div>
+                                        </div>
+                                        <div class="stat-item">
+                                            <div class="stat-number">4.9/5</div>
+                                            <div class="stat-label">Average Rating</div>
+                                        </div>
+                                        <div class="stat-item">
+                                            <div class="stat-number">50+</div>
+                                            <div class="stat-label">Service Categories</div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="feature-box text-center">
-                                        <figure>
-                                            <i class="fa fa-handshake-o fa-3x text-primary"></i>
-                                        </figure>
-                                        <h3>Easy Connection</h3>
-                                        <p>Simple and efficient service booking process</p>
+                            </div>
+
+                            <div class="about-features">
+                                <div class="feature-box">
+                                    <figure>
+                                        <i class="fa fa-users fa-3x"></i>
+                                    </figure>
+                                    <h3>Trusted Community</h3>
+                                    <p>Our rigorous verification process ensures that every professional on our platform is qualified, insured, and committed to excellence. We build trust through transparency, reviews, and continuous quality monitoring.</p>
+                                </div>
+                                <div class="feature-box">
+                                    <figure>
+                                        <i class="fa fa-star fa-3x"></i>
+                                    </figure>
+                                    <h3>Quality Service</h3>
+                                    <p>We maintain high standards through our comprehensive rating system, quality assurance protocols, and dedicated customer support team. Every service provider undergoes background checks and skill assessments.</p>
+                                </div>
+                                <div class="feature-box">
+                                    <figure>
+                                        <i class="fa fa-handshake-o fa-3x"></i>
+                                    </figure>
+                                    <h3>Easy Connection</h3>
+                                    <p>Our intuitive platform makes it simple to find, compare, and book services. With instant quotes, real-time availability, and secure payment processing, connecting with professionals has never been easier.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team & Values Section -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="block">
+                            <h2 class="text-center mb-5">Our Core Values</h2>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="value-item">
+                                        <div class="value-icon">
+                                            <i class="fa fa-shield fa-2x"></i>
+                                        </div>
+                                        <div class="value-content">
+                                            <h4>Trust & Transparency</h4>
+                                            <p>We believe in open communication, honest pricing, and transparent processes. Every interaction on our platform is designed to build and maintain trust between all parties.</p>
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="value-item">
+                                        <div class="value-icon">
+                                            <i class="fa fa-rocket fa-2x"></i>
+                                        </div>
+                                        <div class="value-content">
+                                            <h4>Innovation</h4>
+                                            <p>We continuously evolve our platform with cutting-edge technology, user feedback, and industry best practices to provide the best possible experience for everyone.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="value-item">
+                                        <div class="value-icon">
+                                            <i class="fa fa-heart fa-2x"></i>
+                                        </div>
+                                        <div class="value-content">
+                                            <h4>Community First</h4>
+                                            <p>Our platform exists to serve communities by supporting local businesses, creating job opportunities, and helping neighbors connect with skilled professionals nearby.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="value-item">
+                                        <div class="value-icon">
+                                            <i class="fa fa-check-circle fa-2x"></i>
+                                        </div>
+                                        <div class="value-content">
+                                            <h4>Excellence</h4>
+                                            <p>We strive for excellence in everything we do, from the quality of service providers on our platform to the user experience and customer support we provide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Categories Section -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="block">
+                            <h2 class="text-center mb-5">Service Categories We Cover</h2>
+                            <div class="row">
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="category-item">
+                                        <i class="fa fa-home fa-3x"></i>
+                                        <h4>Home Services</h4>
+                                        <ul>
+                                            <li>Plumbing & Electrical</li>
+                                            <li>Cleaning & Maintenance</li>
+                                            <li>HVAC & Appliance Repair</li>
+                                            <li>Landscaping & Gardening</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="category-item">
+                                        <i class="fa fa-user fa-3x"></i>
+                                        <h4>Personal Services</h4>
+                                        <ul>
+                                            <li>Fitness & Wellness</li>
+                                            <li>Beauty & Grooming</li>
+                                            <li>Education & Tutoring</li>
+                                            <li>Pet Care & Training</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="category-item">
+                                        <i class="fa fa-calendar fa-3x"></i>
+                                        <h4>Event Services</h4>
+                                        <ul>
+                                            <li>Photography & Videography</li>
+                                            <li>Catering & Food Services</li>
+                                            <li>Event Planning & Coordination</li>
+                                            <li>Entertainment & DJ Services</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="category-item">
+                                        <i class="fa fa-briefcase fa-3x"></i>
+                                        <h4>Business Services</h4>
+                                        <ul>
+                                            <li>Marketing & Advertising</li>
+                                            <li>IT & Web Development</li>
+                                            <li>Accounting & Legal</li>
+                                            <li>Consulting & Coaching</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action Section -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="block cta-section">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h2>Ready to Get Started?</h2>
+                                    <p>Join thousands of satisfied customers and professionals who trust UstaHub for their service needs. Whether you're looking for help with a project or want to offer your professional services, we're here to help you succeed.</p>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <a href="register.html" class="btn btn-primary btn-lg">Join UstaHub</a>
+                                    <p class="mt-3"><small>It's free to get started!</small></p>
                                 </div>
                             </div>
                         </div>

@@ -429,14 +429,7 @@ a:focus {
 }
 
 /* ===== SECTION BACKGROUNDS ===== */
-.block {
-  background-color: var(--color-surface);
-}
-
-/* Alternate section background */
-.block:nth-child(even) {
-  background-color: var(--color-bg);
-}
+/* Removed conflicting .block styles - now handled by page-layouts.css */
 
 /* ===== PAGINATION ACTIVE STATE ===== */
 .page-item.active .page-link {

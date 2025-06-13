@@ -46,6 +46,9 @@
     <!-- Custom JS -->
     <script type="module" src="assets/js/supabase.js"></script>
     <script src="assets/js/navbars.js"></script>
+    
+    <!-- Page Layouts CSS - Single Source of Truth -->
+    <link rel="stylesheet" href="assets/css/page-layouts.css">
 
     <title>Sign In - UstaHub</title>
 
@@ -72,33 +75,169 @@
         </div>
         <!-- Main Content -->
         <section class="content">
-                <div class="container">
+            <div class="container">
+                <!-- Welcome Back Section -->
                 <div class="row">
-                    <div class="col-md-6 mx-auto">
+                    <div class="col-12">
                         <div class="block">
-                            <form class="form email" id="signInForm">
-                                <div class="form-group">
-                                    <label for="email" class="col-form-label required">Email</label>
-                                    <input name="email" type="email" class="form-control" id="email" placeholder="Your Email" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="password" class="col-form-label required">Password</label>
-                                    <input name="password" type="password" class="form-control" id="password" placeholder="Your Password" required>
-                                </div>
-                                <div class="form-group">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <label class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input">
-                                            <span class="custom-control-indicator"></span>
-                                            <span class="custom-control-description">Remember me</span>
-                                    </label>
-                                        <a href="#" class="link">Forgot your password?</a>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="welcome-content">
+                                        <h2>Welcome Back!</h2>
+                                        <p>Sign in to access your UstaHub account and continue managing your services, bookings, and profile.</p>
+                                        
+                                        <div class="benefits-list">
+                                            <div class="benefit-item">
+                                                <i class="fa fa-check-circle"></i>
+                                                <span>Access your booking history</span>
+                                            </div>
+                                            <div class="benefit-item">
+                                                <i class="fa fa-check-circle"></i>
+                                                <span>Manage your profile and preferences</span>
+                                            </div>
+                                            <div class="benefit-item">
+                                                <i class="fa fa-check-circle"></i>
+                                                <span>Save favorite service providers</span>
+                                            </div>
+                                            <div class="benefit-item">
+                                                <i class="fa fa-check-circle"></i>
+                                                <span>Track ongoing services</span>
+                                            </div>
+                                            <div class="benefit-item">
+                                                <i class="fa fa-check-circle"></i>
+                                                <span>Get personalized recommendations</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary width-100">Sign In</button>
-                                <hr>
-                                <p class="text-center">Don't have an account? <a href="register.html">Register here</a></p>
-                            </form>
+                                <div class="col-md-6">
+                                    <form class="form email" id="signInForm">
+                                        <h3 class="text-center mb-4">Sign In to Your Account</h3>
+                                        <div class="form-group">
+                                            <label for="email" class="col-form-label required">Email Address</label>
+                                            <input name="email" type="email" class="form-control" id="email" placeholder="Enter your email address" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password" class="col-form-label required">Password</label>
+                                            <input name="password" type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <label class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input">
+                                                    <span class="custom-control-indicator"></span>
+                                                    <span class="custom-control-description">Remember me</span>
+                                                </label>
+                                                <a href="#" class="link">Forgot your password?</a>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary width-100">Sign In</button>
+                                        
+                                        <div class="divider">
+                                            <span>or</span>
+                                        </div>
+                                        
+                                        <div class="social-login">
+                                            <button type="button" class="btn btn-outline-primary width-100 mb-3">
+                                                <i class="fa fa-google"></i> Continue with Google
+                                            </button>
+                                            <button type="button" class="btn btn-outline-primary width-100">
+                                                <i class="fa fa-facebook"></i> Continue with Facebook
+                                            </button>
+                                        </div>
+                                        
+                                        <hr>
+                                        <p class="text-center">Don't have an account? <a href="register.html" class="link">Create one now</a></p>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Notice Section -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="block security-notice">
+                            <div class="row align-items-center">
+                                <div class="col-md-2 text-center">
+                                    <i class="fa fa-shield fa-3x"></i>
+                                </div>
+                                <div class="col-md-10">
+                                    <h4>Your Security is Our Priority</h4>
+                                    <p>We use industry-standard encryption and security measures to protect your personal information and ensure safe transactions. Your data is never shared with third parties without your consent.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Access Section -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="block">
+                            <h3 class="text-center mb-4">Quick Access</h3>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="quick-access-item">
+                                        <i class="fa fa-search fa-2x"></i>
+                                        <h5>Browse Services</h5>
+                                        <p>Explore our wide range of professional services</p>
+                                        <a href="service-category.html" class="btn btn-outline-primary btn-sm">Browse Now</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="quick-access-item">
+                                        <i class="fa fa-question-circle fa-2x"></i>
+                                        <h5>Need Help?</h5>
+                                        <p>Get support from our customer service team</p>
+                                        <a href="contact.html" class="btn btn-outline-primary btn-sm">Contact Support</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="quick-access-item">
+                                        <i class="fa fa-info-circle fa-2x"></i>
+                                        <h5>Learn More</h5>
+                                        <p>Discover more about UstaHub and our mission</p>
+                                        <a href="about-us.html" class="btn btn-outline-primary btn-sm">About Us</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonials Section -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="block">
+                            <h3 class="text-center mb-4">What Our Users Say</h3>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="testimonial-item">
+                                        <div class="testimonial-content">
+                                            <i class="fa fa-quote-left"></i>
+                                            <p>"UstaHub made it so easy to find a reliable plumber. The booking process was smooth and the service was excellent!"</p>
+                                        </div>
+                                        <div class="testimonial-author">
+                                            <strong>Sarah Johnson</strong>
+                                            <small>Verified Customer</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="testimonial-item">
+                                        <div class="testimonial-content">
+                                            <i class="fa fa-quote-left"></i>
+                                            <p>"As a service provider, UstaHub has helped me grow my business and connect with more customers than ever before."</p>
+                                        </div>
+                                        <div class="testimonial-author">
+                                            <strong>Mike Davis</strong>
+                                            <small>Electrical Contractor</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

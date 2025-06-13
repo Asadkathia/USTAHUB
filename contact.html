@@ -47,6 +47,9 @@
     <!-- Custom JS -->
     <script type="module" src="assets/js/supabase.js"></script>
     <script src="assets/js/navbars.js"></script>
+    
+    <!-- Page Layouts CSS - Single Source of Truth -->
+    <link rel="stylesheet" href="assets/css/page-layouts.css">
 
     <title>Contact Us - UstaHub</title>
 
@@ -76,58 +79,181 @@
         <!-- Main Content -->
         <section class="content">
             <div class="container">
+                <!-- Contact Form Section -->
                 <div class="row">
-                    <div class="col-md-8 mx-auto">
+                    <div class="col-12">
                         <div class="block">
                             <div class="row">
                                 <div class="col-md-6">
                                     <h2>Get in Touch</h2>
-                                    <p>Have questions or need assistance? We're here to help! Fill out the form and we'll get back to you as soon as possible.</p>
+                                    <p>Have questions or need assistance? We're here to help! Our dedicated support team is available 24/7 to ensure you get the help you need when you need it.</p>
                                     
                                     <div class="contact-info">
                                         <div class="info-item">
                                             <i class="fa fa-map-marker"></i>
                                             <div>
                                                 <h3>Address</h3>
-                                                <p>123 Service Street<br>New York, NY 10001</p>
+                                                <p>123 Service Street<br>New York, NY 10001<br>United States</p>
                                             </div>
                                         </div>
                                         <div class="info-item">
                                             <i class="fa fa-phone"></i>
                                             <div>
                                                 <h3>Phone</h3>
-                                                <p>+1 (555) 123-4567</p>
+                                                <p>+1 (555) 123-4567<br><small>Available 24/7</small></p>
                                             </div>
                                         </div>
                                         <div class="info-item">
                                             <i class="fa fa-envelope"></i>
                                             <div>
                                                 <h3>Email</h3>
-                                                <p>support@ustahub.com</p>
+                                                <p>support@ustahub.com<br><small>Response within 2 hours</small></p>
+                                            </div>
+                                        </div>
+                                        <div class="info-item">
+                                            <i class="fa fa-clock-o"></i>
+                                            <div>
+                                                <h3>Business Hours</h3>
+                                                <p>Monday - Friday: 8:00 AM - 8:00 PM<br>Saturday - Sunday: 9:00 AM - 6:00 PM</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <form class="form email">
+                                    <form class="form email" id="contactForm">
                                         <div class="form-group">
                                             <label for="name" class="col-form-label required">Your Name</label>
-                                            <input name="name" type="text" class="form-control" id="name" placeholder="Your Name" required>
+                                            <input name="name" type="text" class="form-control" id="name" placeholder="Enter your full name" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="email" class="col-form-label required">Your Email</label>
-                                            <input name="email" type="email" class="form-control" id="email" placeholder="Your Email" required>
+                                            <input name="email" type="email" class="form-control" id="email" placeholder="Enter your email address" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="phone" class="col-form-label">Phone Number</label>
+                                            <input name="phone" type="tel" class="form-control" id="phone" placeholder="Enter your phone number (optional)">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inquiry-type" class="col-form-label required">Inquiry Type</label>
+                                            <select name="inquiry-type" class="form-control" id="inquiry-type" required>
+                                                <option value="">Select inquiry type</option>
+                                                <option value="general">General Question</option>
+                                                <option value="support">Technical Support</option>
+                                                <option value="billing">Billing & Payments</option>
+                                                <option value="provider">Service Provider Application</option>
+                                                <option value="partnership">Partnership Opportunity</option>
+                                                <option value="feedback">Feedback & Suggestions</option>
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="subject" class="col-form-label required">Subject</label>
-                                            <input name="subject" type="text" class="form-control" id="subject" placeholder="Subject" required>
+                                            <input name="subject" type="text" class="form-control" id="subject" placeholder="Brief description of your inquiry" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="message" class="col-form-label required">Your Message</label>
-                                            <textarea name="message" id="message" class="form-control" rows="4" placeholder="Your Message" required></textarea>
+                                            <textarea name="message" id="message" class="form-control" rows="5" placeholder="Please provide detailed information about your inquiry..." required></textarea>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Send Message</button>
+                                        <button type="submit" class="btn btn-primary width-100">Send Message</button>
+                                        <p class="mt-3 text-center"><small>We typically respond within 2 hours during business hours</small></p>
                                     </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Section -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="block">
+                            <h2 class="text-center mb-5">Frequently Asked Questions</h2>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="faq-item">
+                                        <h4><i class="fa fa-question-circle"></i> How do I book a service?</h4>
+                                        <p>Simply browse our service categories, select a provider, choose your preferred date and time, and complete the booking. You'll receive instant confirmation and can track your service request in real-time.</p>
+                                    </div>
+                                    <div class="faq-item">
+                                        <h4><i class="fa fa-shield"></i> Are service providers verified?</h4>
+                                        <p>Yes! All our service providers undergo thorough background checks, license verification, and skill assessments. We also verify insurance coverage and customer reviews before approving any provider.</p>
+                                    </div>
+                                    <div class="faq-item">
+                                        <h4><i class="fa fa-credit-card"></i> What payment methods do you accept?</h4>
+                                        <p>We accept all major credit cards, debit cards, PayPal, and bank transfers. Payments are processed securely through our encrypted payment system, and you only pay after the service is completed to your satisfaction.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="faq-item">
+                                        <h4><i class="fa fa-undo"></i> What is your cancellation policy?</h4>
+                                        <p>You can cancel or reschedule your booking up to 24 hours before the scheduled service time without any charges. For cancellations within 24 hours, a small cancellation fee may apply.</p>
+                                    </div>
+                                    <div class="faq-item">
+                                        <h4><i class="fa fa-headphones"></i> How can I contact customer support?</h4>
+                                        <p>Our customer support team is available 24/7 via phone, email, or live chat. You can also reach out through this contact form, and we'll respond within 2 hours during business hours.</p>
+                                    </div>
+                                    <div class="faq-item">
+                                        <h4><i class="fa fa-star"></i> How does the rating system work?</h4>
+                                        <p>After each service, both customers and providers can rate each other on a 5-star scale. These ratings help maintain quality standards and help other users make informed decisions when choosing service providers.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Support Channels Section -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="block">
+                            <h2 class="text-center mb-5">Multiple Ways to Reach Us</h2>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="support-channel">
+                                        <div class="channel-icon">
+                                            <i class="fa fa-comments fa-3x"></i>
+                                        </div>
+                                        <h4>Live Chat</h4>
+                                        <p>Get instant help from our support team. Available 24/7 for immediate assistance with your questions or issues.</p>
+                                        <button class="btn btn-outline-primary">Start Chat</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="support-channel">
+                                        <div class="channel-icon">
+                                            <i class="fa fa-phone fa-3x"></i>
+                                        </div>
+                                        <h4>Phone Support</h4>
+                                        <p>Speak directly with our experts. Call us for complex issues or when you need detailed guidance through our services.</p>
+                                        <a href="tel:+15551234567" class="btn btn-outline-primary">Call Now</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="support-channel">
+                                        <div class="channel-icon">
+                                            <i class="fa fa-book fa-3x"></i>
+                                        </div>
+                                        <h4>Help Center</h4>
+                                        <p>Browse our comprehensive knowledge base with step-by-step guides, tutorials, and troubleshooting articles.</p>
+                                        <a href="#" class="btn btn-outline-primary">Visit Help Center</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Contact Section -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="block emergency-contact">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h3><i class="fa fa-exclamation-triangle"></i> Need Emergency Assistance?</h3>
+                                    <p>For urgent service requests or emergency situations, contact our 24/7 emergency hotline. We'll connect you with available service providers in your area immediately.</p>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <a href="tel:+15551234567" class="btn btn-danger btn-lg">Emergency: (555) 123-4567</a>
+                                    <p class="mt-2"><small>Available 24/7 for emergencies</small></p>
                                 </div>
                             </div>
                         </div>
