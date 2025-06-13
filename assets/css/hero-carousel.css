@@ -317,7 +317,7 @@
 }
 
 /* ===== CUSTOM DROPDOWN STYLES ===== */
-.custom-dropdown-input {
+.hero-search .custom-dropdown-input {
   cursor: pointer;
   background: var(--hero-content-bg);
   border: none !important;
@@ -331,7 +331,7 @@
   padding-left: 22px;
 }
 
-.custom-dropdown-list {
+.hero-search .custom-dropdown-list {
   display: none;
   position: absolute;
   background: var(--hero-text-primary);
@@ -342,7 +342,7 @@
   overflow-y: auto;
 }
 
-.custom-dropdown-item {
+.hero-search .custom-dropdown-item {
   padding: 12px 18px;
   cursor: pointer;
   color: #222;
@@ -350,7 +350,7 @@
   transition: background 0.15s;
 }
 
-.custom-dropdown-item:hover {
+.hero-search .custom-dropdown-item:hover {
   background: #f5f5f5;
 }
 
@@ -375,39 +375,6 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* ===== HERO INTEGRATION WITH NAVBARS ===== */
-/* Navbar mount points positioning */
-#navbar-top {
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  z-index: 1050 !important;
-}
-
-#navbar-bottom {
-  position: absolute !important;
-  top: 40px !important; /* Updated to match bottom-navbar.css */
-  left: 0 !important;
-  width: 100% !important;
-  z-index: 1100 !important;
-}
-
-/* Ensure navbars are visible and on top of everything */
-.custom-navbar {
-  z-index: 1100 !important;
-}
-
-.hero-header .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.45);
-  z-index: 2;
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
@@ -464,7 +431,7 @@
     margin-bottom: 1rem;
   }
 
-  .custom-dropdown-input {
+  .hero-search .custom-dropdown-input {
     min-width: 100%;
     max-width: 100%;
   }

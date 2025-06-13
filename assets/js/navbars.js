@@ -1,3 +1,70 @@
+// ========================================
+// UstaHub - Navigation JavaScript
+// ========================================
+
+// CRITICAL: Disable Bootstrap dropdown auto-initialization for navbar dropdowns
+// This prevents conflicts between Bootstrap and our custom dropdown system
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait for navbar to be mounted first
+    setTimeout(() => {
+        // Disable Bootstrap dropdown initialization for bottom navbar dropdowns
+        const navbarDropdowns = document.querySelectorAll('.bottom-navbar .nav-item.dropdown');
+        
+        navbarDropdowns.forEach((dropdown, index) => {
+            // Remove Bootstrap dropdown attributes to prevent auto-initialization
+            dropdown.removeAttribute('data-bs-toggle');
+            dropdown.removeAttribute('data-toggle'); // Bootstrap 4 compatibility
+            const link = dropdown.querySelector('a');
+            if (link) {
+                link.removeAttribute('data-bs-toggle');
+                link.removeAttribute('data-toggle'); // Bootstrap 4 compatibility
+                link.removeAttribute('data-bs-target');
+                link.removeAttribute('aria-expanded');
+                link.removeAttribute('role');
+                // Prevent Bootstrap from handling these dropdowns
+                link.classList.remove('dropdown-toggle');
+            }
+            const menu = dropdown.querySelector('.dropdown-menu');
+            if (menu) {
+                menu.removeAttribute('data-bs-popper');
+                menu.removeAttribute('aria-labelledby');
+            }
+            
+            // Mark as custom-handled to prevent Bootstrap interference
+            dropdown.setAttribute('data-custom-dropdown', 'true');
+        });
+        
+        // Initialize our custom dropdown system after disabling Bootstrap
+        setTimeout(() => {
+            initializeNavbarDropdowns();
+        }, 100);
+    }, 200); // Increased delay to ensure navbar is mounted
+});
+
+// Disable Bootstrap 5 dropdown behavior globally for navbar dropdowns
+if (typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {
+    // Override Bootstrap 5 dropdown initialization
+    const originalGetOrCreateInstance = bootstrap.Dropdown.getOrCreateInstance;
+    bootstrap.Dropdown.getOrCreateInstance = function(element, config) {
+        // Skip initialization for bottom navbar dropdowns
+        if (element && element.closest && element.closest('.bottom-navbar')) {
+            return null;
+        }
+        return originalGetOrCreateInstance.call(this, element, config);
+    };
+    
+    // Also disable auto-initialization via data attributes for navbar dropdowns
+    const originalInit = bootstrap.Dropdown.jQueryInterface;
+    bootstrap.Dropdown.jQueryInterface = function(config) {
+        return this.each(function() {
+            if (this.closest && this.closest('.bottom-navbar')) {
+                return;
+            }
+            return originalInit.call(this, config);
+        });
+    };
+}
+
 // Top Navigation Bar
 const topNavbar = `
 <nav class="custom-navbar top-navbar">
@@ -203,7 +270,7 @@ function handleMobileDropdowns() {
         const link = dropdown.querySelector('a');
         const menu = dropdown.querySelector('.dropdown-menu');
         
-        // Remove existing event listeners
+        // Remove existing event listeners by cloning
         const newLink = link.cloneNode(true);
         link.parentNode.replaceChild(newLink, link);
         
@@ -214,14 +281,182 @@ function handleMobileDropdowns() {
                 dropdowns.forEach(otherDropdown => {
                     if (otherDropdown !== dropdown) {
                         otherDropdown.classList.remove('active');
-                        otherDropdown.querySelector('.dropdown-menu').style.display = 'none';
+                        const otherMenu = otherDropdown.querySelector('.dropdown-menu');
+                        if (otherMenu) otherMenu.style.display = 'none';
                     }
                 });
                 // Toggle current dropdown
                 dropdown.classList.toggle('active');
-                menu.style.display = menu.style.display === 'grid' ? 'none' : 'grid';
+                if (menu) {
+                    menu.style.display = menu.style.display === 'grid' ? 'none' : 'grid';
+                }
             });
         }
+    });
+}
+
+
+// Function to cleanup existing dropdown listeners
+function cleanupDropdownListeners() {
+    const dropdownMount = document.getElementById('dropdown-mount');
+    if (dropdownMount) {
+        dropdownMount.innerHTML = '';
+    }
+    
+    // Clear all timeouts
+    if (window.dropdownTimeouts) {
+        window.dropdownTimeouts.forEach(timeout => clearTimeout(timeout));
+        window.dropdownTimeouts = [];
+    } else {
+        window.dropdownTimeouts = [];
+    }
+    
+    const dropdowns = document.querySelectorAll('.bottom-navbar .nav-item.dropdown');
+    dropdowns.forEach(dropdown => {
+        dropdown.removeAttribute('data-listeners-attached');
+        // Remove all event listeners by cloning
+        const newDropdown = dropdown.cloneNode(true);
+        dropdown.parentNode.replaceChild(newDropdown, dropdown);
+    });
+}
+
+// Simplified dropdown positioning function
+function handleDropdownPositioning() {
+    console.log('🎯 handleDropdownPositioning called');
+    const dropdowns = document.querySelectorAll('.bottom-navbar .nav-item.dropdown');
+    const dropdownMount = document.getElementById('dropdown-mount');
+    
+    console.log(`🎯 Found ${dropdowns.length} dropdowns to handle`);
+
+    if (!dropdownMount) {
+        console.warn('❌ Dropdown mount point not found');
+        return;
+    }
+    
+    console.log('✅ Dropdown mount point found');
+
+    // Clear any existing mounted dropdowns
+    dropdownMount.innerHTML = '';
+    
+    // Initialize timeouts array
+    if (!window.dropdownTimeouts) {
+        window.dropdownTimeouts = [];
+    }
+
+    dropdowns.forEach((dropdown, index) => {
+        const link = dropdown.querySelector('a');
+        const menu = dropdown.querySelector('.dropdown-menu');
+        
+        if (!menu || !link) return;
+
+        // Skip if listeners already attached
+        if (dropdown.getAttribute('data-listeners-attached') === 'true') return;
+        
+        let isHovering = false;
+        let currentTimeout = null;
+        let mountedMenu = null;
+
+        // Desktop hover behavior
+        const handleMouseEnter = function() {
+            if (window.innerWidth <= 991) return;
+            
+            // Clear any existing timeout
+            if (currentTimeout) {
+                clearTimeout(currentTimeout);
+                currentTimeout = null;
+            }
+            
+            isHovering = true;
+            
+            // IMPORTANT: Add a small delay before showing the mounted dropdown
+            // This prevents the original dropdown from briefly appearing
+            currentTimeout = setTimeout(() => {
+                // Clear any existing mounted dropdowns
+                dropdownMount.innerHTML = '';
+                
+                // Calculate position
+                const linkRect = link.getBoundingClientRect();
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                
+                // Clone and position the dropdown
+                mountedMenu = menu.cloneNode(true);
+                mountedMenu.style.position = 'fixed';
+                mountedMenu.style.zIndex = '10000';
+                mountedMenu.style.display = 'grid';
+                mountedMenu.style.visibility = 'visible';
+                mountedMenu.style.opacity = '1';
+                mountedMenu.classList.add('dropdown-mounted');
+                mountedMenu.setAttribute('data-dropdown-id', index);
+                
+                // Add to mount point
+                dropdownMount.appendChild(mountedMenu);
+                
+                // Calculate position after adding to DOM
+                const dropdownRect = mountedMenu.getBoundingClientRect();
+                
+                // Center the dropdown under the link
+                let left = linkRect.left + (linkRect.width / 2) - (dropdownRect.width / 2);
+                let top = linkRect.bottom + 5;
+                
+                // Adjust for viewport boundaries
+                if (left < 10) {
+                    left = 10;
+                } else if (left + dropdownRect.width > viewportWidth - 10) {
+                    left = viewportWidth - dropdownRect.width - 10;
+                }
+                
+                if (top + dropdownRect.height > viewportHeight - 10) {
+                    top = linkRect.top - dropdownRect.height - 5;
+                }
+                
+                mountedMenu.style.left = left + 'px';
+                mountedMenu.style.top = top + 'px';
+                mountedMenu.style.transform = 'none'; // Remove transform since we're calculating exact position
+                
+                // Add hover listeners to the cloned menu
+                mountedMenu.addEventListener('mouseenter', function() {
+                    if (currentTimeout) {
+                        clearTimeout(currentTimeout);
+                        currentTimeout = null;
+                    }
+                    isHovering = true;
+                });
+                
+                mountedMenu.addEventListener('mouseleave', function() {
+                    isHovering = false;
+                    currentTimeout = setTimeout(() => {
+                        if (!isHovering && mountedMenu) {
+                            mountedMenu.remove();
+                            mountedMenu = null;
+                        }
+                    }, 150);
+                    window.dropdownTimeouts.push(currentTimeout);
+                });
+            }, 50); // Small delay to prevent double animation effect
+            
+            window.dropdownTimeouts.push(currentTimeout);
+        };
+
+        const handleMouseLeave = function() {
+            if (window.innerWidth <= 991) return;
+            
+            isHovering = false;
+            currentTimeout = setTimeout(() => {
+                if (!isHovering && mountedMenu) {
+                    mountedMenu.remove();
+                    mountedMenu = null;
+                }
+            }, 150);
+            window.dropdownTimeouts.push(currentTimeout);
+        };
+
+        // Attach event listeners
+        dropdown.addEventListener('mouseenter', handleMouseEnter);
+        dropdown.addEventListener('mouseleave', handleMouseLeave);
+        
+        // Mark as having listeners attached
+        dropdown.setAttribute('data-listeners-attached', 'true');
     });
 }
 
@@ -300,8 +535,36 @@ async function updateNavbar() {
   }
 }
 
-// Mount the navigation bars when the DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
+// Global variables to track initialization
+let navbarsInitialized = false;
+let resizeTimeout;
+
+// Debug function to check for duplicate event listeners
+function checkForDuplicateListeners() {
+    console.log('🔍 Checking for duplicate event listeners...');
+    const dropdowns = document.querySelectorAll('.bottom-navbar .nav-item.dropdown');
+    dropdowns.forEach((dropdown, index) => {
+        const hasListeners = dropdown.getAttribute('data-listeners-attached') === 'true';
+        console.log(`Dropdown ${index + 1}: ${dropdown.querySelector('a')?.textContent.trim()} - Has listeners: ${hasListeners}`);
+    });
+    
+    // Check for duplicate mounted dropdowns
+    const mountedDropdowns = document.querySelectorAll('#dropdown-mount .dropdown-mounted');
+    console.log(`Found ${mountedDropdowns.length} mounted dropdowns`);
+    
+    // Check for any inline styles on original dropdowns
+    dropdowns.forEach((dropdown, index) => {
+        const menu = dropdown.querySelector('.dropdown-menu');
+        if (menu && (menu.style.display !== 'none' && menu.style.display !== '')) {
+            console.warn(`⚠️ Original dropdown ${index + 1} has display: ${menu.style.display}`);
+        }
+    });
+}
+
+// Function to initialize all navbar functionality
+function initializeNavbars() {
+    if (navbarsInitialized) return;
+    
     // Mount top navbar
     const topNavbarMount = document.getElementById('navbar-top');
     if (topNavbarMount) {
@@ -313,10 +576,73 @@ document.addEventListener('DOMContentLoaded', function() {
     const bottomNavbarMount = document.getElementById('navbar-bottom');
     if (bottomNavbarMount) {
         bottomNavbarMount.innerHTML = bottomNavbar;
-        // Initialize mobile dropdowns after mounting
+        
+        // Small delay to ensure DOM is ready, then initialize dropdowns
+        setTimeout(() => {
+            handleMobileDropdowns();
+            // Don't call handleDropdownPositioning here - it will be called by initializeNavbarDropdowns
+        }, 100);
+    }
+    
+    navbarsInitialized = true;
+    
+    // Run debug check after initialization
+    setTimeout(checkForDuplicateListeners, 1000);
+}
+
+// Main initialization function for navbar dropdowns (called from DOMContentLoaded)
+function initializeNavbarDropdowns() {
+    console.log('🎯 initializeNavbarDropdowns called');
+    
+    // Clean up any existing listeners first
+    cleanupDropdownListeners();
+    
+    // Initialize our custom dropdown system
+    console.log('🎯 Calling handleDropdownPositioning...');
+    handleDropdownPositioning();
+    
+    console.log('✅ Navbar dropdowns initialized successfully');
+}
+
+// Function to cleanup and reinitialize on resize
+function handleResize() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        // Cleanup existing listeners and dropdowns
+        cleanupDropdownListeners();
+        
+        // Reinitialize with fresh event listeners
         handleMobileDropdowns();
+        handleDropdownPositioning();
+    }, 250);
+}
+
+// Global click handler to close dropdowns when clicking outside
+document.addEventListener('click', function(event) {
+    const dropdownMount = document.getElementById('dropdown-mount');
+    const bottomNavbar = document.querySelector('.bottom-navbar');
+    
+    if (dropdownMount && bottomNavbar) {
+        const clickedInsideNavbar = bottomNavbar.contains(event.target);
+        const clickedInsideDropdown = dropdownMount.contains(event.target);
+        
+        if (!clickedInsideNavbar && !clickedInsideDropdown) {
+            // Close all mounted dropdowns
+            dropdownMount.innerHTML = '';
+            
+            // Close mobile dropdowns
+            const mobileDropdowns = document.querySelectorAll('.bottom-navbar .nav-item.dropdown.active');
+            mobileDropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+                const menu = dropdown.querySelector('.dropdown-menu');
+                if (menu) menu.style.display = 'none';
+            });
+        }
     }
 });
 
-// Handle window resize for mobile dropdowns
-window.addEventListener('resize', handleMobileDropdowns); 
+// Mount the navigation bars when the DOM is loaded
+document.addEventListener('DOMContentLoaded', initializeNavbars);
+
+// Handle window resize
+window.addEventListener('resize', handleResize); 

@@ -405,11 +405,7 @@ a:focus {
   z-index: 10 !important; /* Much lower than navbar z-index */
 }
 
-/* Ensure bottom navbar is properly positioned */
-#navbar-bottom,
-.bottom-navbar {
-  z-index: 1100 !important; /* Higher than hero content */
-}
+/* Bottom navbar positioning handled in bottom-navbar.css */
 
 /* ===== STEP NUMBERS STYLING ===== */
 .step-number {
@@ -484,12 +480,8 @@ a:focus {
   color: var(--color-error) !important;
 }
 
-/* ===== ACCORDION/DROPDOWN ACTIVE STATES ===== */
-.dropdown-item:hover,
-.dropdown-item:focus {
-  background-color: rgba(36, 180, 126, 0.1);
-  color: var(--color-primary);
-}
+/* ===== ACCORDION ACTIVE STATES ===== */
+/* Removed dropdown-item styles to prevent conflicts with navbar dropdowns */
 
 /* ===== BADGES AND TAGS ===== */
 .badge-primary,
@@ -729,31 +721,4 @@ a:focus {
   }
 }
 
-/* ===== FINAL HERO SPACING OVERRIDES ===== */
-/* High priority rules to ensure proper spacing */
-body .hero-content,
-html .hero-content,
-.hero-header .hero-content,
-.hero-carousel .hero-content {
-  padding-top: 450px !important;
-  z-index: 10 !important;
-}
-
-body .hero-content h1,
-html .hero-content h1,
-.hero-header .hero-content h1,
-.hero-carousel .hero-content h1 {
-  margin-top: 15rem !important;
-  z-index: 10 !important;
-  position: relative !important;
-}
-
-/* Ensure navbar stays on top */
-body #navbar-bottom,
-html #navbar-bottom,
-body .bottom-navbar,
-html .bottom-navbar {
-  z-index: 1100 !important;
-  position: absolute !important;
-  top: 40px !important;
-} 
+/* Hero spacing and navbar positioning handled in dedicated CSS files */ 

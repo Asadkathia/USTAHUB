@@ -3,43 +3,7 @@
  * Contains responsive overrides for the entire site
  */
 
-/* ===== RESPONSIVE NAVBAR FIXES ===== */
-@media (max-width: 991.98px) {
-  /* Fix navbar positioning on mobile */
-  .hero-header #navbar-top,
-  .hero-header #navbar-bottom,
-  .hero-carousel #navbar-top,
-  .hero-carousel #navbar-bottom {
-    position: absolute !important;
-    width: 100% !important;
-    left: 0 !important;
-    z-index: 1050 !important;
-  }
-  
-  .custom-navbar {
-    position: absolute !important;
-    width: 100% !important;
-    left: 0 !important;
-    z-index: 1000 !important;
-  }
-  
-  .top-navbar {
-    position: absolute !important;
-    top: 0 !important;
-    width: 100% !important;
-  }
-  
-  .bottom-navbar {
-    position: absolute !important;
-    top: 100px !important;
-    width: 100% !important;
-  }
-  
-  /* Ensure content clears the navbars */
-  .hero-header .hero-content {
-    padding-top: 250px !important;
-  }
-}
+/* Navbar positioning handled in dedicated navbar CSS files */
 
 /* ===== RESPONSIVE LAYOUT FIXES ===== */
 @media (max-width: 767.98px) {

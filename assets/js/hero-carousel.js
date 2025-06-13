@@ -276,7 +276,8 @@ class HeroCarousel {
 // Custom dropdown functionality for hero search
 class HeroSearchDropdown {
   constructor() {
-    this.dropdowns = document.querySelectorAll('.custom-dropdown-input');
+    // Only target dropdowns within hero search areas, not navbar dropdowns
+    this.dropdowns = document.querySelectorAll('.hero-search .custom-dropdown-input, .search-form .custom-dropdown-input');
     this.init();
   }
 
@@ -334,7 +335,8 @@ class HeroSearchDropdown {
   }
 
   closeAllDropdowns() {
-    document.querySelectorAll('.custom-dropdown-list').forEach(list => {
+    // Only close hero search dropdowns, not navbar dropdowns
+    document.querySelectorAll('.hero-search .custom-dropdown-list').forEach(list => {
       list.style.display = 'none';
     });
   }
@@ -356,8 +358,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Handle window resize to reposition dropdowns
 window.addEventListener('resize', () => {
-  // Reposition any open dropdowns
-  document.querySelectorAll('.custom-dropdown-list').forEach(list => {
+  // Reposition any open hero search dropdowns only
+  document.querySelectorAll('.hero-search .custom-dropdown-list').forEach(list => {
     if (list.style.display === 'block') {
       const input = document.querySelector(`[data-list="${list.id}"]`);
       if (input) {

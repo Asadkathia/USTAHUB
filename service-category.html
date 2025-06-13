@@ -33,10 +33,10 @@
         });
     </script>
     <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="assets/css/mobile-sidebar.css">
     <link rel="stylesheet" href="assets/css/bottom-navbar.css">
-    <link rel="stylesheet" href="assets/css/navbar-hero-spacing-fix.css">
+
     <link rel="stylesheet" href="assets/css/top-navbar.css">
     <link rel="stylesheet" href="assets/css/font-awesome-colors.css">
     <link rel="stylesheet" href="assets/css/hero-carousel.css">
@@ -48,6 +48,12 @@
     <!-- Custom JS -->
     <script type="module" src="assets/js/supabase.js"></script>
     <script src="assets/js/navbars.js"></script>
+    
+    <!-- Booking Modal CSS - Load last to override other styles -->
+    <link rel="stylesheet" href="assets/css/booking-modal.css">
+    
+    <!-- Enhanced Service Listings CSS -->
+    <link rel="stylesheet" href="assets/css/service-listings.css">
 
     <title>Service Category - UstaHub</title>
 
@@ -84,7 +90,7 @@
     
     <script>
         // AOS initialization is now handled in the head section
-        
+
         const categoryHierarchy = {
             "home-garden": [
                 "contractors", "plumbing", "electrical", "hvac", "appliances", "roofing", "locksmiths", "painting",
@@ -95,7 +101,7 @@
                 "medical", "health", "therapy", "beauty"
             ],
             "auto-transport": [
-                "auto-repair", "car-wash", "tire-service", "taxi", "moving",
+                "auto-repair", "car-wash", "tire-service", "taxi", "moving", 
                 "travel", "bus", "train", "shipping", "motorcycle", "bicycle", "parking"
             ],
             "business": [
@@ -106,8 +112,8 @@
                 "food-dining", "shopping", "fitness", "events", "pet-services", "childcare",
                 "lessons", "crafts", "music", "entertainment", "cafes", "nightlife", "tutoring"
             ],
-            "more": [
-                "technology", "decor", "veterinary", "venues", "other"
+            "more": [ 
+                "technology", "decor", "veterinary", "venues", "other" 
             ]
         };
         const mainCategories = Object.keys(categoryHierarchy);
@@ -118,19 +124,26 @@
             var results = regex.exec(location.search);
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
-        // Function to create service list item with animation (Enhanced with booking)
+        // Function to create service list item with enhanced layout (Provider Icon, Description, Location, Price)
         function createServiceListItem(service, index) {
             const listItem = document.createElement('div');
             listItem.className = 'service-list-item';
             listItem.setAttribute('data-aos', 'fade-up');
             listItem.setAttribute('data-aos-delay', index * 50);
+            
             // Mock data/placeholders for fields not directly in current 'service' object
             const rating = service.rating || (Math.random() * (5 - 3.5) + 3.5).toFixed(1);
             const reviewCount = service.review_count || Math.floor(Math.random() * 200) + 10;
             const sampleReview = service.sample_review || "This provider was excellent! Very professional and did a great job. Highly recommended.";
+            
             // Provider information
             const providerName = service.provider ? `${service.provider.first_name} ${service.provider.last_name}` : 'Professional Provider';
             const servicePrice = service.price ? `$${service.price}/hr` : 'Contact for pricing';
+            
+            // Location information (mock data for now, can be enhanced with real location)
+            const serviceLocation = service.location || service.address || 'Local Area';
+            const distance = service.distance || (Math.random() * 10 + 1).toFixed(1);
+            
             // Generate star icons based on rating
             let starsHTML = '';
             const fullStars = Math.floor(rating);
@@ -145,20 +158,33 @@
             for (let i = 0; i < emptyStars; i++) {
                 starsHTML += '<i class="far fa-star"></i>';
             }
-            // Create a simple SVG placeholder as base64 data URI
+            
+            // Enhanced provider image placeholder with better design
             const placeholderImage = 'data:image/svg+xml;base64,' + btoa(`
                 <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="160" height="160" fill="#e0e0e0"/>
-                    <text x="80" y="85" font-family="Arial, sans-serif" font-size="14" fill="#666" text-anchor="middle">Service</text>
+                    <defs>
+                        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#24B47E;stop-opacity:0.8" />
+                            <stop offset="100%" style="stop-color:#4BDB97;stop-opacity:0.6" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="160" height="160" fill="url(#grad)"/>
+                    <circle cx="80" cy="60" r="25" fill="white" opacity="0.9"/>
+                    <path d="M 55 60 Q 55 45 80 45 Q 105 45 105 60 Q 105 70 95 75 L 95 85 Q 95 95 80 95 Q 65 95 65 85 L 65 75 Q 55 70 55 60 Z" fill="white" opacity="0.7"/>
+                    <text x="80" y="130" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle" font-weight="bold">${providerName.split(' ').map(n => n[0]).join('').toUpperCase()}</text>
                 </svg>
             `);
+            
+            // Create the enhanced listing structure
             listItem.innerHTML = `
                 <div class="service-list-item__main">
                     <div class="service-list-item__image">
-                        <img src="${service.image_url || placeholderImage}" alt="${service.title || 'Service Image'}" onerror="this.src='${placeholderImage}'">
+                        <img src="${service.image_url || service.provider_image || placeholderImage}" 
+                             alt="${providerName}" 
+                             onerror="this.src='${placeholderImage}'">
                     </div>
                     <div class="service-list-item__details">
-                        <h3 class="service-list-item__name">${index + 1}. ${service.title || 'Service Title'}</h3>
+                        <h3 class="service-list-item__name">${service.title || 'Service Title'}</h3>
                         <div class="service-list-item__provider">
                             <i class="fas fa-user-tie"></i>
                             <span>by ${providerName}</span>
@@ -168,10 +194,14 @@
                             <span class="rating-value">${rating}</span>
                             <span class="review-count">(${reviewCount} reviews)</span>
                         </div>
-                        <p class="service-list-item__description">${service.description || "Service description."}</p>
+                        <p class="service-list-item__description">${service.description || "Professional service tailored to your needs. Our experienced provider ensures quality results and customer satisfaction."}</p>
+                        <div class="service-list-item__location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${serviceLocation} • ${distance} km away</span>
+                        </div>
                         <div class="service-list-item__feedback">
                             <p class="feedback-text">"${sampleReview.substring(0, 100)}${sampleReview.length > 100 ? '...' : ''}"</p>
-                            ${sampleReview.length > 100 ? `<a href="service-details.html?serviceId=${service.id}#reviews" class="read-more-reviews">Read more</a>` : ''}
+                            ${sampleReview.length > 100 ? `<a href="service-details.html?serviceId=${service.id}#reviews" class="read-more-reviews">Read more reviews</a>` : ''}
                         </div>
                     </div>
                 </div>
@@ -181,9 +211,16 @@
                         <span class="price-value">${servicePrice}</span>
                     </div>
                     <div class="service-list-item__buttons">
-                        <a href="service-details.html?serviceId=${service.id}" class="btn btn-outline-primary view-details-btn">View Details</a>
-                        <button class="btn btn-primary book-now-btn" data-service-id="${service.id}" data-provider-id="${service.provider_id}" data-service-title="${service.title}">
-                            <i class="fas fa-calendar-check me-2"></i>Book Now
+                        <a href="service-details.html?serviceId=${service.id}" class="btn btn-outline-primary view-details-btn">
+                            <i class="fas fa-info-circle"></i>View Details
+                        </a>
+                        <button class="btn btn-primary book-now-btn" 
+                                data-service-id="${service.id}" 
+                                data-provider-id="${service.provider_id}" 
+                                data-service-title="${service.title}"
+                                data-service-image="${service.image_url || service.provider_image || placeholderImage}"
+                                data-provider-name="${providerName}">
+                            <i class="fas fa-calendar-check"></i>Book Now
                         </button>
                     </div>
                 </div>
@@ -259,18 +296,21 @@
                         const serviceItem = createServiceListItem(service, index);
                         servicesGrid.appendChild(serviceItem);
                     });
-                    // Add event listeners for Book Now buttons
+                    // Add event listeners for Book Now buttons with enhanced data
                     document.querySelectorAll('.book-now-btn').forEach(button => {
                         button.addEventListener('click', function(e) {
                             e.preventDefault();
                             const serviceId = this.getAttribute('data-service-id');
                             const providerId = this.getAttribute('data-provider-id');
                             const serviceTitle = this.getAttribute('data-service-title');
-                            // For now, show a placeholder modal (we'll implement the full modal next)
+                            const serviceImage = this.getAttribute('data-service-image');
+                            const providerName = this.getAttribute('data-provider-name');
+                            
+                            // Open the enhanced booking modal with complete information
                             if (window.openBookingModal) {
-                                window.openBookingModal(serviceId, providerId, serviceTitle);
+                                window.openBookingModal(serviceId, providerId, serviceTitle, serviceImage, providerName);
                             } else {
-                                alert(`Booking functionality coming soon!\nService: ${serviceTitle}\nService ID: ${serviceId}`);
+                                alert(`Booking functionality coming soon!\nService: ${serviceTitle}\nProvider: ${providerName}\nService ID: ${serviceId}`);
                             }
                         });
                     });
@@ -291,40 +331,95 @@
     </script>
     <!-- Include Booking Modal Component -->
     <div id="bookingModalContainer"></div>
-    <!-- Include Booking Modal JavaScript -->
-    <script src="assets/js/booking-modal.js"></script>
     <script>
-        // Load booking modal component
+        // Load modern booking modal component and initialize
         fetch('assets/components/booking-modal.html')
             .then(response => response.text())
             .then(html => {
                 document.getElementById('bookingModalContainer').innerHTML = html;
-                // Wait for Supabase to be loaded before initializing BookingModal
+                console.log('Booking modal HTML loaded successfully');
+                
+                // Now load the JavaScript
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = 'assets/js/booking-modal.js';
+                    script.onload = () => {
+                        console.log('Booking modal JavaScript loaded successfully');
+                        resolve();
+                    };
+                    script.onerror = () => reject(new Error('Failed to load booking modal JavaScript'));
+                    document.head.appendChild(script);
+                });
+            })
+            .then(() => {
+                // Wait for Supabase and then initialize BookingModal
                 function initializeBookingModal() {
-                    if (typeof BookingModal !== 'undefined' && window.supabase) {
+                    console.log('Attempting to initialize BookingModal...');
+                    console.log('BookingModal available:', typeof window.BookingModal !== 'undefined');
+                    console.log('Supabase available:', typeof window.supabase !== 'undefined');
+                    
+                    if (typeof window.BookingModal !== 'undefined' && window.supabase) {
                         try {
-                            window.bookingModal = new BookingModal();
-                            // Global function to open booking modal
-                            window.openBookingModal = function(serviceId, providerId, serviceTitle) {
-                                console.log('Opening booking modal for:', serviceTitle);
-                                window.bookingModal.openModal(serviceId, providerId, serviceTitle);
+                            window.bookingModal = new window.BookingModal();
+                            
+                            // Enhanced global function to open booking modal
+                            window.openBookingModal = function(serviceId, providerId, serviceTitle, serviceImage = '', providerName = '') {
+                                console.log('Opening modern booking modal for:', serviceTitle);
+                                if (window.bookingModal) {
+                                    window.bookingModal.openModal(serviceId, providerId, serviceTitle, serviceImage, providerName);
+                                } else {
+                                    alert('Booking modal is not yet initialized. Please try again in a moment.');
+                                }
                             };
-                            console.log('Booking modal initialized successfully');
+                            
+                            console.log('Modern booking modal initialized successfully');
+                            return true;
                         } catch (error) {
                             console.error('Error initializing booking modal:', error);
+                            return false;
                         }
-                    } else if (typeof BookingModal === 'undefined') {
-                        console.error('BookingModal class not found');
                     } else {
-                        // Supabase not loaded yet, wait a bit more
-                        setTimeout(initializeBookingModal, 100);
+                        if (typeof window.BookingModal === 'undefined') {
+                            console.log('BookingModal class not yet available, retrying...');
+                        }
+                        if (!window.supabase) {
+                            console.log('Supabase not yet available, retrying...');
+                        }
+                        return false;
                     }
                 }
-                // Start trying to initialize after a short delay
-                setTimeout(initializeBookingModal, 100);
+                
+                // Try to initialize immediately
+                if (!initializeBookingModal()) {
+                    // If initialization fails, retry periodically
+                    let retryCount = 0;
+                    const maxRetries = 50; // Try for up to 5 seconds
+                    
+                    const retryInterval = setInterval(() => {
+                        retryCount++;
+                        console.log(`Retry attempt ${retryCount}/${maxRetries}`);
+                        
+                        if (initializeBookingModal()) {
+                            clearInterval(retryInterval);
+                        } else if (retryCount >= maxRetries) {
+                            clearInterval(retryInterval);
+                            console.error('Failed to initialize booking modal after maximum retries');
+                            
+                            // Fallback: Create a simple openBookingModal function
+                            window.openBookingModal = function(serviceId, providerId, serviceTitle) {
+                                alert(`Booking system is loading...\n\nService: ${serviceTitle}\nService ID: ${serviceId}\n\nPlease refresh the page and try again.`);
+                            };
+                        }
+                    }, 100);
+                }
             })
             .catch(error => {
                 console.error('Error loading booking modal:', error);
+                
+                // Fallback: Create a simple openBookingModal function
+                window.openBookingModal = function(serviceId, providerId, serviceTitle) {
+                    alert(`Booking system failed to load.\n\nService: ${serviceTitle}\nService ID: ${serviceId}\n\nPlease refresh the page and try again.`);
+                };
             });
     </script>
     <!-- Inject sidebar HTML and load sidebar JS after HTML is present -->
@@ -377,7 +472,7 @@
       .catch(error => {
         console.error('Error loading mobile sidebar:', error);
       });
-  });
-</script>
+            });
+    </script>
 </body>
-</html>
+</html> 

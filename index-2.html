@@ -8,7 +8,8 @@
     <meta name="keywords" content="service marketplace, local services, professional services, home services, business services">
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Varela+Round" rel="stylesheet">
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
+    <!-- Using Bootstrap 5.3.0 only - removed local Bootstrap 4.0.0 to prevent conflicts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/fonts/font-awesome.css" type="text/css">
     <link rel="stylesheet" href="assets/css/selectize.css" type="text/css">
     <link rel="stylesheet" href="assets/css/style.css">
@@ -38,18 +39,18 @@
     <link rel="stylesheet" href="assets/css/top-navbar.css">
     <link rel="stylesheet" href="assets/css/font-awesome-colors.css">
     <link rel="stylesheet" href="assets/css/hero-carousel.css">
-    <link rel="stylesheet" href="assets/css/navbar-hero-spacing-fix.css">
+
     <!-- Internationalization Stylesheets -->
     
     <!-- RTL stylesheet will be loaded dynamically when Arabic is selected -->
 
-    <!-- Bootstrap JS and Popper.js -->
+    <!-- Bootstrap JS and Popper.js - Using only Bootstrap 5.3.0 -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     
     <!-- Custom JS -->
     <script type="module" src="assets/js/supabase.js"></script>
-    <script src="assets/js/navbars.js"></script>
+    <!-- Moved navbars.js to end of body to ensure it loads after all other scripts -->
 
 	<title>UstaHub - Find Local Service Professionals</title>
 
@@ -730,7 +731,7 @@
 
 <script src="assets/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="assets/js/popper.min.js"></script>
-<script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
+<!-- Bootstrap 4.0.0 removed - using Bootstrap 5.3.0 from CDN instead -->
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBEDfNcQRmKQEyulDN8nGWjLYPm8s4YB58&libraries=places"></script>
 <script src="assets/js/selectize.min.js"></script>
 <script src="assets/js/masonry.pkgd.min.js"></script>
@@ -738,8 +739,10 @@
 <script src="assets/js/jquery.validate.min.js"></script>
 <script src="assets/js/custom.js"></script>
 <script src="assets/js/custom-dropdown.js"></script>
-  <script src="assets/js/dashboard.js"></script>
-  <script src="assets/js/hero-carousel.js"></script>
+<script src="assets/js/hero-carousel.js"></script>
+<!-- Navbar script loaded last to ensure it overrides any conflicting behaviors -->
+<script src="assets/js/dashboard.js"></script>
+<script src="assets/js/navbars.js"></script>
 
 <!-- For integrating with Mobile Sidebar -->
 <script>
@@ -762,7 +765,7 @@
         var sidebarScript = document.createElement('script');
         sidebarScript.src = 'assets/js/mobile-sidebar.js';
         document.body.appendChild(sidebarScript);
-
+        
       })
       .catch(error => {
         console.error('Error loading mobile sidebar:', error);
