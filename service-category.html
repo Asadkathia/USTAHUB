@@ -263,7 +263,7 @@
                                     id, first_name, last_name, phone
                                 )
                             `)
-                            .in('category', subCategoriesToFetch);
+                            .in('subcategory', subCategoriesToFetch);
                         servicesToDisplay = data;
                         supabaseError = error;
                     } else {
@@ -279,7 +279,7 @@
                                 id, first_name, last_name, phone
                             )
                         `)
-                        .eq('category', categoryNameFromUrl);
+                        .eq('subcategory', categoryNameFromUrl);
                     servicesToDisplay = data;
                     supabaseError = error;
                 }

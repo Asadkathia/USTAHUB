@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS services (
     title TEXT NOT NULL,
     description TEXT,
     category TEXT NOT NULL,
-    subcategory TEXT,
+    subcategory TEXT NOT NULL,
     price DECIMAL(10,2),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL

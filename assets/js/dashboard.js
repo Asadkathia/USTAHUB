@@ -1,11 +1,14 @@
 // Dashboard JavaScript - UstaHub
 // Modern, reactive UI/UX for both Consumer and Provider dashboards
 
-// CSS Variables and Utility Classes
+// CSS Variables and Utility Classes - Updated for Phase 2
 const CSS_VARS = {
     '--transition': '0.3s ease',
-    '--primary-color': '#e00707',
-    '--hover-shadow': '0 8px 32px rgba(224,7,7,0.15)',
+    '--primary-color': '#24B47E',
+    '--secondary-color': '#182B3A', 
+    '--accent-color': '#FFC857',
+    '--success-color': '#4BDB97',
+    '--hover-shadow': '0 8px 32px rgba(36,180,126,0.15)',
     '--card-shadow': '0 4px 24px rgba(0,0,0,0.08)'
 };
 
@@ -440,7 +443,7 @@ async function initProviderDashboard() {
 
         initAnimatedStats();
         initIncomingRequests();
-        initServicesTable(); 
+        // initServicesTable(); // REMOVED - handled by enhanced-dashboard-components.js 
         initFloatingActionButton(); 
     initResponsiveSidebar();
     
@@ -534,250 +537,16 @@ function initIncomingRequests() {
     });
 }
 
-async function fetchAndRenderServices() {
-    try {
-        const { data: { user }, error: userError } = await window.supabase.auth.getUser();
-        if (userError || !user) {
-            utils.showToast('Authentication error. Please sign in again.', 'danger');
-            return;
-        }
-        const { data: services, error } = await window.supabase
-            .from('services')
-            .select('*')
-            .eq('provider_id', user.id);
-        if (error) throw error;
-        renderServices(services || []);
-    } catch (error) {
-        console.error('Error fetching provider services:', error);
-        utils.showToast('Error fetching your services', 'danger');
-        renderServices([]); // Render an empty state
-    }
-}
+// OLD fetchAndRenderServices FUNCTION - REMOVED TO PREVENT CONFLICTS
+// This functionality is now handled by enhanced-dashboard-components.js
 
-function renderServices(services) {
-    const servicesContainer = document.getElementById('services-table');
-    if (!servicesContainer) return;
-    if (services.length === 0) {
-        servicesContainer.innerHTML = '<div class="alert alert-info">You have not added any services yet. Click the "+" button to add your first service!</div>';
-        return;
-    }
-        servicesContainer.innerHTML = `
-            <div class="table-responsive">
-            <table class="table table-hover align-middle">
-                <thead class="table-light">
-                        <tr>
-                        <th>Service Title</th>
-                        <th>Category</th>
-                            <th>Price ($/hr)</th>
-                        <th class="text-end">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    ${services.map(service => `
-                            <tr data-service-id="${service.id}">
-                            <td class="service-name">${service.title || 'N/A'}</td>
-                            <td class="service-category">${service.category || 'N/A'}</td>
-                            <td class="service-price">$${service.price != null ? service.price : 'N/A'}</td>
-                            <td class="service-actions text-end">
-                                <button class="btn btn-sm btn-outline-primary edit-service-btn me-2" title="Edit Service">
-                                        <i class="fa fa-edit"></i> Edit
-                                    </button>
-                                <button class="btn btn-sm btn-outline-danger remove-service-btn" title="Remove Service">
-                                        <i class="fa fa-trash"></i> Remove
-                                    </button>
-                                </td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            </div>
-        `;
-    attachServiceTableHandlers(services); // Pass services to attach handlers with full data
-}
-
-function initServicesTable() {
-    fetchAndRenderServices();
-}
-
-function attachServiceTableHandlers(servicesData) {
-    const servicesContainer = document.getElementById('services-table');
-    if (!servicesContainer) return;
-
-        servicesContainer.querySelectorAll('.edit-service-btn').forEach(btn => {
-        btn.addEventListener('click', async () => {
-                const row = btn.closest('tr');
-                const serviceId = row.dataset.serviceId;
-            
-            const { data: service, error } = await window.supabase
-                .from('services')
-                .select('*')
-                .eq('id', serviceId)
-                .single();
-
-            if (error || !service) {
-                utils.showToast('Error fetching service details for editing.', 'danger');
-                return;
-            }
-            
-            const offcanvasElement = document.getElementById('add-service-offcanvas');
-            const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement) || new bootstrap.Offcanvas(offcanvasElement);
-            const serviceForm = document.getElementById('add-service-form');
-            const formTitle = offcanvasElement.querySelector('#addServiceLabel');
-            const serviceCategorySelect = serviceForm.serviceCategory;
-            const serviceCategoryLabel = serviceCategorySelect ? serviceCategorySelect.closest('.mb-3').querySelector('label[for="serviceCategory"]') : null;
-            
-            formTitle.textContent = 'Edit Service';
-            serviceForm.serviceName.value = service.title;
-            serviceForm.servicePrice.value = service.price;
-            serviceForm.serviceDescription.value = service.description || '';
-            serviceForm.dataset.editingServiceId = serviceId;
-
-            // Set and disable category for editing
-            if (serviceCategorySelect) {
-                serviceCategorySelect.value = service.category; 
-                serviceCategorySelect.disabled = true; 
-                if (serviceCategoryLabel) serviceCategoryLabel.textContent = 'Service Category (Locked for this service)';
-                
-                const selectizeInstance = $(serviceCategorySelect).data('selectize');
-                if (selectizeInstance) {
-                    selectizeInstance.setValue(service.category, true); // silent true
-                    selectizeInstance.disable();
-                }
-            }
-
-            offcanvas.show();
-            });
-        });
-        
-        servicesContainer.querySelectorAll('.remove-service-btn').forEach(btn => {
-        btn.addEventListener('click', async () => {
-                const serviceId = btn.closest('tr').dataset.serviceId;
-                if (confirm('Are you sure you want to remove this service?')) {
-                try {
-                    const { error } = await window.supabase.from('services').delete().eq('id', serviceId);
-                    if (error) throw error;
-                    utils.showToast('Service removed successfully', 'warning');
-                    fetchAndRenderServices();
-                } catch (error) {
-                    utils.showToast(`Error removing service: ${error.message}`, 'danger');
-                }
-                }
-            });
-        });
-    }
+// OLD SERVICE MANAGEMENT FUNCTIONS - REMOVED TO PREVENT CONFLICTS
+// These functions are now handled by enhanced-dashboard-components.js
     
 function initFloatingActionButton() {
-    const addServiceBtn = document.getElementById('add-service-btn');
-    const addServiceForm = document.getElementById('add-service-form');
-    const addServiceOffcanvasElement = document.getElementById('add-service-offcanvas');
-    
-    if (!addServiceOffcanvasElement) {
-        console.warn("Add service offcanvas element not found. Skipping FAB init.");
-            return;
-        }
-    const addServiceOffcanvas = new bootstrap.Offcanvas(addServiceOffcanvasElement);
-    const serviceCategorySelect = addServiceForm ? addServiceForm.serviceCategory : null;
-    const serviceCategoryLabel = serviceCategorySelect ? serviceCategorySelect.closest('.mb-3').querySelector('label[for="serviceCategory"]') : null;
-
-    if (addServiceBtn) {
-        addServiceBtn.addEventListener('click', () => {
-            if (addServiceForm) {
-                addServiceForm.reset();
-                delete addServiceForm.dataset.editingServiceId;
-                const formTitle = addServiceOffcanvasElement.querySelector('#addServiceLabel');
-                if (formTitle) formTitle.textContent = 'Add New Service';
-                const submitButton = addServiceForm.querySelector('button[type="submit"]');
-                if (submitButton) submitButton.textContent = 'Add Service';
-
-                // Enforce primary service category
-                if (serviceCategorySelect) {
-                    const selectizeInstance = $(serviceCategorySelect).data('selectize');
-                    if (currentProviderProfile && currentProviderProfile.primary_service_category) {
-                        serviceCategorySelect.value = currentProviderProfile.primary_service_category;
-                        serviceCategorySelect.disabled = true;
-                        if (serviceCategoryLabel) serviceCategoryLabel.textContent = 'Service Category (Your Registered Specialty)';
-                        if (selectizeInstance) {
-                            selectizeInstance.setValue(currentProviderProfile.primary_service_category, true); // silent true
-                            selectizeInstance.disable();
-                        }
-                    } else {
-                        serviceCategorySelect.disabled = false; 
-                        if (serviceCategoryLabel) serviceCategoryLabel.textContent = 'Service Category';
-                        serviceCategorySelect.selectedIndex = 0; // Reset to placeholder
-                        if (selectizeInstance) {
-                            selectizeInstance.clear(true); // silent true
-                            selectizeInstance.enable();
-                        }
-                    }
-                }
-            }
-            addServiceOffcanvas.show();
-        });
-    }
-
-    if (addServiceForm) {
-        addServiceForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const serviceName = addServiceForm.serviceName.value.trim();
-            const serviceCategory = serviceCategorySelect ? serviceCategorySelect.value : ''; 
-            const servicePrice = parseFloat(addServiceForm.servicePrice.value);
-            const serviceDescription = addServiceForm.serviceDescription.value.trim();
-
-            if (!serviceName || !serviceCategory || isNaN(servicePrice) || servicePrice <= 0 || !serviceDescription) {
-                let errorMsg = 'Please fill in all fields correctly, including a description.';
-                if (!serviceCategory) {
-                    errorMsg = 'Service category is missing. This might be an issue with your profile setup.';
-                }
-                utils.showToast(errorMsg, 'danger');
-                return;
-            }
-            
-            const submitButton = addServiceForm.querySelector('button[type="submit"]');
-            submitButton.disabled = true;
-            submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Adding...';
-
-            try {
-                const { data: { user } } = await window.supabase.auth.getUser();
-                if (!user) throw new Error('User not authenticated. Please sign in.');
-
-                // Ensure provider_id is available (e.g., from currentProviderProfile or session)
-                const providerId = currentProviderProfile?.id || user.id;
-                if (!providerId) throw new Error('Provider ID not found.');
-
-                const newService = {
-                    provider_id: providerId,
-                    title: serviceName,
-                    category: serviceCategory,
-                    price: servicePrice,
-                    description: serviceDescription, // Add description to the object
-                    // status: 'active' // Optional: set a default status
-                };
-
-                    const { data, error } = await window.supabase
-                        .from('services')
-                    .insert([newService])
-                        .select();
-
-                if (error) throw error;
-
-                utils.showToast('Service added successfully!', 'success');
-                addServiceForm.reset();
-                addServiceOffcanvas.hide();
-                
-                // Ensure fetchAndRenderServices is awaited if it's async
-                if (typeof fetchAndRenderServices === "function") {
-                    await fetchAndRenderServices(); // Refresh the services list
-                }
-
-            } catch (error) {
-                console.error('Error adding service:', error);
-                utils.showToast(`Error adding service: ${error.message || 'Could not save service.'}` , 'danger');
-            } finally {
-                submitButton.disabled = false;
-                submitButton.innerHTML = 'Add Service';
-            }
-        });
-    }
+    // Legacy offcanvas-based service form - disabled to avoid conflicts with new modal system
+    // All service management now uses the enhanced modal system in enhanced-dashboard-components.js
+    return;
 }
 
 function initResponsiveSidebar() {
@@ -854,17 +623,893 @@ function updateMetrics() {
 
 /* Hero carousel functionality moved to dedicated hero-carousel.js file */
 
-// General DOMContentLoaded listener
+// General DOMContentLoaded listener - PREVENT MULTIPLE INITIALIZATIONS
+let dashboardJSInitialized = false;
+
 document.addEventListener('DOMContentLoaded', () => {
+    // Prevent multiple initializations
+    if (dashboardJSInitialized) {
+        console.log('⚠️ Dashboard JS already initialized, skipping duplicate initialization');
+        return;
+    }
+    dashboardJSInitialized = true;
+    
+    console.log('🚀 Dashboard JS DOMContentLoaded - checking page type...');
+    
     if (document.body.classList.contains('provider-dashboard')) {
-        // initProviderDashboard(); // Initialization is handled by script in provider-dashboard.html after auth
-        console.log("Provider dashboard JS loaded. Waiting for page script to init.");
+        // Provider dashboard initialization is handled by script in provider-dashboard.html after auth
+        console.log("✅ Provider dashboard JS loaded. Waiting for page script to init.");
     } else if (document.body.classList.contains('consumer-dashboard')) {
+        console.log("🚀 Initializing consumer dashboard...");
         initConsumerDashboard();
     }
+    
+    // Apply CSS variables
     Object.entries(CSS_VARS).forEach(([property, value]) => {
         document.documentElement.style.setProperty(property, value);
     });
-    // initializeMetrics(); // Called within initProviderDashboard or initConsumerDashboard if needed
-    // setInterval(updateMetrics, 30000); // Called within initProviderDashboard or initConsumerDashboard if needed
-}); 
+    
+    console.log('✅ Dashboard JS DOMContentLoaded initialization complete');
+});
+
+// ========================================
+// PHASE 2 ENHANCED PROVIDER DASHBOARD
+// ========================================
+
+// Enhanced initialization for Phase 2 provider dashboard
+window.initEnhancedProviderDashboard = async function() {
+    if (!document.querySelector('.provider-dashboard')) return;
+    
+    console.log('🚀 Initializing Enhanced Provider Dashboard (Phase 2)...');
+    
+    try {
+        // Verify authentication and profile
+        const profileData = await verifyProviderAuthentication();
+        if (!profileData) return;
+        
+        // Initialize all enhanced components
+        await Promise.all([
+            initEnhancedMetrics(profileData),
+            initEnhancedActivityFeed(profileData),
+            initEnhancedNavigation(),
+            initEnhancedModals(),
+            initRealTimeUpdates(profileData)
+        ]);
+        
+        // Initialize animations and interactions
+        initEnhancedAnimations();
+        
+        console.log('✅ Enhanced Provider Dashboard initialized successfully');
+        
+    } catch (error) {
+        console.error('❌ Error initializing enhanced dashboard:', error);
+        utils.showToast('Failed to load dashboard. Please refresh the page.', 'danger');
+    }
+};
+
+// Enhanced authentication verification
+async function verifyProviderAuthentication() {
+    try {
+        if (!window.supabase) {
+            throw new Error('Supabase client not available');
+        }
+        
+        const { data: { session }, error: sessionError } = await window.supabase.auth.getSession();
+        if (sessionError) throw sessionError;
+        
+        if (!session) {
+            console.warn('No active session. Redirecting to sign-in.');
+            window.location.href = 'sign-in.html';
+            return null;
+        }
+
+        const { data: profile, error: profileError } = await window.supabase
+            .from('profiles')
+            .select('*, primary_service_category')
+            .eq('id', session.user.id)
+            .single();
+
+        if (profileError) {
+            console.error('Error fetching profile:', profileError);
+            if (profileError.code === 'PGRST116') {
+                utils.showToast('Profile not found. Redirecting to sign-in.', 'danger');
+                setTimeout(() => window.location.href = 'sign-in.html', 2000);
+            }
+            return null;
+        }
+        
+        if (profile.role !== 'provider') {
+            window.location.href = 'consumer-profile.html';
+            return null;
+        }
+
+        return profile;
+        
+    } catch (error) {
+        console.error('Authentication verification failed:', error);
+        utils.showToast('Authentication error. Please sign in again.', 'danger');
+        return null;
+    }
+}
+
+// Enhanced metrics with real-time data
+async function initEnhancedMetrics(profileData) {
+    try {
+        // Fetch real metrics from Supabase
+        const metrics = await fetchProviderMetrics(profileData.id);
+        
+        // Animate metric values
+        animateEnhancedCounter(document.getElementById('stat-requests'), metrics.newRequests);
+        animateEnhancedCounter(document.getElementById('stat-bookings'), metrics.upcomingBookings);
+        animateEnhancedCounter(document.getElementById('stat-completed'), metrics.completedJobs);
+        
+        // Animate progress bars with smooth transitions
+        setTimeout(() => {
+            updateProgressBar('requests-progress', metrics.requestsProgress);
+            updateProgressBar('bookings-progress', metrics.bookingsProgress);
+            updateProgressBar('completed-progress', metrics.completedProgress);
+        }, 500);
+        
+        // Update metric changes with real data
+        updateMetricChanges(metrics);
+        
+    } catch (error) {
+        console.error('Error initializing enhanced metrics:', error);
+        // Fallback to sample data
+        initSampleMetrics();
+    }
+}
+
+// Update metric change indicators
+function updateMetricChanges(metrics) {
+    if (!metrics.changes) return;
+    
+    const changes = metrics.changes;
+    
+    // Update requests change
+    const requestsChange = document.querySelector('#stat-requests').parentNode.querySelector('.metric-change');
+    if (requestsChange && changes.requests) {
+        requestsChange.textContent = `${changes.requests.positive ? '+' : ''}${changes.requests.value}%`;
+        requestsChange.className = `metric-change ${changes.requests.positive ? 'positive' : 'negative'}`;
+    }
+    
+    // Update bookings change
+    const bookingsChange = document.querySelector('#stat-bookings').parentNode.querySelector('.metric-change');
+    if (bookingsChange && changes.bookings) {
+        bookingsChange.textContent = `${changes.bookings.positive ? '+' : ''}${changes.bookings.value}%`;
+        bookingsChange.className = `metric-change ${changes.bookings.positive ? 'positive' : 'negative'}`;
+    }
+    
+    // Update completed change
+    const completedChange = document.querySelector('#stat-completed').parentNode.querySelector('.metric-change');
+    if (completedChange && changes.completed) {
+        completedChange.textContent = `${changes.completed.positive ? '+' : ''}${changes.completed.value}%`;
+        completedChange.className = `metric-change ${changes.completed.positive ? 'positive' : 'negative'}`;
+    }
+}
+
+// Fetch provider metrics from database
+async function fetchProviderMetrics(providerId) {
+    try {
+        // Call the database function to get real metrics
+        const { data, error } = await window.supabase.rpc('get_provider_metrics', {
+            provider_uuid: providerId,
+            metric_date: new Date().toISOString().split('T')[0]
+        });
+
+        if (error) {
+            console.error('Error fetching provider metrics:', error);
+            throw error;
+        }
+
+        if (data) {
+            console.log('✅ Real provider metrics loaded:', data);
+            return data;
+        }
+
+        // Fallback to sample data if no real data
+        throw new Error('No metrics data returned');
+
+    } catch (error) {
+        console.warn('⚠️ Using sample metrics data due to error:', error);
+        
+        // Enhanced sample data as fallback
+        return {
+            newRequests: 8,
+            upcomingBookings: 5,
+            completedJobs: 27,
+            requestsProgress: 75,
+            bookingsProgress: 60,
+            completedProgress: 85,
+            totalRevenue: 3450.00,
+            pendingRevenue: 1200.00,
+            averageRating: 4.8,
+            totalReviews: 42,
+            profileViews: 1245,
+            changes: {
+                requests: { value: 12, positive: true },
+                bookings: { value: 8, positive: true },
+                completed: { value: 15, positive: true }
+            },
+            lastUpdated: new Date().toISOString()
+        };
+    }
+}
+
+// Enhanced counter animation with easing
+function animateEnhancedCounter(element, target, duration = 1500) {
+    if (!element) return;
+    
+    let start = 0;
+    const startTime = performance.now();
+    
+    function animate(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Easing function (ease-out)
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(start + (target - start) * easeOut);
+        
+        element.textContent = current;
+        
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        } else {
+            element.textContent = target;
+        }
+    }
+    
+    requestAnimationFrame(animate);
+}
+
+// Update progress bars with smooth animations
+function updateProgressBar(elementId, targetPercentage) {
+    const progressBar = document.getElementById(elementId);
+    if (!progressBar) return;
+    
+    let currentWidth = 0;
+    const targetWidth = targetPercentage;
+    const duration = 1000;
+    const startTime = performance.now();
+    
+    function animate(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Smooth easing
+        const easeOut = 1 - Math.pow(1 - progress, 2);
+        currentWidth = targetWidth * easeOut;
+        
+        progressBar.style.width = `${currentWidth}%`;
+        
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        }
+    }
+    
+    requestAnimationFrame(animate);
+}
+
+// Enhanced activity feed with real-time updates
+async function initEnhancedActivityFeed(profileData) {
+    try {
+        const activities = await fetchProviderActivities(profileData.id);
+        renderEnhancedActivityFeed(activities);
+        
+        // Initialize filter functionality
+        initActivityFilters(activities);
+        
+    } catch (error) {
+        console.error('Error loading activity feed:', error);
+        renderSampleActivityFeed();
+    }
+}
+
+// Fetch provider activities from database
+async function fetchProviderActivities(providerId) {
+    try {
+        // Call the database function to get real activities
+        const { data, error } = await window.supabase.rpc('get_provider_activities', {
+            provider_uuid: providerId,
+            activity_limit: 10,
+            activity_filter: 'all'
+        });
+
+        if (error) {
+            console.error('Error fetching provider activities:', error);
+            throw error;
+        }
+
+        if (data && Array.isArray(data)) {
+            console.log('✅ Real provider activities loaded:', data);
+            // Transform the data to match expected format
+            return data.map(activity => ({
+                ...activity,
+                timestamp: new Date(activity.timestamp)
+            }));
+        }
+
+        // Fallback to sample data if no real data
+        throw new Error('No activities data returned');
+
+    } catch (error) {
+        console.warn('⚠️ Using sample activities data due to error:', error);
+        
+        // Enhanced sample data as fallback
+        return [
+            {
+                id: 1,
+                type: 'booking',
+                title: 'New Booking: Plumbing Service',
+                customer: 'John Smith',
+                amount: 150,
+                timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
+                status: 'success'
+            },
+            {
+                id: 2,
+                type: 'review',
+                title: 'New Review: 5 Stars',
+                customer: 'Sarah Johnson',
+                rating: 5,
+                timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000), // 5 hours ago
+                status: 'success'
+            },
+            {
+                id: 3,
+                type: 'milestone',
+                title: 'Profile View Milestone',
+                description: '2,500 profile views',
+                timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
+                status: 'info'
+            },
+            {
+                id: 4,
+                type: 'payment',
+                title: 'Payment Received',
+                amount: 120,
+                description: 'Service completed',
+                timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+                status: 'success'
+            }
+        ];
+    }
+}
+
+// Render enhanced activity feed
+function renderEnhancedActivityFeed(activities) {
+    const feedContainer = document.getElementById('activity-feed');
+    if (!feedContainer) return;
+    
+    feedContainer.innerHTML = activities.map(activity => `
+        <div class="activity-item" data-type="${activity.type}" data-aos="fade-up">
+            <div class="activity-content">
+                <div class="activity-info">
+                    <h6>${activity.title}</h6>
+                    <div class="activity-meta">
+                        ${activity.customer ? `<i class="fas fa-user"></i><span>${activity.customer}</span>` : ''}
+                        ${activity.description ? `<i class="fas fa-info-circle"></i><span>${activity.description}</span>` : ''}
+                        <i class="fas fa-clock"></i>
+                        <span>${formatTimeAgo(activity.timestamp)}</span>
+                    </div>
+                </div>
+                <div class="activity-badge ${activity.status}">
+                    ${activity.amount ? `$${activity.amount}` : ''}
+                    ${activity.rating ? generateStarRating(activity.rating) : ''}
+                    ${activity.type === 'milestone' ? '<i class="fas fa-trophy"></i>' : ''}
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Enhanced navigation with smooth transitions
+function initEnhancedNavigation() {
+    const navLinks = document.querySelectorAll('.dashboard-sidebar .nav-link');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Remove active class from all links
+            navLinks.forEach(l => l.classList.remove('active'));
+            
+            // Add active class with animation
+            this.classList.add('active');
+            
+            // Handle section switching
+            const section = this.dataset.section;
+            switchDashboardSection(section);
+        });
+    });
+}
+
+// Switch dashboard sections with animations
+function switchDashboardSection(sectionName) {
+    console.log(`Switching to section: ${sectionName}`);
+    
+    // Add fade out animation to current content
+    const mainContent = document.querySelector('.col-lg-9');
+    if (mainContent) {
+        mainContent.style.opacity = '0.5';
+        mainContent.style.transform = 'translateY(10px)';
+        
+        // Simulate content loading
+        setTimeout(() => {
+            mainContent.style.opacity = '1';
+            mainContent.style.transform = 'translateY(0)';
+            
+            // Show toast with section name
+            utils.showToast(`Switched to ${sectionName} section`, 'info');
+        }, 300);
+    }
+}
+
+// Enhanced modal management
+function initEnhancedModals() {
+    // Initialize add service modal
+    const addServiceBtns = document.querySelectorAll('[id*="add-service"], .action-btn.primary');
+    const modal = document.getElementById('add-service-modal');
+    
+    if (modal) {
+        const bootstrapModal = new bootstrap.Modal(modal);
+        
+        addServiceBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.textContent.toLowerCase().includes('add')) {
+                    bootstrapModal.show();
+                }
+            });
+        });
+        
+        // Handle form submission
+        const form = document.getElementById('add-service-form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleEnhancedServiceSubmission(this, bootstrapModal);
+            });
+        }
+    }
+}
+
+// Handle enhanced service form submission
+window.handleEnhancedServiceSubmission = async function handleEnhancedServiceSubmission(form, modal) {
+    const formData = new FormData(form);
+    const serviceData = {
+        // Map form field names to database column names
+        title: formData.get('serviceName'), // 'title' is the correct DB column name, not 'name'
+        category: formData.get('serviceCategory'),
+        price: parseFloat(formData.get('servicePrice')), // 'price' is the correct DB column name, not 'base_price'
+        description: formData.get('serviceDescription')
+        // 'status' field removed - doesn't exist in database schema
+    };
+    
+    // Validate required fields
+    if (!serviceData.title || !serviceData.category || isNaN(serviceData.price) || serviceData.price <= 0 || !serviceData.description) {
+        utils.showToast('Please fill in all fields correctly', 'danger');
+        return;
+    }
+    
+    // Validate service category using the new ServiceCategoryManager
+    try {
+        await window.serviceCategoryManager.validateServiceCategory({
+            category: serviceData.category,
+            name: serviceData.title
+        });
+    } catch (error) {
+        utils.showToast(error.message, 'danger');
+        return;
+    }
+    
+    const isEditMode = form.dataset.serviceId;
+    const serviceId = form.dataset.serviceId;
+    
+    // Show loading state
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>Processing...';
+    submitBtn.disabled = true;
+    
+    try {
+        let result;
+        
+        if (isEditMode) {
+            // Update existing service
+            result = await updateServiceInDatabase(serviceId, serviceData);
+            utils.showToast('Service updated successfully!', 'success');
+        } else {
+            // Add new service
+            result = await addServiceToDatabase(serviceData);
+            utils.showToast('Service added successfully!', 'success');
+        }
+        
+        // Close modal
+        modal.hide();
+        
+        // Reset form
+        form.reset();
+        delete form.dataset.serviceId;
+        
+        // Reset modal title and button
+        const modalElement = document.getElementById('add-service-modal');
+        modalElement.querySelector('.modal-title').textContent = 'Add New Service';
+        submitBtn.innerHTML = '<i class="fas fa-plus-circle"></i>Add Service';
+        
+        // Refresh services table if enhanced components are available (non-blocking)
+        setTimeout(() => {
+            if (window.servicesTable && typeof window.servicesTable.refresh === 'function') {
+                window.servicesTable.refresh().catch(error => {
+                    console.warn('Failed to refresh services table:', error);
+                });
+            } else {
+                console.log('Enhanced components not available, consider page refresh');
+            }
+        }, 100);
+        
+    } catch (error) {
+        console.error('Error submitting service:', error);
+        utils.showToast('Error saving service: ' + error.message, 'danger');
+    } finally {
+        // Reset button
+        submitBtn.innerHTML = isEditMode ? '<i class="fas fa-save"></i>Update Service' : '<i class="fas fa-plus-circle"></i>Add Service';
+        submitBtn.disabled = false;
+    }
+}
+
+// Update service in database
+async function updateServiceInDatabase(serviceId, serviceData) {
+    const { data: { user } } = await window.supabase.auth.getUser();
+    if (!user) throw new Error('User not authenticated');
+    
+    // Ensure we're using the correct field names for the database schema
+    const { data, error } = await window.supabase
+        .from('services')
+        .update({
+            title: serviceData.title, // Correct DB column name
+            category: serviceData.category,
+            price: serviceData.price, // Correct DB column name
+            description: serviceData.description,
+            updated_at: new Date().toISOString()
+        })
+        .eq('id', serviceId)
+        .eq('provider_id', user.id); // Ensure user can only update their own services
+        
+    if (error) throw error;
+    
+    // Create activity log for service update (non-blocking)
+    setTimeout(() => {
+        createActivityLog(
+            user.id,
+            'service_updated',
+            `Service Updated: ${serviceData.title}`,
+            `Updated service details in ${serviceData.category} category`,
+            null,  // no related booking
+            serviceId,  // related service ID
+            null,  // no related user
+            serviceData.price || null
+        ).catch(error => {
+            console.warn('Failed to create activity log for service update:', error);
+        });
+    }, 0);
+    
+    return data;
+}
+
+// Add service to database
+async function addServiceToDatabase(serviceData) {
+    const { data: { user } } = await window.supabase.auth.getUser();
+    if (!user) throw new Error('User not authenticated');
+    
+    // Ensure we're using the correct field names for the database schema
+    const { data, error } = await window.supabase
+        .from('services')
+        .insert([{
+            title: serviceData.title, // Correct DB column name
+            category: serviceData.category,
+            price: serviceData.price, // Correct DB column name
+            description: serviceData.description,
+            provider_id: user.id,
+            created_at: new Date().toISOString()
+        }]);
+        
+    if (error) throw error;
+    
+    // Create activity log for service creation (non-blocking)
+    setTimeout(() => {
+        createActivityLog(
+            user.id,
+            'service_created',
+            `New Service Added: ${serviceData.title}`,
+            `Added new service in ${serviceData.category} category`,
+            null,  // no related booking
+            data?.[0]?.id || null,  // related service ID
+            null,  // no related user
+            serviceData.price || null
+        ).catch(error => {
+            console.warn('Failed to create activity log for service creation:', error);
+        });
+    }, 0);
+    
+    return data;
+}
+
+// Create activity log entry
+async function createActivityLog(userId, activityType, title, description, relatedBookingId = null, relatedServiceId = null, relatedUserId = null, amount = null, rating = null, activityData = null) {
+    try {
+        const { data, error } = await window.supabase.rpc('create_activity_log', {
+            user_uuid: userId,
+            activity_type_param: activityType,
+            title_param: title,
+            description_param: description,
+            related_booking_uuid: relatedBookingId,
+            related_service_uuid: relatedServiceId,
+            related_user_uuid: relatedUserId,
+            amount_param: amount,
+            rating_param: rating,
+            activity_data_param: activityData
+        });
+
+        if (error) {
+            console.error('Error creating activity log:', error);
+            return null;
+        }
+
+        console.log('✅ Activity log created:', data);
+        return data;
+    } catch (error) {
+        console.error('Error creating activity log:', error);
+        return null;
+    }
+}
+
+// Real-time updates initialization
+function initRealTimeUpdates(profileData) {
+    // Set up real-time listeners for bookings, reviews, etc.
+    console.log('🔄 Real-time updates initialized for provider:', profileData.id);
+    
+    // Set up periodic refresh for metrics and activities
+    setInterval(async () => {
+        try {
+            // Refresh metrics every 5 minutes
+            await refreshProviderMetrics(profileData.id);
+        } catch (error) {
+            console.warn('Failed to refresh metrics:', error);
+        }
+    }, 5 * 60 * 1000); // 5 minutes
+    
+    // Set up activity feed refresh every 2 minutes
+    setInterval(async () => {
+        try {
+            await refreshActivityFeed(profileData.id);
+        } catch (error) {
+            console.warn('Failed to refresh activity feed:', error);
+        }
+    }, 2 * 60 * 1000); // 2 minutes
+}
+
+// Refresh provider metrics
+async function refreshProviderMetrics(providerId) {
+    try {
+        const metrics = await fetchProviderMetrics(providerId);
+        updateMetricsDisplay(metrics);
+        console.log('✅ Metrics refreshed');
+    } catch (error) {
+        console.error('Error refreshing metrics:', error);
+    }
+}
+
+// Refresh activity feed
+async function refreshActivityFeed(providerId) {
+    try {
+        const activities = await fetchProviderActivities(providerId);
+        const currentFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
+        const filteredActivities = currentFilter === 'all' ? activities : activities.filter(activity => activity.type === currentFilter);
+        renderEnhancedActivityFeed(filteredActivities);
+        console.log('✅ Activity feed refreshed');
+    } catch (error) {
+        console.error('Error refreshing activity feed:', error);
+    }
+}
+
+// Update metrics display with new data
+function updateMetricsDisplay(metrics) {
+    // Update counter values
+    const requestsElement = document.getElementById('stat-requests');
+    const bookingsElement = document.getElementById('stat-bookings');
+    const completedElement = document.getElementById('stat-completed');
+    
+    if (requestsElement) animateEnhancedCounter(requestsElement, metrics.newRequests);
+    if (bookingsElement) animateEnhancedCounter(bookingsElement, metrics.upcomingBookings);
+    if (completedElement) animateEnhancedCounter(completedElement, metrics.completedJobs);
+    
+    // Update progress bars
+    updateProgressBar('requests-progress', metrics.requestsProgress);
+    updateProgressBar('bookings-progress', metrics.bookingsProgress);
+    updateProgressBar('completed-progress', metrics.completedProgress);
+    
+    // Update revenue display
+    const revenueElement = document.querySelector('.revenue-display');
+    if (revenueElement) {
+        revenueElement.textContent = `$${metrics.totalRevenue.toLocaleString()}`;
+    }
+    
+    // Update rating display
+    const ratingElement = document.querySelector('.rating-display');
+    if (ratingElement) {
+        ratingElement.textContent = metrics.averageRating.toFixed(1);
+    }
+}
+
+// Enhanced animations initialization
+function initEnhancedAnimations() {
+    // Initialize AOS animations if not already done
+    if (typeof AOS !== 'undefined') {
+        AOS.refresh();
+    }
+    
+    // Add custom animations for interactive elements
+    addHoverAnimations();
+    addClickAnimations();
+}
+
+// Add hover animations to interactive elements
+function addHoverAnimations() {
+    const interactiveElements = document.querySelectorAll('.metric-card, .action-btn, .activity-item');
+    
+    interactiveElements.forEach(element => {
+        element.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px) scale(1.02)';
+        });
+        
+        element.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+}
+
+// Add click animations
+function addClickAnimations() {
+    const clickableElements = document.querySelectorAll('.action-btn, .filter-btn, .action-icon');
+    
+    clickableElements.forEach(element => {
+        element.addEventListener('click', function(e) {
+            // Create ripple effect
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = 60;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+            ripple.classList.add('ripple');
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    });
+}
+
+// Utility functions for enhanced dashboard
+function formatTimeAgo(timestamp) {
+    const now = new Date();
+    const diff = now - timestamp;
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+    
+    if (minutes < 60) return `${minutes} minutes ago`;
+    if (hours < 24) return `${hours} hours ago`;
+    return `${days} days ago`;
+}
+
+function generateStarRating(rating) {
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+        stars += `<i class="fas fa-star${i <= rating ? '' : '-empty'}"></i>`;
+    }
+    return stars;
+}
+
+// Initialize activity filters
+function initActivityFilters(activities) {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterBtns.forEach(b => b.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Filter activities
+            const filter = this.dataset.filter;
+            filterActivities(activities, filter);
+        });
+    });
+}
+
+function filterActivities(activities, filter) {
+    const filteredActivities = filter === 'all' 
+        ? activities 
+        : activities.filter(activity => activity.type === filter);
+        
+    renderEnhancedActivityFeed(filteredActivities);
+}
+
+// Sample data functions (fallbacks)
+function initSampleMetrics() {
+    animateEnhancedCounter(document.getElementById('stat-requests'), 8);
+    animateEnhancedCounter(document.getElementById('stat-bookings'), 5);
+    animateEnhancedCounter(document.getElementById('stat-completed'), 27);
+    
+    setTimeout(() => {
+        updateProgressBar('requests-progress', 75);
+        updateProgressBar('bookings-progress', 60);
+        updateProgressBar('completed-progress', 85);
+    }, 500);
+}
+
+function renderSampleActivityFeed() {
+    const sampleActivities = [
+        {
+            id: 1,
+            type: 'booking',
+            title: 'New Booking: Plumbing Service',
+            customer: 'John Smith',
+            amount: 150,
+            timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
+            status: 'success'
+        }
+    ];
+    
+    renderEnhancedActivityFeed(sampleActivities);
+}
+
+// OLD SERVICE TABLE FUNCTIONS - REMOVED TO PREVENT CONFLICTS
+// These functions are now handled by enhanced-dashboard-components.js
+
+function getServiceIcon(category) {
+    const iconMap = {
+        'Home Services': 'wrench',
+        'plumbing': 'wrench',
+        'electrical-services': 'bolt',
+        'Beauty & Spas': 'cut',
+        'hair-salon': 'cut',
+        'Automotive': 'car',
+        'auto-repair': 'car',
+        'Business Services': 'briefcase',
+        'default': 'cog'
+    };
+    
+    return iconMap[category] || iconMap['default'];
+}
+
+// CSS for ripple effect
+const rippleCSS = `
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    transform: scale(0);
+    animation: ripple-animation 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+`;
+
+// Inject ripple CSS
+const style = document.createElement('style');
+style.textContent = rippleCSS;
+document.head.appendChild(style); 

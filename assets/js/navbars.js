@@ -563,7 +563,13 @@ function checkForDuplicateListeners() {
 
 // Function to initialize all navbar functionality
 function initializeNavbars() {
-    if (navbarsInitialized) return;
+    // Prevent multiple initializations
+    if (navbarsInitialized) {
+        console.log('⚠️ Navbars already initialized, skipping duplicate initialization');
+        return;
+    }
+    
+    console.log('🚀 Initializing navbars...');
     
     // Mount top navbar
     const topNavbarMount = document.getElementById('navbar-top');
@@ -585,6 +591,7 @@ function initializeNavbars() {
     }
     
     navbarsInitialized = true;
+    console.log('✅ Navbars initialized successfully');
     
     // Run debug check after initialization
     setTimeout(checkForDuplicateListeners, 1000);
@@ -592,6 +599,13 @@ function initializeNavbars() {
 
 // Main initialization function for navbar dropdowns (called from DOMContentLoaded)
 function initializeNavbarDropdowns() {
+    // Prevent multiple initializations
+    if (window.navbarDropdownsInitialized) {
+        console.log('⚠️ Navbar dropdowns already initialized, skipping');
+        return;
+    }
+    window.navbarDropdownsInitialized = true;
+    
     console.log('🎯 initializeNavbarDropdowns called');
     
     // Clean up any existing listeners first
@@ -608,41 +622,80 @@ function initializeNavbarDropdowns() {
 function handleResize() {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
-        // Cleanup existing listeners and dropdowns
-        cleanupDropdownListeners();
-        
-        // Reinitialize with fresh event listeners
-        handleMobileDropdowns();
-        handleDropdownPositioning();
+        // Only reinitialize if navbars were already initialized
+        if (navbarsInitialized) {
+            console.log('🔄 Reinitializing navbars on resize...');
+            // Cleanup existing listeners and dropdowns
+            cleanupDropdownListeners();
+            
+            // Reinitialize with fresh event listeners
+            handleMobileDropdowns();
+            handleDropdownPositioning();
+        }
     }, 250);
 }
 
-// Global click handler to close dropdowns when clicking outside
-document.addEventListener('click', function(event) {
-    const dropdownMount = document.getElementById('dropdown-mount');
-    const bottomNavbar = document.querySelector('.bottom-navbar');
+// Global click handler to close dropdowns when clicking outside - PREVENT DUPLICATES
+let globalClickHandlerAttached = false;
+
+function attachGlobalClickHandler() {
+    if (globalClickHandlerAttached) return;
+    globalClickHandlerAttached = true;
     
-    if (dropdownMount && bottomNavbar) {
-        const clickedInsideNavbar = bottomNavbar.contains(event.target);
-        const clickedInsideDropdown = dropdownMount.contains(event.target);
+    document.addEventListener('click', function(event) {
+        const dropdownMount = document.getElementById('dropdown-mount');
+        const bottomNavbar = document.querySelector('.bottom-navbar');
         
-        if (!clickedInsideNavbar && !clickedInsideDropdown) {
-            // Close all mounted dropdowns
-            dropdownMount.innerHTML = '';
+        if (dropdownMount && bottomNavbar) {
+            const clickedInsideNavbar = bottomNavbar.contains(event.target);
+            const clickedInsideDropdown = dropdownMount.contains(event.target);
             
-            // Close mobile dropdowns
-            const mobileDropdowns = document.querySelectorAll('.bottom-navbar .nav-item.dropdown.active');
-            mobileDropdowns.forEach(dropdown => {
-                dropdown.classList.remove('active');
-                const menu = dropdown.querySelector('.dropdown-menu');
-                if (menu) menu.style.display = 'none';
-            });
+            if (!clickedInsideNavbar && !clickedInsideDropdown) {
+                // Close all mounted dropdowns
+                dropdownMount.innerHTML = '';
+                
+                // Close mobile dropdowns
+                const mobileDropdowns = document.querySelectorAll('.bottom-navbar .nav-item.dropdown.active');
+                mobileDropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                    const menu = dropdown.querySelector('.dropdown-menu');
+                    if (menu) menu.style.display = 'none';
+                });
+            }
         }
+    });
+}
+
+// CONSOLIDATED DOMCONTENTLOADED LISTENER - PREVENT DUPLICATES
+let navbarsDOMInitialized = false;
+
+document.addEventListener('DOMContentLoaded', function() {
+    if (navbarsDOMInitialized) {
+        console.log('⚠️ Navbars DOM already initialized, skipping');
+        return;
     }
+    navbarsDOMInitialized = true;
+    
+    console.log('🚀 Navbars DOMContentLoaded initialization...');
+    
+    // Initialize navbars
+    initializeNavbars();
+    
+    // Attach global click handler
+    attachGlobalClickHandler();
+    
+    console.log('✅ Navbars DOMContentLoaded complete');
 });
 
-// Mount the navigation bars when the DOM is loaded
-document.addEventListener('DOMContentLoaded', initializeNavbars);
+// Handle window resize - PREVENT DUPLICATES
+let resizeHandlerAttached = false;
 
-// Handle window resize
-window.addEventListener('resize', handleResize); 
+function attachResizeHandler() {
+    if (resizeHandlerAttached) return;
+    resizeHandlerAttached = true;
+    
+    window.addEventListener('resize', handleResize);
+}
+
+// Attach resize handler
+attachResizeHandler(); 

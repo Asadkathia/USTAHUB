@@ -18,6 +18,9 @@
     <link rel="stylesheet" href="assets/css/user.css">
     <link rel="stylesheet" href="assets/css/custom.css">
     <link rel="stylesheet" href="assets/css/page-hero.css">
+    <!-- Enhanced Provider Dashboard CSS -->
+    <link rel="stylesheet" href="assets/css/provider-dashboard.css">
+    <link rel="stylesheet" href="assets/css/enhanced-dashboard-components.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -47,7 +50,21 @@
     
     <!-- Custom JS -->
     <script type="module" src="assets/js/supabase.js"></script>
+    <script src="assets/js/service-category-manager.js"></script>
+    <script src="assets/js/database-utils.js"></script>
+    <script src="assets/js/dashboard-utils.js"></script>
+
     <script src="assets/js/navbars.js"></script>
+
+    <!-- Load Simple Services Component -->
+    <link rel="stylesheet" href="assets/css/simple-services.css">
+    <script src="assets/js/simple-services-component.js"></script>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Load hero carousel -->
+    <script src="assets/js/hero-carousel.js"></script>
 
     <title>Service Provider Dashboard - UstaHub</title>
 
@@ -76,31 +93,35 @@
         <section class="content">
             <div class="container">
                 <div class="row">
-                    <!-- Sidebar -->
+                    <!-- Enhanced Sidebar -->
                     <div class="col-lg-3">
                         <div class="dashboard-sidebar">
                             <nav>
-                                <a href="#" class="nav-link active">
-                                    <i class="fa fa-home"></i>
+                                <a href="#" class="nav-link active" data-section="dashboard">
+                                    <i class="fa fa-tachometer-alt"></i>
                                     Dashboard
                                 </a>
-                                <a href="#" class="nav-link">
-                                    <i class="fa fa-list"></i>
+                                <a href="#" class="nav-link" data-section="services">
+                                    <i class="fa fa-cogs"></i>
                                     My Services
                                 </a>
-                                <a href="#" class="nav-link">
-                                    <i class="fa fa-calendar"></i>
+                                <a href="#" class="nav-link" data-section="bookings">
+                                    <i class="fa fa-calendar-check"></i>
                                     Bookings
                                 </a>
-                                <a href="#" class="nav-link">
+                                <a href="#" class="nav-link" data-section="reviews">
                                     <i class="fa fa-star"></i>
                                     Reviews
                                 </a>
-                                <a href="#" class="nav-link">
-                                    <i class="fa fa-wallet"></i>
+                                <a href="#" class="nav-link" data-section="earnings">
+                                    <i class="fa fa-chart-line"></i>
                                     Earnings
                                 </a>
-                                <a href="#" class="nav-link">
+                                <a href="#" class="nav-link" data-section="analytics">
+                                    <i class="fa fa-chart-bar"></i>
+                                    Analytics
+                                </a>
+                                <a href="#" class="nav-link" data-section="settings">
                                     <i class="fa fa-cog"></i>
                                     Settings
                                 </a>
@@ -110,71 +131,97 @@
 
                     <!-- Main Dashboard Content -->
                     <div class="col-lg-9">
-                        <!-- Performance Metrics Cards -->
-                        <div class="row mb-4">
+                        <!-- Enhanced Performance Metrics Cards -->
+                        <div class="row metrics-container" data-aos="fade-up">
                             <div class="col-md-4 mb-3">
-                                <div class="card shadow-sm text-center p-3">
-                                    <h6>New Requests</h6>
-                                    <h2 id="stat-requests">0</h2>
-                                    <div class="progress mt-2 progress-thin">
-                                        <div class="progress-bar bg-primary" id="requests-progress" class="progress-bar-animated"></div>
+                                <div class="metric-card requests">
+                                    <div class="metric-icon">
+                                        <i class="fas fa-inbox"></i>
                                     </div>
-                                    <small class="text-muted">Last 7 days</small>
+                                    <div class="metric-value" id="stat-requests">0</div>
+                                    <div class="metric-label">New Requests</div>
+                                    <div class="metric-change positive">
+                                        <i class="fas fa-arrow-up"></i>
+                                        +12% from last week
+                                    </div>
+                                    <div class="enhanced-progress">
+                                        <div class="enhanced-progress-bar" id="requests-progress" style="width: 0%"></div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <div class="card shadow-sm text-center p-3">
-                                    <h6>Upcoming Bookings</h6>
-                                    <h2 id="stat-bookings">0</h2>
-                                    <div class="progress mt-2 progress-thin">
-                                        <div class="progress-bar bg-success" id="bookings-progress" class="progress-bar-animated"></div>
+                                <div class="metric-card bookings">
+                                    <div class="metric-icon">
+                                        <i class="fas fa-calendar-alt"></i>
                                     </div>
-                                    <small class="text-muted">Next 7 days</small>
+                                    <div class="metric-value" id="stat-bookings">0</div>
+                                    <div class="metric-label">Upcoming Bookings</div>
+                                    <div class="metric-change positive">
+                                        <i class="fas fa-arrow-up"></i>
+                                        +8% from last week
+                                    </div>
+                                    <div class="enhanced-progress">
+                                        <div class="enhanced-progress-bar" id="bookings-progress" style="width: 0%"></div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <div class="card shadow-sm text-center p-3">
-                                    <h6>Jobs Completed</h6>
-                                    <h2 id="stat-completed">0</h2>
-                                    <div class="progress mt-2 progress-thin">
-                                        <div class="progress-bar bg-info" id="completed-progress" class="progress-bar-animated"></div>
+                                <div class="metric-card completed">
+                                    <div class="metric-icon">
+                                        <i class="fas fa-check-circle"></i>
                                     </div>
-                                    <small class="text-muted">This month</small>
+                                    <div class="metric-value" id="stat-completed">0</div>
+                                    <div class="metric-label">Jobs Completed</div>
+                                    <div class="metric-change positive">
+                                        <i class="fas fa-arrow-up"></i>
+                                        +15% this month
+                                    </div>
+                                    <div class="enhanced-progress">
+                                        <div class="enhanced-progress-bar" id="completed-progress" style="width: 0%"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Recent Activity & Quick Actions -->
+                        <!-- Enhanced Activity & Quick Actions -->
                         <div class="row">
-                            <!-- Recent Activity -->
-                            <div class="col-lg-8">
-                                <div class="card shadow-sm">
-                                    <div class="card-header bg-white">
+                            <!-- Enhanced Recent Activity -->
+                            <div class="col-lg-8" data-aos="fade-right">
+                                <div class="activity-card">
+                                    <div class="activity-header">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <h5 class="mb-0">Recent Activity</h5>
-                                            <div class="btn-group">
-                                                <button class="btn btn-sm btn-outline-secondary active">All</button>
-                                                <button class="btn btn-sm btn-outline-secondary">Bookings</button>
-                                                <button class="btn btn-sm btn-outline-secondary">Reviews</button>
+                                            <h5>Recent Activity</h5>
+                                            <div id="activity-filters-container">
+                                                <!-- Enhanced Activity Filters will be inserted here -->
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-body p-0">
-                                        <div class="list-group list-group-flush">
-                                            <div class="list-group-item">
-                                                <div class="d-flex w-100 justify-content-between align-items-center">
-                                                    <div>
-                                                        <h6 class="mb-1">New Booking: Plumbing Service</h6>
-                                                        <p class="mb-1 text-muted">John Smith • 2 hours ago</p>
+                                        <div id="activity-feed">
+                                            <div class="activity-item">
+                                                <div class="activity-content">
+                                                    <div class="activity-info">
+                                                        <h6>New Booking: Plumbing Service</h6>
+                                                        <div class="activity-meta">
+                                                            <i class="fas fa-user"></i>
+                                                            <span>John Smith</span>
+                                                            <i class="fas fa-clock"></i>
+                                                            <span>2 hours ago</span>
+                                                        </div>
                                                     </div>
-                                                    <span class="badge bg-success">$150</span>
+                                                    <div class="activity-badge success">$150</div>
                                                 </div>
                                             </div>
-                                            <div class="list-group-item">
-                                                <div class="d-flex w-100 justify-content-between align-items-center">
-                                                    <div>
-                                                        <h6 class="mb-1">New Review: 5 Stars</h6>
-                                                        <p class="mb-1 text-muted">Sarah Johnson • 5 hours ago</p>
+                                            <div class="activity-item">
+                                                <div class="activity-content">
+                                                    <div class="activity-info">
+                                                        <h6>New Review: 5 Stars</h6>
+                                                        <div class="activity-meta">
+                                                            <i class="fas fa-user"></i>
+                                                            <span>Sarah Johnson</span>
+                                                            <i class="fas fa-clock"></i>
+                                                            <span>5 hours ago</span>
+                                                        </div>
                                                     </div>
                                                     <div class="text-warning">
                                                         <i class="fas fa-star"></i>
@@ -185,13 +232,34 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="list-group-item">
-                                                <div class="d-flex w-100 justify-content-between align-items-center">
-                                                    <div>
-                                                        <h6 class="mb-1">Profile View Milestone</h6>
-                                                        <p class="mb-1 text-muted">2,500 profile views • Yesterday</p>
+                                            <div class="activity-item">
+                                                <div class="activity-content">
+                                                    <div class="activity-info">
+                                                        <h6>Profile View Milestone</h6>
+                                                        <div class="activity-meta">
+                                                            <i class="fas fa-eye"></i>
+                                                            <span>2,500 profile views</span>
+                                                            <i class="fas fa-clock"></i>
+                                                            <span>Yesterday</span>
+                                                        </div>
                                                     </div>
-                                                    <i class="fas fa-trophy text-warning"></i>
+                                                    <div class="activity-badge info">
+                                                        <i class="fas fa-trophy"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="activity-item">
+                                                <div class="activity-content">
+                                                    <div class="activity-info">
+                                                        <h6>Payment Received</h6>
+                                                        <div class="activity-meta">
+                                                            <i class="fas fa-credit-card"></i>
+                                                            <span>Service completed</span>
+                                                            <i class="fas fa-clock"></i>
+                                                            <span>2 days ago</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="activity-badge success">$120</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -199,51 +267,52 @@
                                 </div>
                             </div>
 
-                            <!-- Quick Actions -->
-                            <div class="col-lg-4">
-                                <div class="card shadow-sm">
-                                    <div class="card-header bg-white">
-                                        <h5 class="mb-0">Quick Actions</h5>
+                            <!-- Enhanced Quick Actions -->
+                            <div class="col-lg-4" data-aos="fade-left">
+                                <!-- Quick Actions removed - now using independent services component -->
+
+                                <!-- Enhanced Performance Tips -->
+                                <div class="tips-card">
+                                    <div class="tips-header">
+                                        <h5>Performance Tips</h5>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="d-grid gap-2">
-                                            <button id="add-service-btn" class="btn btn-primary">
-                                                <i class="fas fa-plus-circle me-2"></i>Add New Service
-                                            </button>
-                                            <button class="btn btn-outline-primary">
-                                                <i class="fas fa-calendar-alt me-2"></i>Update Availability
-                                            </button>
-                                            <button class="btn btn-outline-primary">
-                                                <i class="fas fa-chart-line me-2"></i>View Detailed Analytics
-                                            </button>
-                                            <button class="btn btn-outline-primary">
-                                                <i class="fas fa-bullhorn me-2"></i>Boost Visibility
-                                            </button>
-                                        </div>
+                                    <div class="tip-item">
+                                        <i class="fas fa-lightbulb"></i>
+                                        <strong>Pro Tip:</strong> Adding photos to your profile can increase views by up to 40%
                                     </div>
                                 </div>
 
-                                <!-- Performance Tips -->
-                                <div class="card shadow-sm mt-4">
-                                    <div class="card-header bg-white">
-                                        <h5 class="mb-0">Performance Tips</h5>
+                                <!-- Monthly Goals Card -->
+                                <div class="tips-card">
+                                    <div class="tips-header">
+                                        <h5>Monthly Goals</h5>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="alert alert-info mb-0">
-                                            <i class="fas fa-lightbulb me-2"></i>
-                                            <strong>Pro Tip:</strong> Adding photos to your profile can increase views by up to 40%
+                                    <div style="padding: 1.5rem 2rem;">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span>Bookings</span>
+                                            <span>7/10</span>
+                                        </div>
+                                        <div class="enhanced-progress">
+                                            <div class="enhanced-progress-bar" style="width: 70%"></div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2 mt-3">
+                                            <span>Revenue</span>
+                                            <span>$850/$1200</span>
+                                        </div>
+                                        <div class="enhanced-progress">
+                                            <div class="enhanced-progress-bar" style="width: 71%"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- Services Table -->
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <h5 class="mb-3">My Services</h5>
-                                <div id="services-table"></div>
+
+                        <!-- Services Section -->
+                        <section class="services-section">
+                            <div id="services-container">
+                                <!-- Simple Services Component will render here -->
                             </div>
-                        </div>
+                        </section>
                     </div>
                 </div>
             </div>
@@ -330,6 +399,90 @@
         </footer>
     </div>
 
+    <!-- Simple Add Service Modal -->
+    <div class="modal fade" id="add-service-modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-plus-circle me-2"></i>Add New Service
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="simple-service-form">
+                        <!-- Service Name -->
+                        <div class="mb-3">
+                            <label for="simple-service-name" class="form-label">
+                                <i class="fas fa-tag me-1"></i>Service Name
+                            </label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="simple-service-name" 
+                                   name="serviceName"
+                                   placeholder="e.g., Toilet Cleaning, Pipe Repair"
+                                   required>
+                        </div>
+                        
+                        <!-- Service Category (Auto-populated) -->
+                        <div class="mb-3">
+                            <label class="form-label">
+                                <i class="fas fa-folder me-1"></i>Service Category
+                            </label>
+                            <div class="category-display-box p-3 bg-light rounded">
+                                <div id="simple-category-display" class="d-flex align-items-center">
+                                    <i class="fas fa-spinner fa-spin me-2"></i>
+                                    <span>Loading your specialty category...</span>
+                                </div>
+                                <small class="text-muted mt-1 d-block">
+                                    Services will be posted in your registered specialty category
+                                </small>
+                            </div>
+                            <input type="hidden" id="simple-service-category" name="serviceCategory">
+                            <input type="hidden" id="simple-service-subcategory" name="serviceSubcategory">
+                        </div>
+                        
+                        <!-- Service Price -->
+                        <div class="mb-3">
+                            <label for="simple-service-price" class="form-label">
+                                <i class="fas fa-dollar-sign me-1"></i>Price per Hour ($)
+                            </label>
+                            <input type="number" 
+                                   class="form-control" 
+                                   id="simple-service-price" 
+                                   name="servicePrice"
+                                   min="1" 
+                                   step="0.01" 
+                                   placeholder="25.00"
+                                   required>
+                        </div>
+                        
+                        <!-- Service Description -->
+                        <div class="mb-3">
+                            <label for="simple-service-description" class="form-label">
+                                <i class="fas fa-align-left me-1"></i>Service Description
+                            </label>
+                            <textarea class="form-control" 
+                                      id="simple-service-description" 
+                                      name="serviceDescription"
+                                      rows="4" 
+                                      placeholder="Describe your service in detail. What do you offer? What makes your service special?"
+                                      required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-1"></i>Cancel
+                    </button>
+                    <button type="button" class="btn btn-primary" id="simple-submit-service">
+                        <i class="fas fa-plus-circle me-1"></i>Add Service
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript -->
     <script src="assets/js/jquery-3.3.1.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
@@ -340,18 +493,52 @@
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/custom-dropdown.js"></script>
     
-    
-    
     <!-- Scripts -->
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <!-- Then load dashboard and initialize -->
-    <script src="assets/js/dashboard.js"></script>
-  <script src="assets/js/hero-carousel.js"></script>
+    <!-- Load hero carousel -->
+    <script src="assets/js/hero-carousel.js"></script>
     <script>
+        // CONSOLIDATED INITIALIZATION - SINGLE DOMCONTENTLOADED LISTENER
+        let dashboardInitialized = false;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            if (dashboardInitialized) {
+                console.log('⚠️ Dashboard already initialized, skipping duplicate initialization');
+                return;
+            }
+            
+            console.log('🚀 Starting consolidated dashboard initialization...');
+            
+            // Initialize AOS first
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true,
+                offset: 100
+            });
+            
+            // Initialize Simple Services Component
+            if (document.getElementById('services-container')) {
+                console.log('🔧 Initializing Simple Services Component...');
+                window.simpleServicesManager = new SimpleServicesManager();
+                window.simpleServicesManager.init();
+            }
+            
+            // Mark as initialized to prevent duplicates
+            dashboardInitialized = true;
+            console.log('✅ DOMContentLoaded initialization complete');
+        });
+
         // Wait for Supabase to be initialized
         window.addEventListener('load', async () => {
+            // Prevent multiple load event handlers
+            if (window.loadEventHandled) {
+                console.log('⚠️ Load event already handled, skipping');
+                return;
+            }
+            window.loadEventHandled = true;
+            
             // Add a small delay to ensure Supabase is initialized
             await new Promise(resolve => setTimeout(resolve, 100));
             
@@ -376,79 +563,205 @@
                     return;
                 }
 
-                // Initialize dashboard
-                initProviderDashboard();
+                // Initialize simple dashboard
+                initSimpleDashboard();
+                
             } catch (error) {
                 console.error('Error during initialization:', error);
                 window.location.href = 'sign-in.html';
             }
         });
+
+        // Simple Dashboard Initialization
+        function initSimpleDashboard() {
+            console.log('🚀 Initializing Simple Dashboard...');
+            
+            // Initialize animated metrics
+            animateMetrics();
+            
+            // Initialize modal
+            initAddServiceModal();
+            
+            console.log('✅ Simple Dashboard initialized successfully!');
+        }
+
+        function animateMetrics() {
+            // Prevent multiple animations
+            if (window.metricsAnimated) return;
+            window.metricsAnimated = true;
+            
+            // Animate metric values
+            animateCounter(document.getElementById('stat-requests'), 8);
+            animateCounter(document.getElementById('stat-bookings'), 5);
+            animateCounter(document.getElementById('stat-completed'), 27);
+            
+            // Animate progress bars
+            setTimeout(() => {
+                const requestsProgress = document.getElementById('requests-progress');
+                const bookingsProgress = document.getElementById('bookings-progress');
+                const completedProgress = document.getElementById('completed-progress');
+                
+                if (requestsProgress) requestsProgress.style.width = '75%';
+                if (bookingsProgress) bookingsProgress.style.width = '60%';
+                if (completedProgress) completedProgress.style.width = '85%';
+            }, 500);
+        }
+
+        function animateCounter(element, target) {
+            if (!element) return;
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 20);
+        }
+
+        function initAddServiceModal() {
+            console.log('🔧 Modal initialization handled by SimpleServicesManager');
+            // Modal form submission is now handled entirely by SimpleServicesManager
+        }
+        
+        function resetSimpleForm() {
+            const form = document.getElementById('simple-service-form');
+            const modalTitle = document.querySelector('#add-service-modal .modal-title');
+            const submitBtn = document.getElementById('simple-submit-service');
+            
+            if (form) {
+                form.reset();
+                delete form.dataset.editingServiceId;
+            }
+            
+            if (modalTitle) {
+                modalTitle.innerHTML = '<i class="fas fa-plus-circle me-2"></i>Add New Service';
+            }
+            
+            if (submitBtn) {
+                submitBtn.innerHTML = '<i class="fas fa-plus-circle me-1"></i>Add Service';
+            }
+        }
+        
+        async function loadUserCategory() {
+            const categoryDisplay = document.getElementById('simple-category-display');
+            const categoryInput = document.getElementById('simple-service-category');
+            const subcategoryInput = document.getElementById('simple-service-subcategory');
+            
+            if (!categoryDisplay) return;
+            
+            try {
+                // Get current user
+                const { data: { session }, error: sessionError } = await window.supabase.auth.getSession();
+                if (sessionError || !session) {
+                    throw new Error('Not authenticated');
+                }
+                
+                // Get user's primary service category from profile
+                const { data: profile, error: profileError } = await window.supabase
+                    .from('profiles')
+                    .select('primary_service_category')
+                    .eq('id', session.user.id)
+                    .single();
+                
+                if (profileError || !profile || !profile.primary_service_category) {
+                    throw new Error('Primary service category not found');
+                }
+                
+                const userCategory = profile.primary_service_category;
+                console.log('👤 User primary service category:', userCategory);
+                
+                // Get category info from ServiceCategoryManager
+                if (window.ServiceCategoryManager) {
+                    const categoryInfo = window.ServiceCategoryManager.getCategoryInfo(userCategory);
+                    
+                    if (categoryInfo) {
+                        // Update display
+                        categoryDisplay.innerHTML = `
+                            <i class="${categoryInfo.icon} me-2"></i>
+                            <span>${categoryInfo.displayName}</span>
+                        `;
+                        
+                        // Set hidden inputs
+                        categoryInput.value = categoryInfo.mainCategory;
+                        subcategoryInput.value = userCategory;
+                        
+                        console.log('✅ Category loaded:', {
+                            mainCategory: categoryInfo.mainCategory,
+                            subcategory: userCategory,
+                            displayName: categoryInfo.displayName
+                        });
+                    } else {
+                        throw new Error('Category info not found');
+                    }
+                } else {
+                    throw new Error('ServiceCategoryManager not available');
+                }
+                
+            } catch (error) {
+                console.error('❌ Error loading user category:', error);
+                categoryDisplay.innerHTML = `
+                    <i class="fas fa-exclamation-triangle me-2 text-warning"></i>
+                    <span>Error loading category</span>
+                `;
+                showToast('Failed to load your service category', 'error');
+            }
+        }
+
+        function initTooltips() {
+            // Prevent multiple initializations
+            if (window.tooltipsInitialized) return;
+            window.tooltipsInitialized = true;
+            
+            // Initialize Bootstrap tooltips
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        }
+
+        // Toast notification function
+        function showToast(message, type = 'info') {
+            // Create toast container if it doesn't exist
+            let toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) {
+                toastContainer = document.createElement('div');
+                toastContainer.id = 'toast-container';
+                toastContainer.className = 'toast-container position-fixed top-0 end-0 p-3';
+                toastContainer.style.zIndex = '9999';
+                document.body.appendChild(toastContainer);
+            }
+
+            // Create toast element
+            const toastId = 'toast-' + Date.now();
+            const toastHtml = `
+                <div id="${toastId}" class="toast align-items-center text-white bg-${type === 'error' ? 'danger' : type}" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            ${message}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            `;
+
+            toastContainer.insertAdjacentHTML('beforeend', toastHtml);
+            const toastElement = document.getElementById(toastId);
+            const toast = new bootstrap.Toast(toastElement, { delay: 5000 });
+            toast.show();
+
+            // Remove toast element after it's hidden
+            toastElement.addEventListener('hidden.bs.toast', () => {
+                toastElement.remove();
+            });
+        }
+
+        // Make showToast globally available
+        window.showToast = showToast;
     </script>
-    <!-- Before closing body tag, add offcanvas for adding service -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="add-service-offcanvas" aria-labelledby="addServiceLabel">
-        <div class="offcanvas-header">
-            <h5 id="addServiceLabel" class="offcanvas-title">Add New Service</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <form id="add-service-form">
-                <div class="mb-3">
-                    <label for="serviceName" class="form-label">Service Name</label>
-                    <input type="text" name="serviceName" id="serviceName" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="serviceCategory" class="form-label">Service Category</label>
-                    <select name="serviceCategory" id="serviceCategory" class="form-control" required placeholder="Select a category...">
-                        <option value="" disabled selected>Select a category...</option>
-                        <option value="plumbing">Plumbing</option>
-                        <option value="electrical-services">Electrical Services</option>
-                        <option value="hvac">HVAC (Heating & Cooling)</option>
-                        <option value="home-cleaning">Home Cleaning</option>
-                        <option value="landscaping">Landscaping & Gardening</option>
-                        <option value="painting-services">Painting Services</option>
-                        <option value="carpentry">Carpentry</option>
-                        <option value="moving-services">Moving Services</option>
-                        <option value="appliance-repair">Appliance Repair</option>
-                        <option value="roofing-services">Roofing</option>
-                        <option value="locksmith-services">Locksmith</option>
-                        <option value="handyman-services">Handyman / Contractors</option>
-                        <option value="hair-salon">Hair Salon</option>
-                        <option value="nail-salon">Nail Salon</option>
-                        <option value="spa-services">Spa Services</option>
-                        <option value="massage-therapy">Massage Therapy</option>
-                        <option value="wellness-services">Wellness (General)</option>
-                        <option value="beauty-general">Beauty (General)</option>
-                        <option value="auto-repair">Auto Repair & Mechanic</option>
-                        <option value="car-wash">Car Wash & Detailing</option>
-                        <option value="it-services">IT & Tech Support</option>
-                        <option value="marketing-services">Marketing & Advertising</option>
-                        <option value="tutoring-lessons">Tutoring & Lessons</option>
-                        <option value="event-planning">Event Planning</option>
-                        <option value="photography-services">Photography & Videography</option>
-                        <option value="pet-grooming">Pet Grooming</option>
-                        <option value="pet-sitting">Pet Sitting & Care</option>
-                        <option value="real-estate-services">Real Estate Agents</option>
-                        <option value="legal-services">Legal Services</option>
-                        <option value="accounting-services">Accounting & Bookkeeping</option>
-                        <option value="business-consulting">Business Consulting</option>
-                        <option value="fitness-training">Fitness & Personal Training</option>
-                        <option value="catering-services">Catering Services</option>
-                        <option value="graphic-design">Graphic & Web Design</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="servicePrice" class="form-label">Price (USD/hour)</label>
-                    <input type="number" name="servicePrice" id="servicePrice" class="form-control" min="1" required>
-                </div>
-                <div class="mb-3">
-                    <label for="serviceDescription" class="form-label">Service Description</label>
-                    <textarea name="serviceDescription" id="serviceDescription" class="form-control" rows="4" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Add Service</button>
-            </form>
-        </div>
-    </div>
     <!-- Inject sidebar HTML and load sidebar JS after HTML is present -->
     <script>
         fetch('/components/mobile-sidebar.html')

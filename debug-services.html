@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Services Table</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/enhanced-dashboard-components.css">
+    <style>
+        body { padding: 2rem; background: #f8f9fa; }
+        .debug-info { background: white; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Debug Services Table Component</h1>
+        
+        <div class="debug-info">
+            <h5>Debug Information</h5>
+            <div id="debug-output"></div>
+        </div>
+        
+        <div class="services-section">
+            <div id="services-table-container">
+                <!-- Services table will be rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="assets/js/supabase.js"></script>
+    <script src="assets/js/service-category-manager.js"></script>
+    <script src="assets/js/database-utils.js"></script>
+    <script src="assets/js/enhanced-dashboard-components.js"></script>
+    
+    <script>
+        function debugLog(message) {
+            console.log(message);
+            const debugOutput = document.getElementById('debug-output');
+            debugOutput.innerHTML += `<div>${new Date().toLocaleTimeString()}: ${message}</div>`;
+        }
+        
+        document.addEventListener('DOMContentLoaded', async function() {
+            debugLog('🚀 DOM Content Loaded');
+            
+            // Check if container exists
+            const container = document.getElementById('services-table-container');
+            debugLog(`📦 Container found: ${!!container}`);
+            
+            if (container) {
+                debugLog(`📏 Container dimensions: ${container.offsetWidth}x${container.offsetHeight}`);
+                debugLog(`👁️ Container visible: ${container.offsetParent !== null}`);
+            }
+            
+            // Wait for dependencies
+            debugLog('⏳ Waiting for dependencies...');
+            
+            let attempts = 0;
+            const maxAttempts = 50;
+            
+            const waitForDependencies = () => {
+                attempts++;
+                debugLog(`🔍 Attempt ${attempts}: Checking dependencies...`);
+                
+                if (window.ServicesTableComponent) {
+                    debugLog('✅ ServicesTableComponent class found');
+                    initializeServicesTable();
+                } else if (attempts >= maxAttempts) {
+                    debugLog('❌ ServicesTableComponent not found after timeout');
+                    // Try to manually create the table
+                    createManualTable();
+                } else {
+                    setTimeout(waitForDependencies, 100);
+                }
+            };
+            
+            waitForDependencies();
+        });
+        
+        function initializeServicesTable() {
+            try {
+                debugLog('🔧 Initializing ServicesTableComponent...');
+                
+                // Create the component
+                const servicesTable = new ServicesTableComponent('services-table-container');
+                debugLog('✅ ServicesTableComponent created successfully');
+                
+                // Check if it rendered
+                const container = document.getElementById('services-table-container');
+                if (container && container.innerHTML.trim()) {
+                    debugLog('✅ Content rendered successfully');
+                    debugLog(`📝 Content length: ${container.innerHTML.length} characters`);
+                } else {
+                    debugLog('❌ No content rendered');
+                }
+                
+            } catch (error) {
+                debugLog(`❌ Error initializing ServicesTableComponent: ${error.message}`);
+                console.error(error);
+                createManualTable();
+            }
+        }
+        
+        function createManualTable() {
+            debugLog('🔧 Creating manual table as fallback...');
+            
+            const container = document.getElementById('services-table-container');
+            if (!container) {
+                debugLog('❌ Container not found for manual table');
+                return;
+            }
+            
+            const manualHTML = `
+                <div class="services-table-container">
+                    <div class="table-header">
+                        <h5><i class="fas fa-cogs"></i> My Services (Manual)</h5>
+                        <button class="action-btn primary" id="add-service-btn-manual">
+                            <i class="fas fa-plus"></i> Add Service
+                        </button>
+                    </div>
+                    <div class="empty-state">
+                        <i class="fas fa-cogs empty-icon"></i>
+                        <h6>Manual Table Created</h6>
+                        <p>This is a manually created table for debugging purposes</p>
+                        <button class="action-btn primary" id="add-first-service-btn-manual">
+                            <i class="fas fa-plus"></i> Add Your First Service
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = manualHTML;
+            debugLog('✅ Manual table created successfully');
+            
+            // Add event listeners
+            const addBtn = document.getElementById('add-service-btn-manual');
+            const addFirstBtn = document.getElementById('add-first-service-btn-manual');
+            
+            if (addBtn) {
+                addBtn.addEventListener('click', () => {
+                    debugLog('🖱️ Manual Add Service button clicked');
+                    alert('Manual Add Service button works!');
+                });
+            }
+            
+            if (addFirstBtn) {
+                addFirstBtn.addEventListener('click', () => {
+                    debugLog('🖱️ Manual Add First Service button clicked');
+                    alert('Manual Add First Service button works!');
+                });
+            }
+        }
+    </script>
+</body>
+</html> 
