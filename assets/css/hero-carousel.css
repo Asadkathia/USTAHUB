@@ -49,6 +49,24 @@
   object-fit: cover;
 }
 
+/* ===== VIDEO STYLES FOR HERO SLIDES ===== */
+.hero-slide video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+/* Ensure video fallback image styling */
+.hero-slide video img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* ===== OVERLAY STYLES ===== */
 .hero-slide .overlay {
   position: absolute;
