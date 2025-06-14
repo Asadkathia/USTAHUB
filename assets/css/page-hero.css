@@ -122,6 +122,27 @@
   background-image: url('../img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.26 (1).jpeg');
 }
 
+/* ===== DYNAMIC SERVICE CATEGORY BACKGROUNDS ===== */
+.hero-header.hero-services.category-home-garden {
+  background-image: url('../img/openart-image_MqPXUxrw_1749930717494_raw.png');
+}
+
+.hero-header.hero-services.category-auto-transport {
+  background-image: url('../img/openart-image_uLDwiBle_1749930860985_raw.png');
+}
+
+.hero-header.hero-services.category-health-beauty {
+  background-image: url('../img/openart-image_yWdKtc64_1749930792368_raw.png');
+}
+
+.hero-header.hero-services.category-business {
+  background-image: url('../img/20250615_0048_Middle Eastern Business Consultation_simple_compose_01jxqzq0hxetbt1fv28skx0pbc.png');
+}
+
+.hero-header.hero-services.category-lifestyle {
+  background-image: url('../img/20250615_0057_Vibrant Middle Eastern Fusion_simple_compose_01jxr06r4bfq5vhe74n05mr3b0.png');
+}
+
 .hero-header.hero-dashboard {
   background-image: url('../img/Hero-background-imgs/WhatsApp Image 2025-06-11 at 20.22.27.jpeg');
 }

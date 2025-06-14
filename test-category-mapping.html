@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Mapping Test - UstaHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>UstaHub Category Mapping Test</h1>
+        <p>This page tests the category mapping to ensure subcategories are correctly assigned to main categories.</p>
+        
+        <div class="row">
+            <div class="col-12">
+                <h3>Category Mapping Results</h3>
+                <div id="category-results" class="mt-3">
+                    <!-- Results will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/simple-services-component.js"></script>
+    <script>
+        // Test the category mapping
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create a simple services manager instance to test the mapping
+            const manager = new SimpleServicesManager();
+            
+            // Test categories that should be mapped correctly
+            const testCategories = [
+                'plumbing',
+                'electrical',
+                'salons',
+                'hair-salon',
+                'auto-repair',
+                'it-services',
+                'fitness',
+                'pet-grooming'
+            ];
+            
+            const resultsContainer = document.getElementById('category-results');
+            let resultsHTML = '<div class="table-responsive"><table class="table table-striped"><thead><tr><th>Subcategory</th><th>Main Category</th><th>Display Name</th><th>Icon</th></tr></thead><tbody>';
+            
+            testCategories.forEach(category => {
+                const categoryInfo = manager.getCategoryInfo(category);
+                resultsHTML += `
+                    <tr>
+                        <td><code>${category}</code></td>
+                        <td><span class="badge bg-primary">${categoryInfo.mainCategory}</span></td>
+                        <td>${categoryInfo.displayName}</td>
+                        <td><i class="${categoryInfo.icon}"></i></td>
+                    </tr>
+                `;
+            });
+            
+            resultsHTML += '</tbody></table></div>';
+            
+            // Add summary
+            resultsHTML += '<div class="mt-4"><h4>Expected Results:</h4><ul>';
+            resultsHTML += '<li><strong>plumbing</strong> should be under <span class="badge bg-success">Home & Garden</span></li>';
+            resultsHTML += '<li><strong>electrical</strong> should be under <span class="badge bg-success">Home & Garden</span></li>';
+            resultsHTML += '<li><strong>salons/hair-salon</strong> should be under <span class="badge bg-success">Health & Beauty</span></li>';
+            resultsHTML += '<li><strong>auto-repair</strong> should be under <span class="badge bg-success">Auto & Transport</span></li>';
+            resultsHTML += '<li><strong>it-services</strong> should be under <span class="badge bg-success">Business</span></li>';
+            resultsHTML += '<li><strong>fitness</strong> should be under <span class="badge bg-success">Lifestyle</span></li>';
+            resultsHTML += '</ul></div>';
+            
+            resultsContainer.innerHTML = resultsHTML;
+        });
+    </script>
+</body>
+</html> 

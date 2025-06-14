@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServiceCategoryManager Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/enhanced-dashboard-components.css">
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-result { margin: 10px 0; padding: 10px; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .info { background-color: #d1ecf1; color: #0c5460; }
+        .test-form { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>ServiceCategoryManager Test</h1>
+    <div id="test-results"></div>
+    
+    <!-- Mock form to test category display -->
+    <div class="test-form">
+        <h3>Mock Service Form</h3>
+        <form id="test-form">
+            <div class="enhanced-form-group">
+                <label class="enhanced-form-label">Service Category</label>
+                <div class="category-display-container">
+                    <div id="serviceCategoryDisplay" class="category-display">
+                        <i class="fas fa-cog category-icon"></i>
+                        <span class="category-text">Loading...</span>
+                    </div>
+                    <small class="text-muted">Services will be posted in your registered specialty category</small>
+                </div>
+                <input type="hidden" name="serviceCategory" id="serviceCategory" required>
+            </div>
+        </form>
+        <button id="test-category-btn" class="btn btn-primary">Test Category Display</button>
+    </div>
+    
+    <script type="module" src="assets/js/supabase.js"></script>
+    <script src="assets/js/service-category-manager.js"></script>
+    
+    <script>
+        function addResult(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.textContent = message;
+            document.getElementById('test-results').appendChild(div);
+        }
+        
+        async function runTests() {
+            addResult('Starting ServiceCategoryManager tests...', 'info');
+            
+            // Test 1: Check if ServiceCategoryManager is available
+            if (window.serviceCategoryManager) {
+                addResult('✅ ServiceCategoryManager is available globally', 'success');
+            } else {
+                addResult('❌ ServiceCategoryManager is NOT available globally', 'error');
+                return;
+            }
+            
+            // Test 2: Check category mapping
+            const plumbingInfo = window.serviceCategoryManager.getCategoryInfo('plumbing');
+            if (plumbingInfo && plumbingInfo.display === 'Plumbing Services') {
+                addResult('✅ Category mapping works correctly', 'success');
+            } else {
+                addResult('❌ Category mapping failed', 'error');
+            }
+            
+            // Test 3: Check icon mapping
+            const plumbingIcon = window.serviceCategoryManager.getCategoryIcon('plumbing');
+            if (plumbingIcon === 'fa-wrench') {
+                addResult('✅ Icon mapping works correctly', 'success');
+            } else {
+                addResult('❌ Icon mapping failed: ' + plumbingIcon, 'error');
+            }
+            
+            // Test 4: Check display name
+            const displayName = window.serviceCategoryManager.getCategoryDisplayName('plumbing');
+            if (displayName === 'Plumbing Services') {
+                addResult('✅ Display name works correctly', 'success');
+            } else {
+                addResult('❌ Display name failed: ' + displayName, 'error');
+            }
+            
+            addResult('Basic tests completed!', 'info');
+        }
+        
+        async function testCategoryDisplay() {
+            addResult('Testing category display initialization...', 'info');
+            
+            const form = document.getElementById('test-form');
+            
+            try {
+                const success = await window.serviceCategoryManager.initializeCategoryDisplay(form);
+                if (success) {
+                    addResult('✅ Category display initialized successfully!', 'success');
+                } else {
+                    addResult('❌ Category display initialization failed', 'error');
+                }
+            } catch (error) {
+                addResult('❌ Error testing category display: ' + error.message, 'error');
+            }
+        }
+        
+        // Wait for scripts to load
+        setTimeout(() => {
+            runTests();
+            
+            // Add event listener for category display test
+            document.getElementById('test-category-btn').addEventListener('click', testCategoryDisplay);
+        }, 1000);
+    </script>
+</body>
+</html> 

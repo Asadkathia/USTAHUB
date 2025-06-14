@@ -263,7 +263,7 @@
                                     id, first_name, last_name, phone
                                 )
                             `)
-                            .in('category', subCategoriesToFetch);
+                            .in('subcategory', subCategoriesToFetch);
                         servicesToDisplay = data;
                         supabaseError = error;
                     } else {
@@ -279,7 +279,7 @@
                                 id, first_name, last_name, phone
                             )
                         `)
-                        .eq('category', categoryNameFromUrl);
+                        .eq('subcategory', categoryNameFromUrl);
                     servicesToDisplay = data;
                     supabaseError = error;
                 }
@@ -328,6 +328,48 @@
             }
         }
         document.addEventListener('DOMContentLoaded', loadServices);
+        
+        // Function to set dynamic hero background based on category
+        function setHeroBackground() {
+            const categoryNameFromUrl = getUrlParameter('category');
+            const heroHeader = document.querySelector('.hero-header.hero-services');
+            
+            if (!heroHeader || !categoryNameFromUrl) return;
+            
+            // Remove any existing category classes
+            heroHeader.classList.remove('category-home-garden', 'category-auto-transport', 'category-health-beauty', 'category-business', 'category-lifestyle');
+            
+            // Map URL categories to CSS classes
+            const categoryMapping = {
+                'home-garden': 'category-home-garden',
+                'auto-transport': 'category-auto-transport', 
+                'health-beauty': 'category-health-beauty',
+                'business': 'category-business',
+                'lifestyle': 'category-lifestyle'
+            };
+            
+            // Check if it's a main category or if it belongs to a main category
+            let targetCategory = categoryNameFromUrl;
+            
+            // If it's a subcategory, find its main category
+            if (!mainCategories.includes(categoryNameFromUrl)) {
+                for (const [mainCat, subCats] of Object.entries(categoryHierarchy)) {
+                    if (subCats.includes(categoryNameFromUrl)) {
+                        targetCategory = mainCat;
+                        break;
+                    }
+                }
+            }
+            
+            // Apply the appropriate CSS class
+            if (categoryMapping[targetCategory]) {
+                heroHeader.classList.add(categoryMapping[targetCategory]);
+                console.log(`Applied background class: ${categoryMapping[targetCategory]} for category: ${targetCategory}`);
+            }
+        }
+        
+        // Set hero background when page loads
+        document.addEventListener('DOMContentLoaded', setHeroBackground);
     </script>
     <!-- Include Booking Modal Component -->
     <div id="bookingModalContainer"></div>
