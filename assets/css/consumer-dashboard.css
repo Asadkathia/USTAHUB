@@ -1,0 +1,818 @@
+/* Consumer Dashboard Styles - Aligned with UstaHub Design System */
+
+/* Enhanced Consumer Dashboard Styles - Aligned with Provider Dashboard */
+:root {
+  --dashboard-primary: #24B47E;
+  --dashboard-secondary: #182B3A;
+  --dashboard-accent: #FFC857;
+  --dashboard-success: #4BDB97;
+  --dashboard-warning: #FF8C42;
+  --dashboard-error: #E94F37;
+  --dashboard-bg: #F8FAF9;
+  --dashboard-surface: #FFFFFF;
+  --dashboard-text: #202122;
+  --dashboard-muted: #7A869A;
+  --dashboard-shadow: rgba(0, 0, 0, 0.1);
+  --dashboard-shadow-hover: rgba(0, 0, 0, 0.15);
+  --dashboard-border: rgba(36, 180, 126, 0.2);
+}
+
+/* =================================================
+   ENHANCED CONSUMER DASHBOARD LAYOUT
+   ================================================= */
+
+.consumer-dashboard-content {
+  background: linear-gradient(135deg, var(--dashboard-bg) 0%, #ffffff 100%);
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+.hero-consumer-dashboard {
+  background: linear-gradient(135deg, var(--dashboard-primary) 0%, var(--dashboard-secondary) 100%);
+  position: relative;
+  overflow: hidden;
+  min-height: 350px;
+}
+
+.hero-consumer-dashboard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+}
+
+/* =================================================
+   HERO PROFILE CARD
+   ================================================= */
+
+.hero-profile-card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-profile-avatar {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.hero-profile-avatar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  object-fit: cover;
+}
+
+.avatar-status {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid white;
+}
+
+.avatar-status.online {
+  background: var(--dashboard-success);
+}
+
+.hero-profile-info h4 {
+  color: white;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.text-light-muted {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* =================================================
+   ENHANCED CONSUMER SIDEBAR
+   ================================================= */
+
+.consumer-dashboard-sidebar {
+  background: var(--dashboard-surface);
+  border-radius: 16px;
+  padding: 2rem 0;
+  box-shadow: 0 8px 32px var(--dashboard-shadow);
+  border: 1px solid var(--dashboard-border);
+  position: sticky;
+  top: 2rem;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+}
+
+.consumer-dashboard-sidebar nav {
+  padding: 0 1rem;
+}
+
+.consumer-dashboard-sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 12px;
+  color: var(--dashboard-text);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.consumer-dashboard-sidebar .nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--dashboard-primary);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.consumer-dashboard-sidebar .nav-link:hover {
+  background: linear-gradient(135deg, rgba(36, 180, 126, 0.1) 0%, rgba(75, 219, 151, 0.1) 100%);
+  transform: translateX(4px);
+  color: var(--dashboard-primary);
+  text-decoration: none;
+}
+
+.consumer-dashboard-sidebar .nav-link.active {
+  background: linear-gradient(135deg, var(--dashboard-primary) 0%, var(--dashboard-success) 100%);
+  color: white;
+  box-shadow: 0 4px 16px rgba(36, 180, 126, 0.3);
+}
+
+.consumer-dashboard-sidebar .nav-link.active::before {
+  transform: scaleY(1);
+}
+
+.consumer-dashboard-sidebar .nav-link i {
+  width: 24px;
+  margin-right: 1rem;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.consumer-dashboard-sidebar .nav-link:hover i {
+  transform: scale(1.1);
+}
+
+.nav-badge {
+  background: var(--dashboard-accent);
+  color: var(--dashboard-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 10px;
+  margin-left: auto;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* =================================================
+   DASHBOARD SECTIONS
+   ================================================= */
+
+.dashboard-section {
+  display: none;
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.dashboard-section.active {
+  display: block;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--dashboard-border);
+}
+
+.section-header h4 {
+  color: var(--dashboard-secondary);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* =================================================
+   CONSUMER METRIC CARDS
+   ================================================= */
+
+.consumer-metric-card {
+  background: var(--dashboard-surface);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px var(--dashboard-shadow);
+  border: 1px solid var(--dashboard-border);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  height: 100%;
+  margin-bottom: 1rem;
+}
+
+.consumer-metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--dashboard-primary), var(--dashboard-success));
+}
+
+.consumer-metric-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px var(--dashboard-shadow-hover);
+}
+
+.consumer-metric-card.active-bookings {
+  background: linear-gradient(135deg, rgba(36, 180, 126, 0.05) 0%, rgba(75, 219, 151, 0.05) 100%);
+}
+
+.consumer-metric-card.completed-services {
+  background: linear-gradient(135deg, rgba(75, 219, 151, 0.05) 0%, rgba(36, 180, 126, 0.05) 100%);
+}
+
+.consumer-metric-card.saved-favorites {
+  background: linear-gradient(135deg, rgba(255, 200, 87, 0.05) 0%, rgba(255, 140, 66, 0.05) 100%);
+}
+
+.consumer-metric-card.total-spent {
+  background: linear-gradient(135deg, rgba(24, 43, 58, 0.05) 0%, rgba(122, 134, 154, 0.05) 100%);
+}
+
+.metric-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.consumer-metric-card:hover .metric-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.consumer-metric-card.active-bookings .metric-icon {
+  background: linear-gradient(135deg, var(--dashboard-primary), var(--dashboard-success));
+  color: white;
+}
+
+.consumer-metric-card.completed-services .metric-icon {
+  background: linear-gradient(135deg, var(--dashboard-success), var(--dashboard-primary));
+  color: white;
+}
+
+.consumer-metric-card.saved-favorites .metric-icon {
+  background: linear-gradient(135deg, var(--dashboard-accent), var(--dashboard-warning));
+  color: white;
+}
+
+.consumer-metric-card.total-spent .metric-icon {
+  background: linear-gradient(135deg, var(--dashboard-secondary), var(--dashboard-muted));
+  color: white;
+}
+
+.metric-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--dashboard-secondary);
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.metric-label {
+  color: var(--dashboard-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* =================================================
+   ACTIVITY CARD
+   ================================================= */
+
+.consumer-activity-card, .consumer-quick-actions-card, .consumer-settings-card {
+  background: var(--dashboard-surface);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px var(--dashboard-shadow);
+  border: 1px solid var(--dashboard-border);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.activity-header, .quick-actions-header, .settings-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--dashboard-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.activity-header h5, .quick-actions-header h5, .settings-header h5 {
+  margin: 0;
+  color: var(--dashboard-secondary);
+  font-weight: 600;
+}
+
+.activity-filters, .booking-filters {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.filter-btn, .toggle-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--dashboard-border);
+  background: transparent;
+  border-radius: 8px;
+  color: var(--dashboard-muted);
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.filter-btn:hover, .toggle-btn:hover {
+  background: rgba(36, 180, 126, 0.1);
+  border-color: var(--dashboard-primary);
+  color: var(--dashboard-primary);
+}
+
+.filter-btn.active, .toggle-btn.active {
+  background: var(--dashboard-primary);
+  border-color: var(--dashboard-primary);
+  color: white;
+}
+
+.activity-feed {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.activity-item {
+  padding: 1rem;
+  border-bottom: 1px solid var(--dashboard-border);
+  transition: all 0.3s ease;
+}
+
+.activity-item:hover {
+  background: rgba(36, 180, 126, 0.05);
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+/* =================================================
+   QUICK ACTIONS
+   ================================================= */
+
+.quick-actions-body {
+  padding: 1.5rem 2rem;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.action-btn:hover::before {
+  left: 100%;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--dashboard-shadow);
+  text-decoration: none;
+}
+
+.action-btn i {
+  margin-right: 1rem;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.action-btn:hover i {
+  transform: scale(1.1);
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, var(--dashboard-primary), var(--dashboard-success));
+  color: white;
+}
+
+.action-btn.primary:hover {
+  background: linear-gradient(135deg, var(--dashboard-success), var(--dashboard-primary));
+  color: white;
+}
+
+.action-btn.secondary {
+  background: linear-gradient(135deg, var(--dashboard-accent), var(--dashboard-warning));
+  color: var(--dashboard-secondary);
+}
+
+.action-btn.tertiary {
+  background: rgba(36, 180, 126, 0.1);
+  color: var(--dashboard-primary);
+  border: 1px solid var(--dashboard-border);
+}
+
+/* =================================================
+   BOOKINGS CONTAINER
+   ================================================= */
+
+.bookings-container, .favorites-container, .reviews-container {
+  background: var(--dashboard-surface);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px var(--dashboard-shadow);
+  border: 1px solid var(--dashboard-border);
+  padding: 2rem;
+}
+
+.booking-card, .favorite-card, .review-card {
+  background: var(--dashboard-surface);
+  border: 1px solid var(--dashboard-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.booking-card:hover, .favorite-card:hover, .review-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--dashboard-shadow);
+}
+
+.booking-header, .favorite-header, .review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.booking-status, .favorite-status, .review-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.booking-status.pending { background: rgba(255, 200, 87, 0.2); color: var(--dashboard-accent); }
+.booking-status.confirmed { background: rgba(36, 180, 126, 0.2); color: var(--dashboard-primary); }
+.booking-status.completed { background: rgba(75, 219, 151, 0.2); color: var(--dashboard-success); }
+.booking-status.cancelled { background: rgba(233, 79, 55, 0.2); color: var(--dashboard-error); }
+
+/* =================================================
+   VIEW TOGGLE
+   ================================================= */
+
+.view-toggle {
+  display: flex;
+  gap: 0.25rem;
+  background: var(--dashboard-border);
+  border-radius: 8px;
+  padding: 0.25rem;
+}
+
+.favorites-container.grid-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.favorites-container.list-view .favorite-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* =================================================
+   PROFILE SETTINGS
+   ================================================= */
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--dashboard-secondary);
+  font-weight: 500;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--dashboard-border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--dashboard-primary);
+  box-shadow: 0 0 0 3px rgba(36, 180, 126, 0.1);
+}
+
+.form-actions {
+  padding-top: 1rem;
+  border-top: 1px solid var(--dashboard-border);
+}
+
+/* =================================================
+   PROFILE PICTURE UPLOAD
+   ================================================= */
+
+.profile-picture-upload {
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.current-picture {
+  margin-bottom: 1rem;
+}
+
+.current-picture img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--dashboard-border);
+}
+
+/* =================================================
+   NOTIFICATION SETTINGS
+   ================================================= */
+
+.notification-settings {
+  padding: 1.5rem;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--dashboard-border);
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-info h6 {
+  margin: 0 0 0.25rem 0;
+  color: var(--dashboard-secondary);
+  font-weight: 500;
+}
+
+.setting-info p {
+  margin: 0;
+  color: var(--dashboard-muted);
+  font-size: 0.85rem;
+}
+
+/* Toggle Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--dashboard-muted);
+  transition: 0.3s;
+  border-radius: 28px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: var(--dashboard-primary);
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+/* =================================================
+   EMPTY STATES
+   ================================================= */
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--dashboard-muted);
+}
+
+.empty-state i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--dashboard-border);
+}
+
+.empty-state h5 {
+  color: var(--dashboard-secondary);
+  margin-bottom: 1rem;
+}
+
+/* =================================================
+   RESPONSIVE DESIGN
+   ================================================= */
+
+@media (max-width: 992px) {
+  .consumer-dashboard-sidebar {
+    position: relative;
+    top: auto;
+    margin-bottom: 2rem;
+  }
+  
+  .hero-consumer-dashboard {
+    min-height: 250px;
+  }
+  
+  .hero-profile-card {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .consumer-dashboard-content {
+    padding: 1rem 0;
+  }
+  
+  .consumer-metric-card {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .metric-value {
+    font-size: 2rem;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .activity-filters, .booking-filters {
+    flex-wrap: wrap;
+  }
+  
+  .consumer-dashboard-sidebar .nav-link {
+    padding: 0.75rem 1rem;
+  }
+  
+  .hero-profile-card {
+    padding: 1.5rem;
+  }
+  
+  .hero-profile-avatar img {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 576px) {
+  .consumer-metric-card {
+    padding: 1rem;
+  }
+  
+  .metric-value {
+    font-size: 1.75rem;
+  }
+  
+  .action-btn {
+    padding: 0.75rem 1rem;
+  }
+  
+  .booking-card, .favorite-card, .review-card {
+    padding: 1rem;
+  }
+  
+  .favorites-container.grid-view {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =================================================
+   ACCESSIBILITY IMPROVEMENTS
+   ================================================= */
+
+.nav-link:focus,
+.filter-btn:focus,
+.toggle-btn:focus,
+.action-btn:focus {
+  outline: 2px solid var(--dashboard-primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =================================================
+   LOADING STATES
+   ================================================= */
+
+.loading-skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
