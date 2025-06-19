@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Manage your UstaHub consumer profile, bookings, and preferences.">
+    <meta name="author" content="UstaHub">
+
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700|Varela+Round" rel="stylesheet">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/selectize.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/rtl.css" id="rtl-stylesheet" disabled>
+    <link rel="stylesheet" href="assets/css/user.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/page-hero.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+        });
+    </script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/mobile-sidebar.css">
+    <link rel="stylesheet" href="assets/css/bottom-navbar.css">
+
+    <link rel="stylesheet" href="assets/css/top-navbar.css">
+    <link rel="stylesheet" href="assets/css/font-awesome-colors.css">
+    <link rel="stylesheet" href="assets/css/hero-carousel.css">
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script type="module" src="assets/js/supabase.js"></script>
+    <script src="assets/js/navbars.js"></script>
+
+    <title>My Profile - UstaHub</title>
+
+</head>
+<body>
+  <!-- Mount point for detached dropdown list (for custom dropdown, must be outside all containers) -->
+  <div id="dropdown-mount"></div>
+  <!-- React Hero Section Mount Point -->
+  <div id="react-hero"></div>
+  <div class="page">
+    <!-- Hero Section -->
+    <div class="hero-header hero-profile">
+        <div class="overlay"></div>
+        <!-- Modern JS NavBar Mount Points -->
+        <div id="navbar-top"></div>
+        <div id="navbar-bottom"></div>
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <div class="container">
+                <h1 class="center">My Profile</h1>
+                <p class="subtitle">Manage your account settings and preferences</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <section class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <!-- Profile Card -->
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <img id="profileAvatar" src="assets/img/default-avatar.svg" alt="Profile Avatar" class="profile-avatar">
+                            <h3 id="profileName">Loading...</h3>
+                            <p id="profileEmail" class="text-muted">Loading...</p>
+                        </div>
+                        <div class="profile-info">
+                            <div class="info-item">
+                                <i class="fa fa-phone"></i>
+                                <span id="profilePhone">Loading...</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fa fa-map-marker"></i>
+                                <span id="profileLocation">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <!-- Profile Tabs -->
+                    <div class="profile-tabs">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#bookings">My Bookings</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#favorites">Favorites</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#settings">Settings</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <!-- Bookings Tab -->
+                            <div class="tab-pane fade show active" id="bookings">
+                                <div class="list-group" id="bookingsList">
+                                    <!-- Bookings will be loaded here -->
+                                </div>
+                            </div>
+                            <!-- Favorites Tab -->
+                            <div class="tab-pane fade" id="favorites">
+                                <div class="list-group" id="favoritesList">
+                                    <!-- Favorites will be loaded here -->
+                                </div>
+                            </div>
+                            <!-- Settings Tab -->
+                            <div class="tab-pane fade" id="settings">
+                                <form id="settingsForm">
+                                    <div class="form-check mb-3">
+                                        <input type="checkbox" class="form-check-input" id="emailNotifications">
+                                        <label class="form-check-label" for="emailNotifications">Email Notifications</label>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input type="checkbox" class="form-check-input" id="smsNotifications">
+                                        <label class="form-check-label" for="smsNotifications">SMS Notifications</label>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input type="checkbox" class="form-check-input" id="marketingEmails">
+                                        <label class="form-check-label" for="marketingEmails">Marketing Emails</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Settings</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3"></div>
+
+  <script src="assets/js/auth.js"></script>
+
+  <script>
+    // Function to check auth status
+    async function checkAuthStatus() {
+      try {
+        const { data: { session }, error } = await window.supabase.auth.getSession();
+        
+        if (error) {
+          console.error('Auth error:', error);
+          throw error;
+        }
+        
+        if (!session) {
+          console.log('No session found, redirecting to sign in');
+          window.location.href = 'sign-in.html';
+          return;
+        }
+
+        console.log('Session found');
+      } catch (err) {
+        console.error('Error checking auth status:', err);
+        window.location.href = 'sign-in.html';
+      }
+    }
+
+    // Wait for DOM to be fully loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', checkAuthStatus);
+    } else {
+      checkAuthStatus();
+    }
+  </script>
+
+  <!-- Inject sidebar HTML and load sidebar JS after HTML is present -->
+  <script>
+    fetch('/components/mobile-sidebar.html')
+      .then(res => res.text())
+      .then(html => {
+        document.body.insertAdjacentHTML('beforeend', html);
+        var script = document.createElement('script');
+        script.src = '/assets/js/mobile-sidebar.js';
+        document.body.appendChild(script);
+      });
+  </script>
+<script src="assets/js/jquery-3.3.1.min.js"></script>
+
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBEDfNcQRmKQEyulDN8nGWjLYPm8s4YB58&libraries=places"></script>
+<script src="assets/js/selectize.min.js"></script>
+<script src="assets/js/masonry.pkgd.min.js"></script>
+<script src="assets/js/icheck.min.js"></script>
+<script src="assets/js/jquery.validate.min.js"></script>
+<script src="assets/js/custom.js"></script>
+<script src="assets/js/custom-dropdown.js"></script>
+<script src="assets/js/dashboard.js"></script>
+<script src="assets/js/hero-carousel.js"></script>
+
+<!-- For integrating with Mobile Sidebar -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Load mobile sidebar with absolute path
+    fetch('components/mobile-sidebar.html')
+      .then(res => {
+        if (!res.ok) {
+          // Try with a different path if the first attempt fails
+          return fetch('/components/mobile-sidebar.html');
+        }
+        return res;
+      })
+      .then(res => res.text())
+      .then(html => {
+        // Insert sidebar HTML
+        document.body.insertAdjacentHTML('beforeend', html);
+        
+        // Load mobile sidebar script
+        var sidebarScript = document.createElement('script');
+        sidebarScript.src = 'assets/js/mobile-sidebar.js';
+        document.body.appendChild(sidebarScript);
+
+      })
+      .catch(error => {
+        console.error('Error loading mobile sidebar:', error);
+      });
+  });
+</script>
+</body>
+</html> 

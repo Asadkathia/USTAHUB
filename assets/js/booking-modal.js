@@ -35,6 +35,11 @@ class BookingModal {
         document.getElementById('weekendService').addEventListener('change', () => this.calculatePrice());
         document.getElementById('materialIncluded')?.addEventListener('change', () => this.calculatePrice());
         
+        // Payment method change
+        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
+            radio.addEventListener('change', () => this.handlePaymentMethodChange());
+        });
+        
         // Form validation triggers
         this.setupFormValidation();
         
@@ -51,6 +56,15 @@ class BookingModal {
         const modal = document.getElementById('bookingModal');
         modal.addEventListener('hidden.bs.modal', () => this.resetModal());
         modal.addEventListener('shown.bs.modal', () => this.focusFirstField());
+        
+        // For testing - add keyboard shortcut to trigger success animation (press Ctrl+Alt+S)
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.altKey && e.key === 's') {
+                console.log('Test animation shortcut triggered');
+                this.testSuccessAnimation();
+                e.preventDefault();
+            }
+        });
     }
     
     setupTimeSlotSelection() {
@@ -179,6 +193,63 @@ class BookingModal {
             } else {
                 weekendCheckbox.parentElement.style.opacity = '1';
             }
+        }
+    }
+    
+    async handlePaymentMethodChange() {
+        const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
+        if (selectedPayment && selectedPayment.value === 'wallet') {
+            await this.validateWalletPayment();
+        }
+    }
+    
+    async validateWalletPayment() {
+        try {
+            if (!window.WalletSystem) {
+                console.warn('Wallet system not loaded');
+                return;
+            }
+            
+            const totalAmount = this.bookingData.estimatedPrice || 0;
+            const walletCheck = await window.WalletSystem.canPayWithWallet(totalAmount);
+            
+            const walletOption = document.getElementById('walletPaymentOption');
+            const walletRadio = walletOption?.querySelector('input[type="radio"]');
+            
+            if (!walletCheck.canPay) {
+                // Disable wallet option and show reason
+                if (walletOption) {
+                    walletOption.classList.add('disabled');
+                    const desc = walletOption.querySelector('.payment-desc');
+                    if (desc) {
+                        desc.textContent = walletCheck.reason;
+                        desc.style.color = '#dc3545';
+                    }
+                }
+                if (walletRadio) {
+                    walletRadio.disabled = true;
+                    // Switch to cash payment
+                    document.querySelector('input[name="paymentMethod"][value="cash"]').checked = true;
+                }
+                
+                this.showValidationError(walletCheck.reason);
+            } else {
+                // Enable wallet option
+                if (walletOption) {
+                    walletOption.classList.remove('disabled');
+                    const desc = walletOption.querySelector('.payment-desc');
+                    if (desc) {
+                        const wallet = walletCheck.wallet;
+                        desc.textContent = `Balance: $${wallet.cash_balance.toFixed(2)}`;
+                        desc.style.color = '';
+                    }
+                }
+                if (walletRadio) {
+                    walletRadio.disabled = false;
+                }
+            }
+        } catch (error) {
+            console.error('Error validating wallet payment:', error);
         }
     }
     
@@ -497,6 +568,12 @@ class BookingModal {
         this.bookingData.basePrice = basePrice;
         this.bookingData.addonsPrice = addonsPrice;
         
+        // Re-validate wallet payment if wallet is selected
+        const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
+        if (selectedPayment && selectedPayment.value === 'wallet') {
+            setTimeout(() => this.validateWalletPayment(), 100);
+        }
+        
         return totalPrice;
     }
     
@@ -667,10 +744,26 @@ class BookingModal {
         document.querySelectorAll('.booking-step').forEach(step => {
             step.style.display = 'none';
         });
-        document.getElementById('loading-step').style.display = 'block';
+        
+        const loadingStep = document.getElementById('loading-step');
+        loadingStep.style.display = 'block';
+        loadingStep.classList.add('fade-in');
+        
+        // Reset any previous animations
+        const spinner = loadingStep.querySelector('.spinner');
+        if (spinner) {
+            spinner.classList.remove('morphing');
+            spinner.classList.add('spin-up');
+        }
         
         document.getElementById('nextStepBtn').disabled = true;
         document.getElementById('prevStepBtn').disabled = true;
+        
+        // Remove animation classes after they complete
+        setTimeout(() => {
+            loadingStep.classList.remove('fade-in');
+            if (spinner) spinner.classList.remove('spin-up');
+        }, 500);
     }
     
     hideLoading() {
@@ -682,21 +775,531 @@ class BookingModal {
     }
     
     showSuccess(bookingData) {
-        document.querySelectorAll('.booking-step').forEach(step => {
-            step.style.display = 'none';
-        });
-        document.getElementById('success-step').style.display = 'block';
+        console.log('showSuccess called');
         
         // Generate a booking reference
         const reference = `UH${Date.now().toString().slice(-6)}${Math.random().toString(36).substr(2, 2).toUpperCase()}`;
-        document.getElementById('bookingReference').textContent = reference;
         
-        // Update navigation
-        document.getElementById('nextStepBtn').style.display = 'none';
-        document.getElementById('prevStepBtn').style.display = 'none';
+        // First animate the loading spinner to success transition
+        this.animateLoadingToSuccess().then(() => {
+            console.log('animateLoadingToSuccess completed');
+            
+            // Set booking reference
+            document.getElementById('bookingReference').textContent = reference;
+            
+            // Update navigation
+            document.getElementById('nextStepBtn').style.display = 'none';
+            document.getElementById('prevStepBtn').style.display = 'none';
+            
+            // Setup success step interactions
+            this.setupSuccessStepInteractions(bookingData, reference);
+            
+            // Send confirmation (if possible)
+            this.sendConfirmation(bookingData, reference);
+            
+            // Trigger celebration animations with a slight delay to ensure DOM is ready
+            setTimeout(() => {
+                this.triggerCelebrationEffects();
+            }, 100);
+        }).catch(error => {
+            console.error('Error in animation transition:', error);
+            
+            // Fallback to direct display without animation
+            document.querySelectorAll('.booking-step').forEach(step => {
+                step.style.display = 'none';
+            });
+            
+            const successStep = document.getElementById('success-step');
+            successStep.style.display = 'block';
+            
+            const successContainer = successStep.querySelector('.success-container');
+            if (successContainer) {
+                successContainer.style.display = 'block';
+            }
+            
+            document.getElementById('bookingReference').textContent = reference;
+            document.getElementById('nextStepBtn').style.display = 'none';
+            document.getElementById('prevStepBtn').style.display = 'none';
+            
+            this.setupSuccessStepInteractions(bookingData, reference);
+            this.sendConfirmation(bookingData, reference);
+            this.triggerCelebrationEffects();
+        });
+    }
+    
+    animateLoadingToSuccess() {
+        return new Promise((resolve) => {
+            const loadingStep = document.getElementById('loading-step');
+            const successStep = document.getElementById('success-step');
+            
+            // Make sure loading step is visible
+            document.querySelectorAll('.booking-step').forEach(step => {
+                step.style.display = 'none';
+            });
+            loadingStep.style.display = 'block';
+            
+            // Create the morphing animation
+            const spinner = loadingStep.querySelector('.spinner');
+            if (spinner) {
+                spinner.classList.add('morphing');
+            }
+            
+            // After a delay, transition to success step with animation
+            setTimeout(() => {
+                loadingStep.style.display = 'none';
+                successStep.style.display = 'block';
+                
+                // Make sure success container is visible
+                const successContainer = successStep.querySelector('.success-container');
+                if (successContainer) {
+                    successContainer.style.display = 'block';
+                }
+                
+                successStep.classList.add('animate-in');
+                
+                // Log visibility state for debugging
+                console.log('Success step display:', successStep.style.display);
+                console.log('Success container display:', successContainer ? successContainer.style.display : 'not found');
+                
+                // Remove animation classes after completion
+                setTimeout(() => {
+                    if (spinner) spinner.classList.remove('morphing');
+                    successStep.classList.remove('animate-in');
+                    resolve();
+                }, 800);
+            }, 1000);
+        });
+    }
+    
+    setupSuccessStepInteractions(bookingData, reference) {
+        // Copy reference functionality
+        const copyBtn = document.getElementById('copyReferenceBtn');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                this.copyToClipboard(reference, copyBtn);
+            });
+        }
         
-        // Send confirmation (if possible)
-        this.sendConfirmation(bookingData, reference);
+        // View booking details
+        const viewBookingBtn = document.getElementById('viewBookingBtn');
+        if (viewBookingBtn) {
+            viewBookingBtn.addEventListener('click', () => {
+                // Redirect to consumer profile or booking details page
+                if (window.location.pathname.includes('service-category') || 
+                    window.location.pathname.includes('service-details')) {
+                    window.location.href = '/consumer-profile.html#bookings';
+                } else {
+                    this.showBookingDetails(bookingData);
+                }
+            });
+        }
+        
+        // Close modal and return to services
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', () => {
+                // Close modal with animation
+                const modal = bootstrap.Modal.getInstance(document.getElementById('bookingModal'));
+                if (modal) {
+                    modal.hide();
+                }
+            });
+        }
+    }
+    
+    copyToClipboard(text, button) {
+        // Use modern clipboard API if available
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(() => {
+                this.showCopySuccess(button);
+            }).catch(() => {
+                this.fallbackCopyToClipboard(text, button);
+            });
+        } else {
+            this.fallbackCopyToClipboard(text, button);
+        }
+    }
+    
+    fallbackCopyToClipboard(text, button) {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            document.execCommand('copy');
+            this.showCopySuccess(button);
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+            this.showCopyError(button);
+        } finally {
+            document.body.removeChild(textArea);
+        }
+    }
+    
+    showCopySuccess(button) {
+        const originalHTML = button.innerHTML;
+        const originalClass = button.className;
+        
+        // Update button state
+        button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+        button.classList.add('copied');
+        button.disabled = true;
+        
+        // Create floating success indicator
+        this.createFloatingIndicator(button, 'success');
+        
+        // Restore button after delay
+        setTimeout(() => {
+            button.innerHTML = originalHTML;
+            button.className = originalClass;
+            button.disabled = false;
+        }, 2000);
+    }
+    
+    createFloatingIndicator(element, type = 'success') {
+        // Create the floating indicator element
+        const indicator = document.createElement('div');
+        indicator.className = `floating-indicator ${type}`;
+        
+        // Set content based on type
+        if (type === 'success') {
+            indicator.innerHTML = '<i class="fas fa-check-circle"></i> Copied to clipboard!';
+        } else if (type === 'error') {
+            indicator.innerHTML = '<i class="fas fa-exclamation-circle"></i> Failed to copy';
+        }
+        
+        // Position above the element
+        const rect = element.getBoundingClientRect();
+        indicator.style.left = `${rect.left + rect.width / 2}px`;
+        indicator.style.top = `${rect.top - 10}px`;
+        
+        // Add to document
+        document.body.appendChild(indicator);
+        
+        // Animate and remove
+        setTimeout(() => {
+            indicator.classList.add('animate');
+            
+            // Remove from DOM after animation completes
+            setTimeout(() => {
+                if (indicator.parentNode) {
+                    indicator.parentNode.removeChild(indicator);
+                }
+            }, 2000);
+        }, 10);
+    }
+    
+    showCopyError(button) {
+        const originalHTML = button.innerHTML;
+        
+        // Update button state
+        button.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Copy Failed';
+        button.style.background = '#dc3545';
+        button.style.borderColor = '#dc3545';
+        button.style.color = 'white';
+        
+        // Create floating error indicator
+        this.createFloatingIndicator(button, 'error');
+        
+        // Restore button after delay
+        setTimeout(() => {
+            button.innerHTML = originalHTML;
+            button.style.background = '';
+            button.style.borderColor = '';
+            button.style.color = '';
+        }, 2000);
+    }
+    
+    triggerCelebrationEffects() {
+        // Get service category for themed celebration (if available)
+        let serviceCategory = 'default';
+        if (this.serviceData && this.serviceData.category) {
+            serviceCategory = this.serviceData.category;
+        }
+        
+        // Ensure checkmark animations are visible
+        const checkmarkElements = document.querySelectorAll('.checkmark-stem, .checkmark-kick, .checkmark-background');
+        checkmarkElements.forEach(el => {
+            if (el) {
+                // Force animation restart by removing and adding animation class
+                const animationName = el.className.includes('stem') ? 'stemGrow' : 
+                                     el.className.includes('kick') ? 'kickGrow' : 'circleGrow';
+                el.style.animation = 'none';
+                setTimeout(() => {
+                    el.style.animation = `${animationName} 0.6s ease-out forwards`;
+                }, 10);
+            }
+        });
+        
+        // Add subtle celebration particle effect with theme
+        this.createCelebrationParticles(serviceCategory);
+        
+        // Play success sound if available
+        this.playSuccessSound();
+        
+        // Add success ripple effect
+        this.createSuccessRipple();
+        
+        // Log animation state for debugging
+        console.log('Celebration effects triggered');
+        const checkmark = document.querySelector('.checkmark-circle');
+        if (checkmark) {
+            console.log('Checkmark element:', checkmark);
+            console.log('Checkmark computed style:', window.getComputedStyle(checkmark));
+        }
+    }
+    
+    createSuccessRipple() {
+        const successCircle = document.querySelector('.checkmark-circle');
+        if (successCircle) {
+            const ripple = document.createElement('div');
+            ripple.className = 'success-ripple';
+            
+            // Position ripple centered on the checkmark circle
+            const rect = successCircle.getBoundingClientRect();
+            ripple.style.width = `${rect.width * 3}px`;
+            ripple.style.height = `${rect.height * 3}px`;
+            ripple.style.left = '50%';
+            ripple.style.top = '50%';
+            
+            // Add to DOM
+            const container = document.querySelector('.checkmark-container');
+            if (container) {
+                container.appendChild(ripple);
+                
+                // Remove after animation completes
+                setTimeout(() => {
+                    if (ripple.parentNode) {
+                        ripple.parentNode.removeChild(ripple);
+                    }
+                }, 2000);
+            }
+        }
+    }
+    
+    createCelebrationParticles(theme = 'default') {
+        // Define theme-based colors and particle count
+        let colors = ['#24B47E', '#1e9c6d', '#4BDB97', '#28a745']; // Default green theme
+        let particleCount = 50;
+        let particleShapes = ['circle'];
+        
+        // Theme-specific settings
+        switch (theme.toLowerCase()) {
+            case 'cleaning':
+                colors = ['#4ECDC4', '#1A535C', '#4BB5C1', '#7BE0AD'];
+                particleShapes = ['circle', 'bubble'];
+                break;
+            case 'repair':
+            case 'plumbing':
+                colors = ['#3498DB', '#2980B9', '#5DADE2', '#85C1E9'];
+                particleShapes = ['circle', 'square'];
+                break;
+            case 'electrical':
+                colors = ['#F1C40F', '#F39C12', '#F7DC6F', '#F9E79F'];
+                particleShapes = ['circle', 'spark'];
+                break;
+            case 'education':
+                colors = ['#9B59B6', '#8E44AD', '#C39BD3', '#D7BDE2'];
+                particleShapes = ['circle', 'star'];
+                break;
+            case 'health':
+                colors = ['#E74C3C', '#C0392B', '#F1948A', '#FADBD8'];
+                particleShapes = ['circle', 'heart'];
+                break;
+            default:
+                // Use default green theme
+                break;
+        }
+        
+        // Create particles with delay
+        for (let i = 0; i < particleCount; i++) {
+            setTimeout(() => {
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const shape = particleShapes[Math.floor(Math.random() * particleShapes.length)];
+                this.createParticle(color, shape);
+            }, i * 20);
+        }
+    }
+    
+    createParticle(color, shape = 'circle') {
+        const particle = document.createElement('div');
+        
+        // Base styles for all particles
+        let styles = `
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: particleFloat 3s ease-out forwards;
+        `;
+        
+        // Shape-specific styles
+        switch (shape) {
+            case 'square':
+                styles += `
+                    width: 8px;
+                    height: 8px;
+                    background: ${color};
+                    transform: translate(-50%, -50%) rotate(45deg);
+                `;
+                break;
+            case 'star':
+                styles += `
+                    width: 0;
+                    height: 0;
+                    border-left: 5px solid transparent;
+                    border-right: 5px solid transparent;
+                    border-bottom: 10px solid ${color};
+                    transform: translate(-50%, -50%) rotate(${Math.random() * 360}deg);
+                `;
+                break;
+            case 'bubble':
+                styles += `
+                    width: 10px;
+                    height: 10px;
+                    background: transparent;
+                    border: 2px solid ${color};
+                    border-radius: 50%;
+                    opacity: 0.7;
+                `;
+                break;
+            case 'spark':
+                styles += `
+                    width: 3px;
+                    height: 12px;
+                    background: ${color};
+                    transform: translate(-50%, -50%) rotate(${Math.random() * 360}deg);
+                    box-shadow: 0 0 5px 1px ${color};
+                `;
+                break;
+            case 'heart':
+                styles += `
+                    width: 10px;
+                    height: 10px;
+                    background: ${color};
+                    transform: translate(-50%, -50%) rotate(45deg);
+                    position: relative;
+                `;
+                // Create heart shape with pseudo-elements
+                const before = document.createElement('div');
+                const after = document.createElement('div');
+                before.style.cssText = `
+                    position: absolute;
+                    width: 10px;
+                    height: 10px;
+                    background: ${color};
+                    border-radius: 50%;
+                    left: -50%;
+                    top: 0;
+                `;
+                after.style.cssText = `
+                    position: absolute;
+                    width: 10px;
+                    height: 10px;
+                    background: ${color};
+                    border-radius: 50%;
+                    left: 0;
+                    top: -50%;
+                `;
+                particle.appendChild(before);
+                particle.appendChild(after);
+                break;
+            case 'circle':
+            default:
+                styles += `
+                    width: 6px;
+                    height: 6px;
+                    background: ${color};
+                    border-radius: 50%;
+                `;
+                break;
+        }
+        
+        particle.style.cssText = styles;
+        
+        // Add random direction and speed
+        const angle = Math.random() * 2 * Math.PI;
+        const speed = Math.random() * 200 + 100;
+        const xMove = Math.cos(angle) * speed;
+        const yMove = Math.sin(angle) * speed;
+        
+        particle.style.setProperty('--x-move', `${xMove}px`);
+        particle.style.setProperty('--y-move', `${yMove}px`);
+        
+        document.body.appendChild(particle);
+        
+        // Remove particle after animation
+        setTimeout(() => {
+            if (particle.parentNode) {
+                particle.parentNode.removeChild(particle);
+            }
+        }, 3000);
+    }
+    
+    playSuccessSound() {
+        try {
+            // Create a subtle success sound using Web Audio API
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+            oscillator.frequency.setValueAtTime(1000, audioContext.currentTime + 0.1);
+            
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.3);
+        } catch (error) {
+            // Silently fail if audio is not supported
+            console.log('Audio feedback not available');
+        }
+    }
+    
+    showBookingDetails(bookingData) {
+        // Create a detailed booking summary modal or redirect
+        const detailsHTML = `
+            <div class="booking-details-summary">
+                <h6>Booking Details</h6>
+                <div class="detail-item">
+                    <strong>Service:</strong> ${this.serviceData.title}
+                </div>
+                <div class="detail-item">
+                    <strong>Provider:</strong> ${this.providerData.name}
+                </div>
+                <div class="detail-item">
+                    <strong>Date:</strong> ${document.getElementById('serviceDate').value}
+                </div>
+                <div class="detail-item">
+                    <strong>Time:</strong> ${document.getElementById('selectedTime').value}
+                </div>
+                <div class="detail-item">
+                    <strong>Duration:</strong> ${document.getElementById('serviceDuration').selectedOptions[0]?.text}
+                </div>
+                <div class="detail-item">
+                    <strong>Location:</strong> ${document.getElementById('serviceAddress').value}
+                </div>
+                <div class="detail-item">
+                    <strong>Total Price:</strong> $${this.bookingData.estimatedPrice || 'Contact for quote'}
+                </div>
+            </div>
+        `;
+        
+        // You could show this in a new modal or redirect to a details page
+        console.log('Booking details:', detailsHTML);
     }
     
     async sendConfirmation(bookingData, reference) {
@@ -797,6 +1400,26 @@ class BookingModal {
         
         // Initialize price calculation
         this.calculatePrice();
+    }
+
+    // For testing purposes only - trigger success animation directly
+    testSuccessAnimation() {
+        const mockBookingData = {
+            service_id: 1,
+            provider_id: 1,
+            customer_name: 'Test User',
+            customer_phone: '+1234567890',
+            customer_email: 'test@example.com',
+            booking_date: '2025-06-19',
+            booking_time: '10:00',
+            duration: 60,
+            location: 'Test Location',
+            notes: 'Test booking',
+            payment_method: 'cash',
+            estimatedPrice: 100
+        };
+        
+        this.showSuccess(mockBookingData);
     }
 }
 

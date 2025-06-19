@@ -21,6 +21,7 @@
     <!-- Enhanced Provider Dashboard CSS -->
     <link rel="stylesheet" href="assets/css/provider-dashboard.css">
     <link rel="stylesheet" href="assets/css/enhanced-dashboard-components.css">
+    <link rel="stylesheet" href="assets/css/service-completion.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -66,6 +67,11 @@
     <!-- Load hero carousel -->
     <script src="assets/js/hero-carousel.js"></script>
 
+    <!-- Load Service Completion Components -->
+    <script src="assets/js/service-completion-manager.js"></script>
+    <!-- Include Service Completion Modal -->
+    <div id="service-completion-modal-container"></div>
+
     <title>Service Provider Dashboard - UstaHub</title>
 
 </head>
@@ -105,7 +111,7 @@
                                     <i class="fa fa-cogs"></i>
                                     My Services
                                 </a>
-                                <a href="#" class="nav-link" data-section="bookings">
+                                <a href="#" class="nav-link" data-section="bookings" onclick="window.providerBookingsManager.navigateToBookings(); return false;">
                                     <i class="fa fa-calendar-check"></i>
                                     Bookings
                                 </a>
@@ -308,9 +314,32 @@
                         </div>
 
                         <!-- Services Section -->
-                        <section class="services-section">
+                        <section class="dashboard-section active" id="services-section">
                             <div id="services-container">
                                 <!-- Simple Services Component will render here -->
+                            </div>
+                        </section>
+
+                        <!-- Bookings Section -->
+                        <section class="dashboard-section" id="bookings-section">
+                            <div class="section-header">
+                                <h4>My Bookings</h4>
+                                <div class="section-actions">
+                                    <div class="booking-filters">
+                                        <button class="filter-btn active" data-status="all">All</button>
+                                        <button class="filter-btn" data-status="pending">Pending</button>
+                                        <button class="filter-btn" data-status="confirmed">Confirmed</button>
+                                        <button class="filter-btn" data-status="completed">Completed</button>
+                                        <button class="filter-btn" data-status="cancelled">Cancelled</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bookings-container" id="bookings-list">
+                                <!-- Bookings will be loaded here -->
+                                <div class="loading-state">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <p>Loading bookings...</p>
+                                </div>
                             </div>
                         </section>
                     </div>
@@ -493,6 +522,9 @@
     <script src="assets/js/custom.js"></script>
     <script src="assets/js/custom-dropdown.js"></script>
     
+    <!-- Provider Dashboard Scripts -->
+    <script src="assets/js/dashboard/provider-bookings.js"></script>
+    
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
@@ -576,8 +608,14 @@
         function initSimpleDashboard() {
             console.log('🚀 Initializing Simple Dashboard...');
             
-            // Initialize animated metrics
-            animateMetrics();
+            // Initialize provider bookings manager instead of using sample data
+            if (window.providerBookingsManager) {
+                window.providerBookingsManager.init();
+            } else {
+                console.error('Provider Bookings Manager not loaded');
+                // Fallback to animated metrics if manager not available
+                animateMetrics();
+            }
             
             // Initialize modal
             initAddServiceModal();
@@ -586,6 +624,9 @@
         }
 
         function animateMetrics() {
+            // Only use this for fallback if real data isn't available
+            console.log('⚠️ Using sample metrics (fallback)');
+            
             // Prevent multiple animations
             if (window.metricsAnimated) return;
             window.metricsAnimated = true;
@@ -772,6 +813,37 @@
                 script.src = '/assets/js/mobile-sidebar.js';
                 document.body.appendChild(script);
             });
+    </script>
+    <script>
+        // Load service completion modal
+        fetch('assets/components/service-completion-modal.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('service-completion-modal-container').innerHTML = html;
+                
+                // Setup service completion polling after modal is loaded
+                setupProviderPolling();
+            });
+            
+        // Setup polling for provider dashboard updates
+        function setupProviderPolling() {
+            // Check every 30 seconds for booking status changes
+            setInterval(async () => {
+                try {
+                    // Refresh provider bookings if available
+                    if (window.providerBookingsManager?.loadBookings) {
+                        await window.providerBookingsManager.loadBookings();
+                    }
+                    
+                    // Refresh services table if available
+                    if (window.servicesTable?.refresh) {
+                        await window.servicesTable.refresh();
+                    }
+                } catch (error) {
+                    console.warn('Provider dashboard polling failed:', error);
+                }
+            }, 30000);
+        }
     </script>
 </body>
 </html> 

@@ -1,0 +1,45 @@
+<!-- Service Confirmation Modal -->
+<div class="modal fade" id="serviceConfirmationModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Service Completion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="service-summary mb-4">
+                    <h6>Service Details</h6>
+                    <div class="service-info" id="serviceInfo">
+                        <!-- Service details will be populated here -->
+                    </div>
+                </div>
+                <div class="completion-details mb-4">
+                    <h6>Completion Details</h6>
+                    <div class="completion-info" id="completionInfo">
+                        <!-- Completion details will be populated here -->
+                    </div>
+                </div>
+                <div class="rating-section mb-3">
+                    <label>Rate the Service</label>
+                    <div class="star-rating">
+                        <i class="far fa-star" data-rating="1"></i>
+                        <i class="far fa-star" data-rating="2"></i>
+                        <i class="far fa-star" data-rating="3"></i>
+                        <i class="far fa-star" data-rating="4"></i>
+                        <i class="far fa-star" data-rating="5"></i>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label>Review (Optional)</label>
+                    <textarea class="form-control" id="reviewText" placeholder="Share your experience..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Not Completed</button>
+                <button type="button" class="btn btn-success" id="confirmServiceCompletion">
+                    <i class="fas fa-check"></i> Confirm Completion
+                </button>
+            </div>
+        </div>
+    </div>
+</div> 

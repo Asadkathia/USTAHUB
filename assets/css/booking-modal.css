@@ -1000,7 +1000,6 @@
 .success-container {
     text-align: center;
     padding: 3rem 2rem;
-    display: none;
 }
 
 .loading-spinner {
@@ -1064,6 +1063,529 @@
     font-size: 1.1rem;
     font-weight: bold;
     letter-spacing: 1px;
+}
+
+/* Enhanced Success Animation Styles */
+.success-animation {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.checkmark-container {
+    position: relative;
+}
+
+.checkmark-circle {
+    width: 120px;
+    height: 120px;
+    position: relative;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #24B47E 0%, #1e9c6d 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: successPulse 0.8s ease-out forwards !important;
+    box-shadow: 0 10px 30px rgba(36, 180, 126, 0.3);
+}
+
+.checkmark-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    animation: circleGrow 0.6s ease-out 0.2s both !important;
+}
+
+.checkmark-icon {
+    position: relative;
+    z-index: 2;
+}
+
+.checkmark-stem {
+    position: absolute;
+    width: 3px;
+    height: 20px;
+    background: white;
+    left: 16px;
+    top: 25px;
+    transform: rotate(45deg);
+    transform-origin: left bottom;
+    animation: stemGrow 0.3s ease-out 0.6s both !important;
+}
+
+.checkmark-kick {
+    position: absolute;
+    width: 3px;
+    height: 12px;
+    background: white;
+    left: 8px;
+    top: 32px;
+    transform: rotate(-45deg);
+    transform-origin: left bottom;
+    animation: kickGrow 0.2s ease-out 0.7s both !important;
+}
+
+.success-content {
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.success-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    animation: textAppear 0.6s ease-out 0.8s both;
+}
+
+.success-message {
+    color: #6c757d;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    animation: textAppear 0.6s ease-out 1s both;
+}
+
+.booking-reference-card {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid #24B47E;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    animation: cardSlideIn 0.6s ease-out 1.2s both;
+    position: relative;
+    overflow: hidden;
+}
+
+.booking-reference-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(36, 180, 126, 0.1), transparent);
+    animation: shimmer 2s ease-in-out 1.5s infinite;
+}
+
+.reference-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: #24B47E;
+    font-weight: 600;
+}
+
+.reference-number {
+    background: #24B47E;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 12px rgba(36, 180, 126, 0.3);
+}
+
+.copy-reference-btn {
+    background: transparent;
+    border: 2px solid #24B47E;
+    color: #24B47E;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.copy-reference-btn:hover {
+    background: #24B47E;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.copy-reference-btn.copied {
+    background: #28a745;
+    border-color: #28a745;
+    color: white;
+}
+
+.success-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+    animation: actionsSlideIn 0.6s ease-out 1.4s both;
+}
+
+.btn-outline-primary {
+    background: transparent;
+    border: 2px solid #24B47E;
+    color: #24B47E;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background: #24B47E;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(36, 180, 126, 0.3);
+}
+
+.next-steps {
+    background: #f8f9fa;
+    border-radius: 16px;
+    padding: 2rem;
+    animation: stepsSlideIn 0.6s ease-out 1.6s both;
+}
+
+.next-steps h6 {
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.next-step {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 12px;
+    border-left: 4px solid #24B47E;
+    transition: all 0.3s ease;
+}
+
+.next-step:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.step-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: #24B47E;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.step-text {
+    color: #2c3e50;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* Success Animation Keyframes */
+@keyframes successPulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Make sure animations run properly */
+#success-step {
+    overflow: visible !important;
+}
+
+.success-animation {
+    overflow: visible !important;
+    opacity: 1 !important;
+}
+
+@keyframes circleGrow {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes stemGrow {
+    0% {
+        height: 0;
+    }
+    100% {
+        height: 20px;
+    }
+}
+
+@keyframes kickGrow {
+    0% {
+        height: 0;
+    }
+    100% {
+        height: 12px;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes textAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cardSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes actionsSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes stepsSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes particleFloat {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--x-move, 0px)), calc(-50% + var(--y-move, -200px))) scale(0);
+    }
+}
+
+/* Loading to Success Animation */
+.spinner.morphing {
+    animation: morphToCheckmark 1s forwards;
+    border-color: transparent;
+}
+
+@keyframes morphToCheckmark {
+    0% {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 4px solid #e9ecef;
+        border-top: 4px solid #24B47E;
+        transform: rotate(0deg);
+    }
+    50% {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 4px solid #24B47E;
+        transform: rotate(180deg);
+    }
+    100% {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #24B47E;
+        border: 4px solid #24B47E;
+        transform: rotate(360deg);
+    }
+}
+
+/* Success Step Animation */
+.booking-step.animate-in {
+    animation: fadeInScale 0.5s ease-out forwards;
+}
+
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Loading Animation */
+.booking-step.fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+.spinner.spin-up {
+    animation: spinUp 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes spinUp {
+    0% {
+        transform: rotate(0deg) scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Success Ripple Effect */
+.success-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(36, 180, 126, 0.2);
+    transform: translate(-50%, -50%);
+    animation: rippleEffect 2s ease-out forwards;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes rippleEffect {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Floating Indicator */
+.floating-indicator {
+    position: fixed;
+    background: white;
+    color: #2c3e50;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 10000;
+    transform: translate(-50%, 0);
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.floating-indicator.success {
+    border-left: 4px solid #24B47E;
+}
+
+.floating-indicator.success i {
+    color: #24B47E;
+}
+
+.floating-indicator.error {
+    border-left: 4px solid #dc3545;
+}
+
+.floating-indicator.error i {
+    color: #dc3545;
+}
+
+.floating-indicator.animate {
+    animation: floatUp 2s ease-out forwards;
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 0);
+    }
+    10% {
+        opacity: 1;
+        transform: translate(-50%, -30px);
+    }
+    80% {
+        opacity: 1;
+        transform: translate(-50%, -30px);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50px);
+    }
 }
 
 /* Modern Footer */
@@ -1359,5 +1881,50 @@
     
     .step-title {
         font-size: 1.1rem;
+    }
+    
+    /* Success Animation Mobile Adjustments */
+    .checkmark-circle {
+        width: 100px !important;
+        height: 100px !important;
+    }
+    
+    .success-title {
+        font-size: 1.5rem !important;
+    }
+    
+    .booking-reference-card {
+        padding: 1.5rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+    
+    .reference-number {
+        font-size: 1rem !important;
+        padding: 0.75rem 1.5rem !important;
+        letter-spacing: 1px !important;
+    }
+    
+    .success-actions {
+        flex-direction: column !important;
+        gap: 0.75rem !important;
+    }
+    
+    .btn-outline-primary,
+    .btn-primary {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+    
+    .next-steps {
+        padding: 1.5rem !important;
+    }
+    
+    .next-step {
+        padding: 0.75rem !important;
+    }
+    
+    .step-icon {
+        width: 35px !important;
+        height: 35px !important;
     }
 } 
