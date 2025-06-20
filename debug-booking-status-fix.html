@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UstaHub - Booking Status Fix</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .result-container {
+            max-height: 400px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .status-badge {
+            margin-right: 5px;
+        }
+        .booking-item {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+        .booking-item:last-child {
+            border-bottom: none;
+        }
+        .action-buttons {
+            margin-top: 10px;
+        }
+        .log-entry {
+            margin-bottom: 5px;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .log-info {
+            background-color: #e3f2fd;
+        }
+        .log-success {
+            background-color: #e8f5e9;
+        }
+        .log-warning {
+            background-color: #fff3e0;
+        }
+        .log-error {
+            background-color: #ffebee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>UstaHub Booking Status Fix</h1>
+        <p class="lead">This tool helps diagnose and fix issues with booking statuses</p>
+        
+        <div class="alert alert-warning">
+            <strong>Warning:</strong> This is a debugging tool. Use with caution.
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Cleanup Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <button id="cleanupButton" class="btn btn-primary mb-3">
+                            Run Automatic Cleanup
+                        </button>
+                        <button id="clearStorageButton" class="btn btn-warning mb-3">
+                            Clear LocalStorage Completed Bookings
+                        </button>
+                        <button id="forceClearButton" class="btn btn-danger mb-3">
+                            Force Clear All Pending Confirmations
+                        </button>
+                        <hr>
+                        <h6>LocalStorage Status:</h6>
+                        <div id="storageStatus" class="result-container" style="max-height: 150px;">
+                            Checking localStorage...
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">Database Status</h5>
+                    </div>
+                    <div class="card-body">
+                        <button id="checkStatusButton" class="btn btn-info mb-3">
+                            Check Database Status
+                        </button>
+                        <div id="databaseStatus" class="result-container">
+                            Click "Check Database Status" to view current state
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0">Pending Confirmations</h5>
+            </div>
+            <div class="card-body">
+                <div id="pendingConfirmations" class="result-container">
+                    Loading pending confirmations...
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Log</h5>
+            </div>
+            <div class="card-body">
+                <div id="logContainer" class="result-container">
+                    Ready to begin...
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="assets/js/supabase.js"></script>
+    <script src="assets/js/service-completion-manager.js"></script>
+    <script>
+        // Initialize logging
+        const logContainer = document.getElementById('logContainer');
+        
+        function log(message, type = 'info') {
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry log-${type}`;
+            logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', async function() {
+            log('Page loaded, initializing...');
+            
+            // Wait for service completion manager to initialize
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            if (!window.serviceCompletionManager) {
+                log('Service completion manager not found!', 'error');
+                return;
+            }
+            
+            log('Service completion manager found, ready to use debug tools');
+            
+            // Display localStorage status
+            updateStorageStatus();
+            
+            // Setup event listeners
+            document.getElementById('cleanupButton').addEventListener('click', async function() {
+                log('Running automatic cleanup...');
+                try {
+                    const fixedCount = await window.cleanupBookingStatuses();
+                    log(`Cleanup completed. Fixed ${fixedCount} bookings.`, 'success');
+                    updateStorageStatus();
+                    checkPendingConfirmations();
+                } catch (error) {
+                    log(`Error during cleanup: ${error.message}`, 'error');
+                }
+            });
+            
+            document.getElementById('clearStorageButton').addEventListener('click', function() {
+                log('Clearing localStorage completed bookings...');
+                localStorage.removeItem('recentlyCompletedBookings');
+                updateStorageStatus();
+                log('LocalStorage cleared', 'success');
+            });
+            
+            document.getElementById('forceClearButton').addEventListener('click', async function() {
+                log('Force clearing all pending confirmations...');
+                try {
+                    const clearedCount = await window.clearPendingConfirmations();
+                    log(`Force cleared ${clearedCount} pending confirmations`, 'success');
+                    checkPendingConfirmations();
+                } catch (error) {
+                    log(`Error during force clear: ${error.message}`, 'error');
+                }
+            });
+            
+            document.getElementById('checkStatusButton').addEventListener('click', checkDatabaseStatus);
+            
+            // Initial check for pending confirmations
+            checkPendingConfirmations();
+        });
+        
+        // Update localStorage status display
+        function updateStorageStatus() {
+            const storageStatus = document.getElementById('storageStatus');
+            const storedData = localStorage.getItem('recentlyCompletedBookings');
+            
+            if (!storedData) {
+                storageStatus.textContent = 'No completed bookings found in localStorage';
+                return;
+            }
+            
+            try {
+                const parsedData = JSON.parse(storedData);
+                const bookingCount = Object.keys(parsedData).length;
+                
+                let statusHTML = `Found ${bookingCount} bookings in localStorage:\n\n`;
+                
+                for (const [bookingId, timestamp] of Object.entries(parsedData)) {
+                    const date = new Date(timestamp);
+                    const expiry = new Date(timestamp + 24 * 60 * 60 * 1000); // 24 hours
+                    const isExpired = expiry < new Date();
+                    
+                    statusHTML += `${bookingId.substring(0, 8)}... - ${date.toLocaleString()}\n`;
+                    statusHTML += `Expires: ${expiry.toLocaleString()} (${isExpired ? 'EXPIRED' : 'valid'})\n\n`;
+                }
+                
+                storageStatus.textContent = statusHTML;
+            } catch (error) {
+                storageStatus.textContent = `Error parsing localStorage: ${error.message}`;
+            }
+        }
+        
+        // Check for pending confirmations
+        async function checkPendingConfirmations() {
+            const pendingContainer = document.getElementById('pendingConfirmations');
+            
+            if (!window.serviceCompletionManager || !window.serviceCompletionManager.currentUser) {
+                pendingContainer.textContent = 'Please log in to check pending confirmations';
+                return;
+            }
+            
+            log('Checking for pending confirmations...');
+            pendingContainer.textContent = 'Loading...';
+            
+            try {
+                const { data: pendingBookings, error } = await window.supabase
+                    .from('bookings')
+                    .select(`
+                        id,
+                        service_id,
+                        provider_id,
+                        consumer_id,
+                        status,
+                        booking_date,
+                        created_at,
+                        services (title),
+                        profiles!provider_id (full_name)
+                    `)
+                    .eq('consumer_id', window.serviceCompletionManager.currentUser.id)
+                    .eq('status', 'pending_confirmation');
+                    
+                if (error) {
+                    throw error;
+                }
+                
+                if (!pendingBookings || pendingBookings.length === 0) {
+                    pendingContainer.textContent = 'No pending confirmations found';
+                    log('No pending confirmations found', 'info');
+                    return;
+                }
+                
+                log(`Found ${pendingBookings.length} pending confirmations`, 'warning');
+                
+                let pendingHTML = '';
+                for (const booking of pendingBookings) {
+                    const bookingDate = new Date(booking.booking_date).toLocaleDateString();
+                    const createdDate = new Date(booking.created_at).toLocaleString();
+                    
+                    pendingHTML += `<div class="booking-item">`;
+                    pendingHTML += `<strong>Booking ID:</strong> ${booking.id.substring(0, 8)}...<br>`;
+                    pendingHTML += `<strong>Service:</strong> ${booking.services?.title || 'Unknown'}<br>`;
+                    pendingHTML += `<strong>Provider:</strong> ${booking.profiles?.full_name || 'Unknown'}<br>`;
+                    pendingHTML += `<strong>Booking Date:</strong> ${bookingDate}<br>`;
+                    pendingHTML += `<strong>Created:</strong> ${createdDate}<br>`;
+                    pendingHTML += `<div class="action-buttons">`;
+                    pendingHTML += `<button class="btn btn-sm btn-success fix-booking" data-id="${booking.id}">Fix This Booking</button>`;
+                    pendingHTML += `</div>`;
+                    pendingHTML += `</div>`;
+                }
+                
+                pendingContainer.innerHTML = pendingHTML;
+                
+                // Add event listeners to fix buttons
+                document.querySelectorAll('.fix-booking').forEach(button => {
+                    button.addEventListener('click', async function() {
+                        const bookingId = this.getAttribute('data-id');
+                        await fixSingleBooking(bookingId);
+                    });
+                });
+            } catch (error) {
+                pendingContainer.textContent = `Error: ${error.message}`;
+                log(`Error checking pending confirmations: ${error.message}`, 'error');
+            }
+        }
+        
+        // Fix a single booking
+        async function fixSingleBooking(bookingId) {
+            log(`Fixing booking ${bookingId.substring(0, 8)}...`);
+            
+            try {
+                // First check if there's a completed status
+                const { data: completedStatus, error: statusError } = await window.supabase
+                    .from('booking_statuses')
+                    .select('*')
+                    .eq('booking_id', bookingId)
+                    .eq('status', 'completed')
+                    .limit(1);
+                    
+                if (statusError) throw statusError;
+                
+                if (completedStatus && completedStatus.length > 0) {
+                    // There's a completed status, update the booking
+                    log(`Found completed status for booking ${bookingId.substring(0, 8)}, updating main booking record...`);
+                    
+                    const { error: updateError } = await window.supabase
+                        .from('bookings')
+                        .update({
+                            status: 'completed',
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq('id', bookingId);
+                        
+                    if (updateError) throw updateError;
+                    
+                    // Add to recently completed
+                    if (window.serviceCompletionManager) {
+                        window.serviceCompletionManager.recentlyCompletedBookings.add(bookingId);
+                        window.serviceCompletionManager.saveCompletedBookingsToStorage();
+                    }
+                    
+                    log(`Successfully fixed booking ${bookingId.substring(0, 8)}`, 'success');
+                } else {
+                    // No completed status, add one
+                    log(`No completed status found for booking ${bookingId.substring(0, 8)}, adding one...`);
+                    
+                    const { error: insertError } = await window.supabase
+                        .from('booking_statuses')
+                        .insert({
+                            booking_id: bookingId,
+                            status: 'completed',
+                            notes: 'Manually completed via debug tool'
+                        });
+                        
+                    if (insertError) throw insertError;
+                    
+                    // Update the booking
+                    const { error: updateError } = await window.supabase
+                        .from('bookings')
+                        .update({
+                            status: 'completed',
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq('id', bookingId);
+                        
+                    if (updateError) throw updateError;
+                    
+                    // Add to recently completed
+                    if (window.serviceCompletionManager) {
+                        window.serviceCompletionManager.recentlyCompletedBookings.add(bookingId);
+                        window.serviceCompletionManager.saveCompletedBookingsToStorage();
+                    }
+                    
+                    log(`Successfully fixed booking ${bookingId.substring(0, 8)}`, 'success');
+                }
+                
+                // Refresh the pending confirmations list
+                checkPendingConfirmations();
+                updateStorageStatus();
+            } catch (error) {
+                log(`Error fixing booking ${bookingId.substring(0, 8)}: ${error.message}`, 'error');
+            }
+        }
+        
+        // Check database status
+        async function checkDatabaseStatus() {
+            const statusContainer = document.getElementById('databaseStatus');
+            statusContainer.textContent = 'Loading database status...';
+            log('Checking database status...');
+            
+            if (!window.serviceCompletionManager || !window.serviceCompletionManager.currentUser) {
+                statusContainer.textContent = 'Please log in to check database status';
+                return;
+            }
+            
+            try {
+                // Get all bookings for this user
+                const { data: bookings, error: bookingsError } = await window.supabase
+                    .from('bookings')
+                    .select(`
+                        id,
+                        status,
+                        created_at,
+                        updated_at
+                    `)
+                    .eq('consumer_id', window.serviceCompletionManager.currentUser.id)
+                    .order('created_at', { ascending: false });
+                    
+                if (bookingsError) throw bookingsError;
+                
+                if (!bookings || bookings.length === 0) {
+                    statusContainer.textContent = 'No bookings found for this user';
+                    return;
+                }
+                
+                // For each booking, get its status records
+                let statusHTML = `Found ${bookings.length} bookings. Checking status records...\n\n`;
+                let inconsistencyCount = 0;
+                
+                for (const booking of bookings) {
+                    const { data: statusRecords, error: statusError } = await window.supabase
+                        .from('booking_statuses')
+                        .select('*')
+                        .eq('booking_id', booking.id)
+                        .order('created_at', { ascending: false });
+                        
+                    if (statusError) {
+                        statusHTML += `Error checking status for booking ${booking.id.substring(0, 8)}: ${statusError.message}\n\n`;
+                        continue;
+                    }
+                    
+                    // Check for inconsistencies
+                    let hasInconsistency = false;
+                    
+                    if (!statusRecords || statusRecords.length === 0) {
+                        statusHTML += `⚠️ Booking ${booking.id.substring(0, 8)} has no status records but status is "${booking.status}"\n\n`;
+                        hasInconsistency = true;
+                    } else {
+                        const latestStatus = statusRecords[0];
+                        
+                        if (latestStatus.status !== booking.status) {
+                            statusHTML += `⚠️ Inconsistency: Booking ${booking.id.substring(0, 8)} has status "${booking.status}" but latest status record is "${latestStatus.status}"\n\n`;
+                            hasInconsistency = true;
+                        }
+                        
+                        // Check for duplicate statuses
+                        const statusCounts = {};
+                        statusRecords.forEach(record => {
+                            statusCounts[record.status] = (statusCounts[record.status] || 0) + 1;
+                        });
+                        
+                        for (const [status, count] of Object.entries(statusCounts)) {
+                            if (count > 1) {
+                                statusHTML += `⚠️ Booking ${booking.id.substring(0, 8)} has ${count} "${status}" status records\n\n`;
+                                hasInconsistency = true;
+                            }
+                        }
+                    }
+                    
+                    if (hasInconsistency) {
+                        inconsistencyCount++;
+                    }
+                }
+                
+                if (inconsistencyCount === 0) {
+                    statusHTML = `✅ All ${bookings.length} bookings are consistent between tables. No issues found.`;
+                } else {
+                    statusHTML = `Found ${inconsistencyCount} bookings with inconsistencies:\n\n` + statusHTML;
+                }
+                
+                statusContainer.textContent = statusHTML;
+                log(`Database status check complete. Found ${inconsistencyCount} inconsistencies.`, inconsistencyCount > 0 ? 'warning' : 'success');
+            } catch (error) {
+                statusContainer.textContent = `Error checking database status: ${error.message}`;
+                log(`Error checking database status: ${error.message}`, 'error');
+            }
+        }
+    </script>
+</body>
+</html> 

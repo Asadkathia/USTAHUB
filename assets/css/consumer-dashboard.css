@@ -816,3 +816,112 @@ input:checked + .slider:before {
     background-position: -200% 0;
   }
 }
+
+/* Booking status styles */
+.booking-status {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.booking-status.pending {
+    background-color: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.booking-status.confirmed {
+    background-color: rgba(13, 110, 253, 0.2);
+    color: #0d6efd;
+}
+
+.booking-status.pending_confirmation {
+    background-color: rgba(255, 153, 0, 0.2);
+    color: #ff9900;
+}
+
+.booking-status.completed {
+    background-color: rgba(25, 135, 84, 0.2);
+    color: #198754;
+}
+
+.booking-status.cancelled {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+}
+
+/* =================================================
+   STAR RATING SYSTEM
+   ================================================= */
+
+.star-rating {
+    display: flex;
+    gap: 5px;
+    margin: 10px 0;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.star-rating .star {
+    font-size: 24px;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.1s ease;
+    user-select: none;
+    outline: none;
+}
+
+.star-rating .star:hover {
+    color: #ffeb3b;
+    transform: scale(1.1);
+}
+
+.star-rating .star.selected {
+    color: #ffc107;
+}
+
+.star-rating .star.hovered {
+    color: #ffeb3b;
+}
+
+.star-rating .star:focus {
+    outline: 2px solid var(--dashboard-primary);
+    outline-offset: 2px;
+    border-radius: 3px;
+}
+
+/* Rating section styling */
+.rating-section {
+    margin: 20px 0;
+}
+
+.rating-section label {
+    font-weight: 600;
+    color: var(--dashboard-text);
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Modal specific star rating */
+#serviceConfirmationModal .star-rating {
+    justify-content: flex-start;
+    margin: 15px 0;
+}
+
+#serviceConfirmationModal .star-rating .star {
+    font-size: 28px;
+    margin-right: 8px;
+}
+
+/* Responsive star rating */
+@media (max-width: 576px) {
+    .star-rating .star {
+        font-size: 20px;
+    }
+    
+    #serviceConfirmationModal .star-rating .star {
+        font-size: 24px;
+        margin-right: 6px;
+    }
+}

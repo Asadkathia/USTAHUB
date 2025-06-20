@@ -54,6 +54,35 @@
     <script src="assets/js/service-category-manager.js"></script>
     <script src="assets/js/database-utils.js"></script>
     <script src="assets/js/dashboard-utils.js"></script>
+    
+    <!-- Load Provider Bookings Manager only if not already loaded -->
+    <script>
+        if (!window.scriptsLoaded) {
+            window.scriptsLoaded = {
+                providerBookings: false,
+                serviceCompletion: false,
+                heroCarousel: true // Already loaded in head
+            };
+        }
+        
+        if (!window.scriptsLoaded.providerBookings) {
+            const script = document.createElement('script');
+            script.src = 'assets/js/dashboard/provider-bookings.js';
+            script.onload = function() {
+                window.scriptsLoaded.providerBookings = true;
+                console.log('Provider Bookings Manager script loaded');
+            };
+            
+            // Safety check for document.body
+            if (document.body) {
+                document.body.appendChild(script);
+            } else {
+                document.addEventListener('DOMContentLoaded', () => {
+                    document.body.appendChild(script);
+                });
+            }
+        }
+    </script>
 
     <script src="assets/js/navbars.js"></script>
 
@@ -67,8 +96,6 @@
     <!-- Load hero carousel -->
     <script src="assets/js/hero-carousel.js"></script>
 
-    <!-- Load Service Completion Components -->
-    <script src="assets/js/service-completion-manager.js"></script>
     <!-- Include Service Completion Modal -->
     <div id="service-completion-modal-container"></div>
 
@@ -113,7 +140,11 @@
                                 </a>
                                 <a href="#" class="nav-link" data-section="bookings" onclick="window.providerBookingsManager.navigateToBookings(); return false;">
                                     <i class="fa fa-calendar-check"></i>
-                                    Bookings
+                                    Active Bookings
+                                </a>
+                                <a href="#" class="nav-link" data-section="history">
+                                    <i class="fa fa-history"></i>
+                                    Booking History
                                 </a>
                                 <a href="#" class="nav-link" data-section="reviews">
                                     <i class="fa fa-star"></i>
@@ -122,10 +153,6 @@
                                 <a href="#" class="nav-link" data-section="earnings">
                                     <i class="fa fa-chart-line"></i>
                                     Earnings
-                                </a>
-                                <a href="#" class="nav-link" data-section="analytics">
-                                    <i class="fa fa-chart-bar"></i>
-                                    Analytics
                                 </a>
                                 <a href="#" class="nav-link" data-section="settings">
                                     <i class="fa fa-cog"></i>
@@ -342,6 +369,171 @@
                                 </div>
                             </div>
                         </section>
+
+                        <!-- Booking History Section -->
+                        <section class="dashboard-section" id="history-section">
+                            <div class="section-header">
+                                <h4>Booking History</h4>
+                                <div class="section-actions">
+                                    <div class="history-filters">
+                                        <button class="filter-btn active" data-status="completed">Completed</button>
+                                        <button class="filter-btn" data-status="cancelled">Cancelled</button>
+                                        <select class="form-select d-inline-block w-auto" id="history-date-filter">
+                                            <option value="all">All Time</option>
+                                            <option value="last-week">Last Week</option>
+                                            <option value="last-month">Last Month</option>
+                                            <option value="last-3-months">Last 3 Months</option>
+                                            <option value="last-year">Last Year</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="history-container" id="history-list">
+                                <!-- History will be loaded here -->
+                                <div class="loading-state">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <p>Loading booking history...</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Reviews Section -->
+                        <section class="dashboard-section" id="reviews-section">
+                            <div class="section-header">
+                                <h4>Customer Reviews</h4>
+                                <div class="section-actions">
+                                    <div class="review-stats">
+                                        <div class="avg-rating">
+                                            <span class="rating-value" id="avg-rating">0.0</span>
+                                            <div class="stars" id="avg-rating-stars">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                            <span class="review-count">(<span id="total-reviews">0</span> reviews)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="reviews-container" id="reviews-list">
+                                <!-- Reviews will be loaded here -->
+                                <div class="loading-state">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <p>Loading reviews...</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Settings Section -->
+                        <section class="dashboard-section" id="settings-section">
+                            <div class="section-header">
+                                <h4>Account Settings</h4>
+                            </div>
+                            <div class="settings-container">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <!-- Profile Settings -->
+                                        <div class="settings-card">
+                                            <div class="settings-card-header">
+                                                <h5><i class="fas fa-user"></i> Profile Information</h5>
+                                            </div>
+                                            <div class="settings-card-body">
+                                                <form id="profile-settings-form">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3">
+                                                                <label for="first-name" class="form-label">First Name</label>
+                                                                <input type="text" class="form-control" id="first-name" name="firstName">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="mb-3">
+                                                                <label for="last-name" class="form-label">Last Name</label>
+                                                                <input type="text" class="form-control" id="last-name" name="lastName">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="email" class="form-label">Email</label>
+                                                        <input type="email" class="form-control" id="email" name="email" readonly>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="phone" class="form-label">Phone Number</label>
+                                                        <input type="tel" class="form-control" id="phone" name="phone">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="bio" class="form-label">Professional Bio</label>
+                                                        <textarea class="form-control" id="bio" name="bio" rows="4" placeholder="Tell customers about your experience and expertise..."></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <i class="fas fa-save"></i> Update Profile
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                        <!-- Notification Settings -->
+                                        <div class="settings-card">
+                                            <div class="settings-card-header">
+                                                <h5><i class="fas fa-bell"></i> Notification Preferences</h5>
+                                            </div>
+                                            <div class="settings-card-body">
+                                                <form id="notification-settings-form">
+                                                    <div class="form-check form-switch mb-3">
+                                                        <input class="form-check-input" type="checkbox" id="email-notifications" checked>
+                                                        <label class="form-check-label" for="email-notifications">
+                                                            Email Notifications
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-switch mb-3">
+                                                        <input class="form-check-input" type="checkbox" id="booking-notifications" checked>
+                                                        <label class="form-check-label" for="booking-notifications">
+                                                            New Booking Notifications
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-switch mb-3">
+                                                        <input class="form-check-input" type="checkbox" id="review-notifications" checked>
+                                                        <label class="form-check-label" for="review-notifications">
+                                                            Review Notifications
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-switch mb-3">
+                                                        <input class="form-check-input" type="checkbox" id="marketing-notifications">
+                                                        <label class="form-check-label" for="marketing-notifications">
+                                                            Marketing Emails
+                                                        </label>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <i class="fas fa-save"></i> Save Preferences
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <!-- Account Actions -->
+                                        <div class="settings-card">
+                                            <div class="settings-card-header">
+                                                <h5><i class="fas fa-shield-alt"></i> Account Security</h5>
+                                            </div>
+                                            <div class="settings-card-body">
+                                                <button type="button" class="btn btn-outline-primary btn-block mb-3" id="change-password-btn">
+                                                    <i class="fas fa-key"></i> Change Password
+                                                </button>
+                                                <button type="button" class="btn btn-outline-info btn-block mb-3" id="download-data-btn">
+                                                    <i class="fas fa-download"></i> Download My Data
+                                                </button>
+                                                <button type="button" class="btn btn-outline-danger btn-block" id="delete-account-btn">
+                                                    <i class="fas fa-trash"></i> Delete Account
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     </div>
                 </div>
             </div>
@@ -528,8 +720,6 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <!-- Load hero carousel -->
-    <script src="assets/js/hero-carousel.js"></script>
     <script>
         // CONSOLIDATED INITIALIZATION - SINGLE DOMCONTENTLOADED LISTENER
         let dashboardInitialized = false;
@@ -814,36 +1004,40 @@
                 document.body.appendChild(script);
             });
     </script>
+    <!-- First load the service completion modal, then initialize the manager -->
     <script>
+        // Check if scripts are already loaded to prevent duplicates
+        if (!window.scriptsLoaded) {
+            window.scriptsLoaded = {
+                providerBookings: false,
+                serviceCompletion: false,
+                heroCarousel: true // Already loaded in head
+            };
+        }
+
         // Load service completion modal
         fetch('assets/components/service-completion-modal.html')
             .then(response => response.text())
             .then(html => {
+                // Insert the modal HTML
                 document.getElementById('service-completion-modal-container').innerHTML = html;
                 
-                // Setup service completion polling after modal is loaded
-                setupProviderPolling();
-            });
-            
-        // Setup polling for provider dashboard updates
-        function setupProviderPolling() {
-            // Check every 30 seconds for booking status changes
-            setInterval(async () => {
-                try {
-                    // Refresh provider bookings if available
-                    if (window.providerBookingsManager?.loadBookings) {
-                        await window.providerBookingsManager.loadBookings();
-                    }
-                    
-                    // Refresh services table if available
-                    if (window.servicesTable?.refresh) {
-                        await window.servicesTable.refresh();
-                    }
-                } catch (error) {
-                    console.warn('Provider dashboard polling failed:', error);
+                // Now that the modal is loaded, load the service completion manager if not already loaded
+                if (!window.scriptsLoaded.serviceCompletion && !window.serviceCompletionManager) {
+                    const script = document.createElement('script');
+                    script.src = 'assets/js/service-completion-manager.js';
+                    script.onload = function() {
+                        window.scriptsLoaded.serviceCompletion = true;
+                        console.log('Service completion manager script loaded');
+                    };
+                    document.body.appendChild(script);
                 }
-            }, 30000);
-        }
+                
+                console.log('Service completion modal loaded and manager initialized');
+            })
+            .catch(error => {
+                console.error('Error loading service completion modal:', error);
+            });
     </script>
 </body>
 </html> 

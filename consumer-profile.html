@@ -218,11 +218,11 @@
                                     <button class="filter-btn" data-status="confirmed" data-i18n="booking.confirmed">Confirmed</button>
                                     <button class="filter-btn" data-status="completed" data-i18n="booking.completed">Completed</button>
                                     <button class="filter-btn" data-status="cancelled" data-i18n="booking.cancelled">Cancelled</button>
-                                </div>
-                            </div>
                         </div>
+                    </div>
+                </div>
                         <div class="bookings-container" id="consumerBookingsContainer">
-                            <!-- Bookings will be loaded here -->
+                                    <!-- Bookings will be loaded here -->
                         </div>
                     </div>
 
@@ -242,7 +242,7 @@
                             </div>
                         </div>
                         <div class="favorites-container" id="consumerFavoritesContainer">
-                            <!-- Favorites will be loaded here -->
+                                    <!-- Favorites will be loaded here -->
                         </div>
                     </div>
 
@@ -405,7 +405,7 @@
                                                 <i class="fa fa-save"></i> Update Profile
                                             </button>
                                         </div>
-                                    </form>
+                                </form>
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -481,6 +481,9 @@
   <!-- Toast Container -->
   <div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3"></div>
 
+  <!-- Service Confirmation Modal Container -->
+  <div id="service-confirmation-modal-container"></div>
+
   <!-- AOS Animation Script -->
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
@@ -552,47 +555,70 @@
       });
   </script>
 
-  <!-- Load Service Completion Components -->
-  <script src="assets/js/service-completion-manager.js"></script>
-  <!-- Include Service Confirmation Modal -->
-  <div id="service-confirmation-modal-container"></div>
-
+  <!-- First load the service confirmation modal, then initialize the manager -->
   <script>
+    // Check if scripts are already loaded to prevent duplicates
+    if (!window.scriptsLoaded) {
+      window.scriptsLoaded = {
+        serviceCompletion: false
+      };
+    }
+    
+    // Create a toast container if it doesn't exist
+    if (!document.getElementById('toast-container')) {
+      const toastContainer = document.createElement('div');
+      toastContainer.id = 'toast-container';
+      toastContainer.className = 'toast-container position-fixed top-0 end-0 p-3';
+      document.body.appendChild(toastContainer);
+    }
+    
     // Load service confirmation modal
     fetch('assets/components/service-confirmation-modal.html')
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('service-confirmation-modal-container').innerHTML = html;
-            
-            // Setup service completion polling after modal is loaded
-            setupServiceCompletionPolling();
-        });
+      .then(response => response.text())
+      .then(html => {
+        // Insert the modal HTML
+        document.getElementById('service-confirmation-modal-container').innerHTML = html;
         
-    // Setup polling for service completion updates
-    function setupServiceCompletionPolling() {
-        // Check immediately after page load
+        // Now that the modal is loaded, wait a moment for DOM to settle, then load the service completion manager
         setTimeout(() => {
-            if (window.serviceCompletionManager) {
-                window.serviceCompletionManager.checkForPendingConfirmations();
-            }
-        }, 3000);
-        
-        // Check every 30 seconds for status changes
-        setInterval(async () => {
-            try {
-                if (window.serviceCompletionManager) {
-                    await window.serviceCompletionManager.checkForPendingConfirmations();
+          if (!window.scriptsLoaded.serviceCompletion && !window.serviceCompletionManager) {
+            const script = document.createElement('script');
+            script.src = 'assets/js/service-completion-manager.js';
+            script.onload = function() {
+              window.scriptsLoaded.serviceCompletion = true;
+              console.log('Service completion manager script loaded');
+              
+              // Initialize the manager after DOM is ready - increased delay
+              setTimeout(() => {
+                if (window.ServiceCompletionManager && !window.serviceCompletionManager) {
+                  window.serviceCompletionManager = new window.ServiceCompletionManager();
+                  console.log('Service completion manager initialized');
                 }
                 
-                // Refresh consumer dashboard bookings if available
-                if (window.ConsumerDashboard?.updateMetrics) {
-                    await window.ConsumerDashboard.updateMetrics();
-                }
-            } catch (error) {
-                console.warn('Service completion polling failed:', error);
-            }
-        }, 30000);
-    }
-  </script>
+                // Check for pending confirmations after initialization - increased delay
+                setTimeout(() => {
+                  if (window.serviceCompletionManager && window.serviceCompletionManager.checkForPendingConfirmations) {
+                    window.serviceCompletionManager.checkForPendingConfirmations();
+                  }
+                }, 2000); // Increased from 1000ms to 2000ms
+              }, 1000); // Increased from 500ms to 1000ms
+            };
+            document.body.appendChild(script);
+          } else {
+            // If already loaded, still check for pending confirmations
+            setTimeout(() => {
+              if (window.serviceCompletionManager && window.serviceCompletionManager.checkForPendingConfirmations) {
+                window.serviceCompletionManager.checkForPendingConfirmations();
+              }
+            }, 2000); // Increased from 1000ms to 2000ms
+          }
+        }, 500); // Increased from 100ms to 500ms
+        
+        console.log('Service confirmation modal loaded');
+      })
+      .catch(error => {
+        console.error('Error loading service confirmation modal:', error);
+  });
+</script>
 </body>
 </html> 

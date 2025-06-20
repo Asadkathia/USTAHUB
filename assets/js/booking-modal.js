@@ -785,17 +785,17 @@ class BookingModal {
             console.log('animateLoadingToSuccess completed');
             
             // Set booking reference
-            document.getElementById('bookingReference').textContent = reference;
-            
-            // Update navigation
-            document.getElementById('nextStepBtn').style.display = 'none';
-            document.getElementById('prevStepBtn').style.display = 'none';
+        document.getElementById('bookingReference').textContent = reference;
+        
+        // Update navigation
+        document.getElementById('nextStepBtn').style.display = 'none';
+        document.getElementById('prevStepBtn').style.display = 'none';
             
             // Setup success step interactions
             this.setupSuccessStepInteractions(bookingData, reference);
-            
-            // Send confirmation (if possible)
-            this.sendConfirmation(bookingData, reference);
+        
+        // Send confirmation (if possible)
+        this.sendConfirmation(bookingData, reference);
             
             // Trigger celebration animations with a slight delay to ensure DOM is ready
             setTimeout(() => {

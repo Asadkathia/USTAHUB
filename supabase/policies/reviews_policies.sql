@@ -6,6 +6,7 @@ CREATE POLICY "Everyone can view active reviews" ON reviews
     USING (status = 'active');
 
 -- Policy for reviewers to create reviews for their own bookings
+-- Updated to handle both completed and pending_confirmation statuses
 CREATE POLICY "Reviewers can create reviews for their bookings" ON reviews
     FOR INSERT
     WITH CHECK (
@@ -14,7 +15,8 @@ CREATE POLICY "Reviewers can create reviews for their bookings" ON reviews
             SELECT 1 FROM bookings b
             WHERE b.id = booking_id
             AND b.consumer_id = auth.uid()
-            AND b.status = 'completed'
+            AND b.status IN ('completed', 'pending_confirmation')
+            AND b.completed_by_provider = true
         )
     );
 
