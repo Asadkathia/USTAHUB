@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Schema Fix Utility</title>
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="assets/js/supabase.js"></script>
+    <style>
+        .result-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            font-family: monospace;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .loading {
+            color: #007bff;
+            font-style: italic;
+        }
+        .error {
+            color: #dc3545;
+        }
+        .success {
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Database Schema Fix Utility</h1>
+        <p class="text-muted">This tool helps fix database schema issues and test the new booking status system.</p>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Schema Operations</h5>
+                    </div>
+                    <div class="card-body">
+                        <button id="checkSchema" class="btn btn-primary mb-2 w-100">Check Current Schema</button>
+                        <button id="runMigration" class="btn btn-warning mb-2 w-100">Run New Migration</button>
+                        <button id="testFunctions" class="btn btn-info mb-2 w-100">Test Status Functions</button>
+                        <div id="schemaResults" class="result-box"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Booking Status Testing</h5>
+                    </div>
+                    <div class="card-body">
+                        <button id="testProviderCompletion" class="btn btn-success mb-2 w-100">Test Provider Completion</button>
+                        <button id="testConsumerConfirmation" class="btn btn-success mb-2 w-100">Test Consumer Confirmation</button>
+                        <button id="viewStatusHistory" class="btn btn-secondary mb-2 w-100">View Status History</button>
+                        <div id="testResults" class="result-box"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Migration Script</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>The new system uses <code>booking_statuses</code> table for status management and removes unnecessary columns from <code>bookings</code> table.</p>
+                        <div class="alert alert-info">
+                            <strong>Key Changes:</strong>
+                            <ul class="mb-0">
+                                <li>Removed: <code>completed_by_provider</code>, <code>completed_by_consumer</code>, <code>provider_completion_time</code>, <code>consumer_completion_time</code>, <code>completion_notes</code></li>
+                                <li>Added: Database functions for status management</li>
+                                <li>Using: <code>booking_statuses</code> table for audit trail</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Test booking IDs (you may need to update these)
+        const TEST_BOOKING_ID = 'f3c98307-99db-41af-81dc-03f4645e2c70'; // Replace with actual booking ID
+        
+        function showLoading(elementId) {
+            document.getElementById(elementId).innerHTML = '<div class="loading">Loading...</div>';
+        }
+
+        function displayResults(elementId, data) {
+            const element = document.getElementById(elementId);
+            if (data.error) {
+                element.innerHTML = `<div class="error">Error: ${data.error}</div>`;
+            } else {
+                element.innerHTML = `<div class="success">Success:</div>${JSON.stringify(data, null, 2)}`;
+            }
+        }
+
+        async function checkSchema() {
+            showLoading('schemaResults');
+            
+            try {
+                // Check if new functions exist
+                const { data: functions, error: funcError } = await window.supabase
+                    .rpc('add_booking_status', {
+                        booking_uuid: '00000000-0000-0000-0000-000000000000',
+                        status_value: 'test',
+                        notes_value: 'test'
+                    });
+                    
+                if (funcError && funcError.message.includes('function add_booking_status')) {
+                    displayResults('schemaResults', { 
+                        status: 'Migration needed',
+                        message: 'New status functions not found. Please run migration.'
+                    });
+                    return;
+                }
+                
+                // Check if old columns exist
+                const { data: tableInfo, error: tableError } = await window.supabase
+                    .from('bookings')
+                    .select('completed_by_provider, completed_by_consumer')
+                    .limit(1);
+                    
+                if (!tableError) {
+                    displayResults('schemaResults', {
+                        status: 'Old schema detected',
+                        message: 'Unnecessary columns still exist. Migration needed.',
+                        columns_found: ['completed_by_provider', 'completed_by_consumer']
+                    });
+                } else {
+                    displayResults('schemaResults', {
+                        status: 'New schema active',
+                        message: 'Schema appears to be updated correctly.',
+                        functions_available: true
+                    });
+                }
+                
+            } catch (error) {
+                displayResults('schemaResults', { error: error.message });
+            }
+        }
+
+        async function runMigration() {
+            showLoading('schemaResults');
+            
+            try {
+                // Note: This would typically be run as a migration file
+                // For testing purposes, we'll just check if we can create the functions
+                
+                const migrationSQL = `
+                    -- Create the status management functions
+                    CREATE OR REPLACE FUNCTION add_booking_status(
+                        booking_uuid UUID,
+                        status_value TEXT,
+                        notes_value TEXT DEFAULT NULL
+                    ) RETURNS UUID
+                    LANGUAGE plpgsql
+                    SECURITY DEFINER
+                    AS $$
+                    DECLARE
+                        new_status_id UUID;
+                    BEGIN
+                        INSERT INTO booking_statuses (booking_id, status, notes)
+                        VALUES (booking_uuid, status_value, notes_value)
+                        RETURNING id INTO new_status_id;
+                        
+                        UPDATE bookings 
+                        SET status = status_value, updated_at = NOW()
+                        WHERE id = booking_uuid;
+                        
+                        RETURN new_status_id;
+                    END;
+                    $$;
+                `;
+                
+                displayResults('schemaResults', {
+                    message: 'Migration should be run server-side',
+                    sql: migrationSQL.trim(),
+                    note: 'Use the migration file: supabase/migrations/20241220_refactor_booking_status_system.sql'
+                });
+                
+            } catch (error) {
+                displayResults('schemaResults', { error: error.message });
+            }
+        }
+
+        async function testFunctions() {
+            showLoading('schemaResults');
+            
+            try {
+                // Test if the new functions work
+                const tests = [];
+                
+                // Test 1: Try to call add_booking_status function
+                try {
+                    const { data, error } = await window.supabase
+                        .rpc('add_booking_status', {
+                            booking_uuid: TEST_BOOKING_ID,
+                            status_value: 'test_status',
+                            notes_value: 'Testing function'
+                        });
+                    
+                    tests.push({
+                        test: 'add_booking_status',
+                        result: error ? 'FAILED' : 'PASSED',
+                        details: error?.message || 'Function callable'
+                    });
+                } catch (e) {
+                    tests.push({
+                        test: 'add_booking_status',
+                        result: 'FAILED',
+                        details: e.message
+                    });
+                }
+                
+                // Test 2: Try to call get_booking_status_details function
+                try {
+                    const { data, error } = await window.supabase
+                        .rpc('get_booking_status_details', {
+                            booking_uuid: TEST_BOOKING_ID
+                        });
+                    
+                    tests.push({
+                        test: 'get_booking_status_details',
+                        result: error ? 'FAILED' : 'PASSED',
+                        details: error?.message || 'Function callable'
+                    });
+                } catch (e) {
+                    tests.push({
+                        test: 'get_booking_status_details',
+                        result: 'FAILED',
+                        details: e.message
+                    });
+                }
+                
+                displayResults('schemaResults', { tests });
+                
+            } catch (error) {
+                displayResults('schemaResults', { error: error.message });
+            }
+        }
+
+        async function testProviderCompletion() {
+            showLoading('testResults');
+            
+            try {
+                const { data, error } = await window.supabase
+                    .rpc('complete_booking_by_provider', {
+                        booking_uuid: TEST_BOOKING_ID,
+                        final_price: 150.00,
+                        provider_notes: 'Test completion by provider'
+                    });
+                
+                if (error) {
+                    displayResults('testResults', { error: error.message });
+                } else {
+                    displayResults('testResults', {
+                        message: 'Provider completion successful',
+                        status_id: data,
+                        booking_id: TEST_BOOKING_ID
+                    });
+                }
+                
+            } catch (error) {
+                displayResults('testResults', { error: error.message });
+            }
+        }
+
+        async function testConsumerConfirmation() {
+            showLoading('testResults');
+            
+            try {
+                const { data, error } = await window.supabase
+                    .rpc('confirm_booking_by_consumer', {
+                        booking_uuid: TEST_BOOKING_ID,
+                        consumer_notes: 'Test confirmation by consumer'
+                    });
+                
+                if (error) {
+                    displayResults('testResults', { error: error.message });
+                } else {
+                    displayResults('testResults', {
+                        message: 'Consumer confirmation successful',
+                        status_id: data,
+                        booking_id: TEST_BOOKING_ID
+                    });
+                }
+                
+            } catch (error) {
+                displayResults('testResults', { error: error.message });
+            }
+        }
+
+        async function viewStatusHistory() {
+            showLoading('testResults');
+            
+            try {
+                const { data, error } = await window.supabase
+                    .from('booking_statuses')
+                    .select('*')
+                    .eq('booking_id', TEST_BOOKING_ID)
+                    .order('created_at', { ascending: false });
+                
+                if (error) {
+                    displayResults('testResults', { error: error.message });
+                } else {
+                    displayResults('testResults', {
+                        message: 'Status history for booking',
+                        booking_id: TEST_BOOKING_ID,
+                        history: data
+                    });
+                }
+                
+            } catch (error) {
+                displayResults('testResults', { error: error.message });
+            }
+        }
+
+        // Event listeners
+        document.getElementById('checkSchema').addEventListener('click', checkSchema);
+        document.getElementById('runMigration').addEventListener('click', runMigration);
+        document.getElementById('testFunctions').addEventListener('click', testFunctions);
+        document.getElementById('testProviderCompletion').addEventListener('click', testProviderCompletion);
+        document.getElementById('testConsumerConfirmation').addEventListener('click', testConsumerConfirmation);
+        document.getElementById('viewStatusHistory').addEventListener('click', viewStatusHistory);
+
+        // Auto-check schema on load
+        document.addEventListener('DOMContentLoaded', () => {
+            checkSchema();
+        });
+    </script>
+</body>
+</html> 

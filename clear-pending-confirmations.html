@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Pending Confirmations</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .log-entry {
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            padding: 3px;
+            border-bottom: 1px solid #eee;
+        }
+        .log-error {
+            color: #dc3545;
+        }
+        .log-success {
+            color: #28a745;
+        }
+        .log-info {
+            color: #17a2b8;
+        }
+        .log-warning {
+            color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Clear Pending Confirmations</h1>
+        
+        <div class="alert alert-info">
+            This page helps clear stuck pending confirmations in the system.
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Authentication</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="auth-status">Not logged in</div>
+                        <button id="login-btn" class="btn btn-primary mt-2">Login</button>
+                        <button id="logout-btn" class="btn btn-secondary mt-2">Logout</button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <button id="check-pending-btn" class="btn btn-info mb-2">Check Pending Confirmations</button>
+                        <button id="clear-pending-btn" class="btn btn-warning mb-2">Clear All Pending Confirmations</button>
+                        <button id="clear-storage-btn" class="btn btn-danger mb-2">Clear LocalStorage Data</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Debug Log</h5>
+                        <button id="clear-log-btn" class="btn btn-sm btn-outline-secondary float-end">Clear</button>
+                    </div>
+                    <div class="card-body">
+                        <div id="debug-log" style="max-height: 300px; overflow-y: auto;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h5>Pending Confirmations</h5>
+                <span id="pending-count" class="badge bg-secondary float-end">0</span>
+            </div>
+            <div class="card-body">
+                <div id="pending-container" class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Service</th>
+                                <th>Provider</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pending-table-body">
+                            <tr>
+                                <td colspan="5" class="text-center">No pending confirmations found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h5>LocalStorage Data</h5>
+            </div>
+            <div class="card-body">
+                <pre id="storage-data">No data found</pre>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/supabase.js"></script>
+    <script src="assets/js/service-completion-manager.js"></script>
+    
+    <script>
+        // Debug Tool for Clearing Pending Confirmations
+        class PendingConfirmationCleaner {
+            constructor() {
+                this.currentUser = null;
+                this.pendingConfirmations = [];
+                
+                // Initialize UI elements
+                this.initUI();
+                
+                // Check authentication status
+                this.checkAuth();
+                
+                // Display localStorage data
+                this.displayStorageData();
+            }
+            
+            initUI() {
+                // Authentication buttons
+                document.getElementById('login-btn').addEventListener('click', () => this.login());
+                document.getElementById('logout-btn').addEventListener('click', () => this.logout());
+                
+                // Action buttons
+                document.getElementById('check-pending-btn').addEventListener('click', () => this.checkPendingConfirmations());
+                document.getElementById('clear-pending-btn').addEventListener('click', () => this.clearPendingConfirmations());
+                document.getElementById('clear-storage-btn').addEventListener('click', () => this.clearStorageData());
+                document.getElementById('clear-log-btn').addEventListener('click', () => this.clearLog());
+            }
+            
+            async checkAuth() {
+                try {
+                    const { data: { user }, error } = await window.supabase.auth.getUser();
+                    
+                    if (error) throw error;
+                    
+                    if (user) {
+                        this.currentUser = user;
+                        document.getElementById('auth-status').innerHTML = `
+                            <div class="alert alert-success">
+                                Logged in as ${user.email}
+                            </div>
+                        `;
+                        this.log('User authenticated: ' + user.email, 'info');
+                        
+                        // Check for pending confirmations
+                        this.checkPendingConfirmations();
+                    } else {
+                        document.getElementById('auth-status').innerHTML = `
+                            <div class="alert alert-warning">
+                                Not logged in
+                            </div>
+                        `;
+                    }
+                } catch (error) {
+                    this.log('Authentication error: ' + error.message, 'error');
+                    document.getElementById('auth-status').innerHTML = `
+                        <div class="alert alert-danger">
+                            Error: ${error.message}
+                        </div>
+                    `;
+                }
+            }
+            
+            async login() {
+                try {
+                    const { error } = await window.supabase.auth.signInWithOAuth({
+                        provider: 'google'
+                    });
+                    
+                    if (error) throw error;
+                } catch (error) {
+                    this.log('Login error: ' + error.message, 'error');
+                }
+            }
+            
+            async logout() {
+                try {
+                    const { error } = await window.supabase.auth.signOut();
+                    
+                    if (error) throw error;
+                    
+                    this.currentUser = null;
+                    document.getElementById('auth-status').innerHTML = `
+                        <div class="alert alert-warning">
+                            Not logged in
+                        </div>
+                    `;
+                    this.log('User logged out', 'info');
+                } catch (error) {
+                    this.log('Logout error: ' + error.message, 'error');
+                }
+            }
+            
+            async checkPendingConfirmations() {
+                if (!this.currentUser) {
+                    this.log('Please login first', 'warning');
+                    return;
+                }
+                
+                try {
+                    this.log('Checking for pending confirmations...', 'info');
+                    
+                    // Get all pending confirmations for this user
+                    const { data: pendingBookings, error } = await window.supabase
+                        .from('bookings')
+                        .select(`
+                            id, 
+                            status, 
+                            scheduled_date,
+                            scheduled_time,
+                            services (title),
+                            profiles!bookings_provider_id_fkey (first_name, last_name)
+                        `)
+                        .eq('consumer_id', this.currentUser.id)
+                        .eq('status', 'pending_confirmation');
+                        
+                    if (error) {
+                        this.log('Error fetching pending confirmations: ' + error.message, 'error');
+                        return;
+                    }
+                    
+                    this.pendingConfirmations = pendingBookings || [];
+                    this.log(`Found ${this.pendingConfirmations.length} pending confirmations`, 'info');
+                    
+                    // Update UI
+                    this.renderPendingConfirmations();
+                } catch (error) {
+                    this.log('Error checking pending confirmations: ' + error.message, 'error');
+                }
+            }
+            
+            async clearPendingConfirmations() {
+                if (!this.currentUser) {
+                    this.log('Please login first', 'warning');
+                    return;
+                }
+                
+                if (this.pendingConfirmations.length === 0) {
+                    this.log('No pending confirmations to clear', 'info');
+                    return;
+                }
+                
+                try {
+                    this.log(`Clearing ${this.pendingConfirmations.length} pending confirmations...`, 'info');
+                    
+                    // Use the service completion manager to clear pending confirmations
+                    if (window.serviceCompletionManager) {
+                        const clearedCount = await window.serviceCompletionManager.forceClearPendingConfirmations();
+                        this.log(`Successfully cleared ${clearedCount} pending confirmations`, 'success');
+                        
+                        // Refresh the list
+                        await this.checkPendingConfirmations();
+                    } else {
+                        this.log('Service completion manager not available', 'error');
+                    }
+                } catch (error) {
+                    this.log('Error clearing pending confirmations: ' + error.message, 'error');
+                }
+            }
+            
+            renderPendingConfirmations() {
+                const tableBody = document.getElementById('pending-table-body');
+                const pendingCount = document.getElementById('pending-count');
+                
+                pendingCount.textContent = this.pendingConfirmations.length;
+                
+                if (this.pendingConfirmations.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="5" class="text-center">No pending confirmations found</td>
+                        </tr>
+                    `;
+                    return;
+                }
+                
+                tableBody.innerHTML = '';
+                
+                this.pendingConfirmations.forEach(booking => {
+                    const row = document.createElement('tr');
+                    
+                    // Format date
+                    const formattedDate = booking.scheduled_date ? 
+                        new Date(booking.scheduled_date).toLocaleDateString() : 'N/A';
+                        
+                    row.innerHTML = `
+                        <td>${booking.id.substring(0, 8)}...</td>
+                        <td>${booking.services?.title || 'N/A'}</td>
+                        <td>${booking.profiles?.first_name || ''} ${booking.profiles?.last_name || ''}</td>
+                        <td>${formattedDate} ${booking.scheduled_time || ''}</td>
+                        <td>
+                            <button class="btn btn-sm btn-warning clear-single-btn" data-booking-id="${booking.id}">
+                                Clear
+                            </button>
+                        </td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+                
+                // Add event listeners to buttons
+                document.querySelectorAll('.clear-single-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        const bookingId = btn.dataset.bookingId;
+                        await this.clearSinglePendingConfirmation(bookingId);
+                    });
+                });
+            }
+            
+            async clearSinglePendingConfirmation(bookingId) {
+                try {
+                    this.log(`Clearing pending confirmation for booking: ${bookingId.substring(0, 8)}`, 'info');
+                    
+                    // First add a status record to booking_statuses
+                    await window.supabase
+                        .from('booking_statuses')
+                        .insert({
+                            booking_id: bookingId,
+                            status: 'completed',
+                            notes: 'Manually cleared by user'
+                        });
+                    
+                    // Then update the booking status
+                    const { error } = await window.supabase
+                        .from('bookings')
+                        .update({
+                            status: 'completed',
+                            updated_at: new Date().toISOString()
+                        })
+                        .eq('id', bookingId);
+                        
+                    if (error) {
+                        this.log(`Error clearing booking ${bookingId.substring(0, 8)}: ${error.message}`, 'error');
+                    } else {
+                        this.log(`Successfully cleared booking ${bookingId.substring(0, 8)}`, 'success');
+                        
+                        // Add to recently completed list if service completion manager exists
+                        if (window.serviceCompletionManager) {
+                            window.serviceCompletionManager.recentlyCompletedBookings.add(bookingId);
+                            window.serviceCompletionManager.saveCompletedBookingsToStorage();
+                        }
+                        
+                        // Refresh the list
+                        await this.checkPendingConfirmations();
+                    }
+                } catch (error) {
+                    this.log(`Error clearing booking ${bookingId.substring(0, 8)}: ${error.message}`, 'error');
+                }
+            }
+            
+            displayStorageData() {
+                const storageData = document.getElementById('storage-data');
+                
+                try {
+                    const completedBookings = localStorage.getItem('completedBookings');
+                    
+                    if (completedBookings) {
+                        const parsed = JSON.parse(completedBookings);
+                        storageData.textContent = JSON.stringify(parsed, null, 2);
+                    } else {
+                        storageData.textContent = 'No completedBookings data in localStorage';
+                    }
+                } catch (error) {
+                    storageData.textContent = `Error reading localStorage: ${error.message}`;
+                }
+            }
+            
+            clearStorageData() {
+                try {
+                    localStorage.removeItem('completedBookings');
+                    this.log('Cleared completedBookings from localStorage', 'success');
+                    
+                    // Reset the service completion manager's Set if it exists
+                    if (window.serviceCompletionManager) {
+                        window.serviceCompletionManager.recentlyCompletedBookings = new Set();
+                    }
+                    
+                    // Update display
+                    this.displayStorageData();
+                } catch (error) {
+                    this.log(`Error clearing localStorage: ${error.message}`, 'error');
+                }
+            }
+            
+            log(message, type = 'info') {
+                const logContainer = document.getElementById('debug-log');
+                const logEntry = document.createElement('div');
+                logEntry.className = `log-entry log-${type}`;
+                logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+                logContainer.prepend(logEntry);
+                
+                console.log(`[${type.toUpperCase()}] ${message}`);
+            }
+            
+            clearLog() {
+                document.getElementById('debug-log').innerHTML = '';
+            }
+        }
+        
+        // Initialize the cleaner when the document is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            window.pendingConfirmationCleaner = new PendingConfirmationCleaner();
+        });
+    </script>
+</body>
+</html> 

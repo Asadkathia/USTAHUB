@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Status Debug - UstaHub</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Booking Status Debug Tool</h1>
+        
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Consumer Debug (ID: 1c14d2a9-28dc-446d-b91e-944034a1b345)</h5>
+                    </div>
+                    <div class="card-body">
+                        <button id="checkConsumerBookings" class="btn btn-primary">Check Consumer Bookings</button>
+                        <button id="fixConsumerModal" class="btn btn-warning">Fix Modal Issue</button>
+                        <div id="consumerResults" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Provider Debug (ID: 9602642b-f89a-4fe3-bc46-3af6f412d593)</h5>
+                    </div>
+                    <div class="card-body">
+                        <button id="checkProviderBookings" class="btn btn-primary">Check Provider Bookings</button>
+                        <button id="testCompleteBooking" class="btn btn-success">Test Complete Booking</button>
+                        <div id="providerResults" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Manual Booking Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input type="text" id="bookingIdInput" class="form-control" 
+                                       placeholder="Booking ID (f3c98307-99db-41af-81dc-03f4645e2c70)">
+                            </div>
+                            <div class="col-md-4">
+                                <button id="completeBookingManually" class="btn btn-danger">Force Complete</button>
+                            </div>
+                        </div>
+                        <div id="manualResults" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module">
+        // Import Supabase client
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+
+        // Initialize Supabase client
+        const SUPABASE_URL = 'https://haaxbgibiagiamsnczeu.supabase.co'
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhhYXhiZ2liaWFnaWFtc25jemV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg2MjczODgsImV4cCI6MjA2NDIwMzM4OH0.hcZ0eTCh9SDZQjK-cLCEXLHthV9t9KVccvhRDHCdxT4'
+
+        // Create Supabase client
+        const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
+
+        // Make supabase client available globally
+        window.supabase = supabase
+
+        console.log('Supabase initialized for debug tool');
+        const CONSUMER_ID = '1c14d2a9-28dc-446d-b91e-944034a1b345';
+        const PROVIDER_ID = '9602642b-f89a-4fe3-bc46-3af6f412d593';
+        const PROBLEM_BOOKING_ID = 'f3c98307-99db-41af-81dc-03f4645e2c70';
+
+                 function displayResults(containerId, data) {
+             const container = document.getElementById(containerId);
+             if (data && data.error) {
+                 container.innerHTML = `<div class="alert alert-danger"><strong>Error:</strong> ${data.error}</div>`;
+             } else {
+                 container.innerHTML = `<pre style="background: #f8f9fa; padding: 10px; border-radius: 5px; max-height: 300px; overflow-y: auto;">${JSON.stringify(data, null, 2)}</pre>`;
+             }
+         }
+
+         function showLoading(containerId) {
+             const container = document.getElementById(containerId);
+             container.innerHTML = '<div class="text-center"><i class="spinner-border spinner-border-sm" role="status"></i> Loading...</div>';
+         }
+
+                 async function checkConsumerBookings() {
+             showLoading('consumerResults');
+             try {
+                 if (!window.supabase) {
+                     throw new Error('Supabase not initialized');
+                 }
+                 const { data, error } = await window.supabase
+                    .from('bookings')
+                    .select('*')
+                    .eq('consumer_id', CONSUMER_ID);
+
+                if (error) throw error;
+
+                const result = {
+                    total: data.length,
+                    by_status: data.reduce((acc, b) => {
+                        acc[b.status] = (acc[b.status] || 0) + 1;
+                        return acc;
+                    }, {}),
+                    pending_confirmations: data.filter(b => b.status === 'pending_confirmation'),
+                    problem_booking: data.find(b => b.id === PROBLEM_BOOKING_ID)
+                };
+
+                displayResults('consumerResults', result);
+            } catch (error) {
+                displayResults('consumerResults', { error: error.message });
+            }
+        }
+
+                 async function checkProviderBookings() {
+             showLoading('providerResults');
+             try {
+                 if (!window.supabase) {
+                     throw new Error('Supabase not initialized');
+                 }
+                 const { data, error } = await window.supabase
+                    .from('bookings')
+                    .select('*')
+                    .eq('provider_id', PROVIDER_ID);
+
+                if (error) throw error;
+
+                const result = {
+                    total: data.length,
+                    by_status: data.reduce((acc, b) => {
+                        acc[b.status] = (acc[b.status] || 0) + 1;
+                        return acc;
+                    }, {}),
+                    completed: data.filter(b => b.status === 'completed'),
+                    pending_confirmation: data.filter(b => b.status === 'pending_confirmation'),
+                    all_bookings: data.map(b => ({
+                        id: b.id.substring(0, 8),
+                        status: b.status,
+                        completed_by_provider: b.completed_by_provider,
+                        completed_by_consumer: b.completed_by_consumer
+                    }))
+                };
+
+                displayResults('providerResults', result);
+            } catch (error) {
+                displayResults('providerResults', { error: error.message });
+            }
+        }
+
+                 async function fixConsumerModal() {
+             showLoading('consumerResults');
+             try {
+                // Force update the problem booking to completed
+                const { data, error } = await window.supabase
+                    .from('bookings')
+                    .update({
+                        status: 'completed',
+                        completed_by_consumer: true,
+                        consumer_completion_time: new Date().toISOString()
+                    })
+                    .eq('id', PROBLEM_BOOKING_ID)
+                    .select();
+
+                if (error) throw error;
+
+                displayResults('consumerResults', { 
+                    message: 'Fixed problem booking',
+                    updated_booking: data[0]
+                });
+            } catch (error) {
+                displayResults('consumerResults', { error: error.message });
+            }
+        }
+
+                 async function testCompleteBooking() {
+             showLoading('providerResults');
+             try {
+                // Find a pending_confirmation booking and complete it
+                const { data: bookings, error: fetchError } = await window.supabase
+                    .from('bookings')
+                    .select('*')
+                    .eq('provider_id', PROVIDER_ID)
+                    .eq('status', 'pending_confirmation')
+                    .limit(1);
+
+                if (fetchError) throw fetchError;
+
+                if (bookings.length === 0) {
+                    displayResults('providerResults', { message: 'No pending_confirmation bookings found' });
+                    return;
+                }
+
+                const booking = bookings[0];
+                const { data, error } = await window.supabase
+                    .from('bookings')
+                    .update({
+                        status: 'completed',
+                        completed_by_consumer: true,
+                        consumer_completion_time: new Date().toISOString()
+                    })
+                    .eq('id', booking.id)
+                    .select();
+
+                if (error) throw error;
+
+                displayResults('providerResults', { 
+                    message: 'Completed booking for testing',
+                    booking_id: booking.id.substring(0, 8),
+                    updated_booking: data[0]
+                });
+            } catch (error) {
+                displayResults('providerResults', { error: error.message });
+            }
+        }
+
+                 async function completeBookingManually() {
+             const bookingId = document.getElementById('bookingIdInput').value || PROBLEM_BOOKING_ID;
+             showLoading('manualResults');
+             
+             try {
+                const { data, error } = await window.supabase
+                    .from('bookings')
+                    .update({
+                        status: 'completed',
+                        completed_by_consumer: true,
+                        completed_by_provider: true,
+                        consumer_completion_time: new Date().toISOString(),
+                        provider_completion_time: new Date().toISOString()
+                    })
+                    .eq('id', bookingId)
+                    .select();
+
+                if (error) throw error;
+
+                displayResults('manualResults', { 
+                    message: 'Force completed booking',
+                    booking_id: bookingId.substring(0, 8),
+                    updated_booking: data[0]
+                });
+            } catch (error) {
+                displayResults('manualResults', { error: error.message });
+            }
+        }
+
+                 // Event listeners
+        document.getElementById('checkConsumerBookings').addEventListener('click', () => {
+            console.log('Check Consumer Bookings clicked');
+            checkConsumerBookings();
+        });
+        document.getElementById('checkProviderBookings').addEventListener('click', () => {
+            console.log('Check Provider Bookings clicked');
+            checkProviderBookings();
+        });
+        document.getElementById('fixConsumerModal').addEventListener('click', () => {
+            console.log('Fix Consumer Modal clicked');
+            fixConsumerModal();
+        });
+        document.getElementById('testCompleteBooking').addEventListener('click', () => {
+            console.log('Test Complete Booking clicked');
+            testCompleteBooking();
+        });
+        document.getElementById('completeBookingManually').addEventListener('click', () => {
+            console.log('Complete Booking Manually clicked');
+            completeBookingManually();
+        });
+
+                 // Auto-load on page load - wait for supabase to be ready
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                if (window.supabase) {
+                    console.log('Starting auto-checks...');
+                    checkConsumerBookings();
+                    checkProviderBookings();
+                } else {
+                    console.error('Supabase not available');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

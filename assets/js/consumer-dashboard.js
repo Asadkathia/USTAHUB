@@ -23,7 +23,8 @@ window.ConsumerDashboard = (function() {
             totalSpent: 0
         },
         currentSection: 'overview',
-        isLoading: false
+        isLoading: false,
+        lastRefreshTime: null
     };
 
     // Configuration
@@ -149,43 +150,46 @@ window.ConsumerDashboard = (function() {
 
     // Core initialization
     async function init(user) {
-        if (!user) {
-            throw new Error('User is required for initialization');
-        }
-
         try {
+            if (config.debug) {
+                console.log('🚀 Initializing Consumer Dashboard for user:', user.id);
+            }
+
             state.user = user;
             state.isLoading = true;
 
-            // Load all data in parallel for better performance
+            // Initialize components in parallel for better performance
             await Promise.all([
                 loadUserProfile(),
                 loadUserMetrics(),
-                loadRecentActivities()
+                loadRecentActivities(),
+                initializeEventListeners(),
+                initializeInternationalization()
             ]);
 
-            // Setup UI
+            // Initialize UI components
             updateProfileDisplay();
             renderMetricCards();
             renderActivityFeed();
             setupSectionNavigation();
-            initializeEventListeners();
-            setupPeriodicRefresh();
-            initializeInternationalization();
 
-            // Check for pending service confirmations after a short delay
-            setTimeout(async () => {
-                await checkServiceCompletions();
-            }, 2000);
+            // Set up periodic refresh
+            setupPeriodicRefresh();
+            
+            // Check for pending service confirmations
+            setTimeout(checkPendingServiceConfirmations, 2000);
 
             state.isLoading = false;
-            console.log('✅ Consumer Dashboard initialized successfully');
+            utils.showToast('Dashboard loaded successfully', 'success');
+
+            if (config.debug) {
+                console.log('✅ Consumer Dashboard initialized successfully');
+            }
 
         } catch (error) {
-            state.error = error.message;
+            console.error('❌ Error initializing consumer dashboard:', error);
+            utils.showToast('Error loading dashboard', 'error');
             state.isLoading = false;
-            console.error('❌ Consumer Dashboard initialization failed:', error);
-            utils.showToast('Failed to load dashboard', 'error');
         }
     }
 
@@ -437,16 +441,20 @@ window.ConsumerDashboard = (function() {
             <div class="booking-card" data-booking-id="${booking.id}">
                 <div class="booking-header">
                     <h5>${booking.service_name || 'Service Booking'}</h5>
-                    <span class="booking-status ${booking.status}">${booking.status}</span>
+                    <span class="booking-status ${booking.status}">${getStatusLabel(booking.status)}</span>
                 </div>
                 <div class="booking-details">
                     <p><i class="fa fa-calendar"></i> ${utils.formatDate(booking.scheduled_date)}</p>
                     <p><i class="fa fa-clock"></i> ${booking.scheduled_time}</p>
                     <p><i class="fa fa-map-marker"></i> ${booking.location_address}</p>
                     ${booking.estimated_price ? `<p><i class="fa fa-dollar-sign"></i> ${utils.formatCurrency(booking.estimated_price)}</p>` : ''}
+                    ${booking.actual_price ? `<p><i class="fa fa-receipt"></i> Final Price: ${utils.formatCurrency(booking.actual_price)}</p>` : ''}
                 </div>
                 <div class="booking-actions">
-                    ${getBookingActions(booking)}
+                    <button class="btn btn-sm btn-primary" onclick="viewBookingDetails('${booking.id}')">
+                        View Details
+                    </button>
+                    ${getBookingActionButton(booking)}
                 </div>
             </div>
         `).join('');
@@ -665,65 +673,31 @@ window.ConsumerDashboard = (function() {
                     renderMetricCards();
                 }
                 
-                // Check for service completions
-                await checkServiceCompletions();
+                // Check for pending confirmations with improved throttling
+                if (!state.lastRefreshTime || Date.now() - state.lastRefreshTime > 15000) { // 15 second cooldown
+                    state.lastRefreshTime = Date.now();
+                    checkPendingServiceConfirmations();
+                }
             } catch (error) {
                 console.warn('Periodic refresh failed:', error);
             }
         }, config.refreshInterval);
     }
-
-    // Check for pending service confirmations
-    async function checkServiceCompletions() {
-        if (window.serviceCompletionManager) {
-            await window.serviceCompletionManager.checkForPendingConfirmations();
+    
+    /**
+     * Check for pending service confirmations
+     */
+    function checkPendingServiceConfirmations() {
+        if (window.serviceCompletionManager && window.serviceCompletionManager.checkForPendingConfirmations) {
+            window.serviceCompletionManager.checkForPendingConfirmations();
         }
     }
 
-    // Get booking action buttons based on status
-    function getBookingActions(booking) {
-        switch (booking.status) {
-            case 'pending':
-                return `
-                    <button class="btn btn-sm btn-outline-primary" onclick="viewBookingDetails('${booking.id}')">
-                        <i class="fas fa-eye"></i> View Details
-                    </button>
-                `;
-            case 'confirmed': 
-                return `
-                    <button class="btn btn-sm btn-outline-primary" onclick="viewBookingDetails('${booking.id}')">
-                        <i class="fas fa-eye"></i> View Details
-                    </button>
-                `;
-            case 'pending_confirmation':
-                return `
-                    <button class="btn btn-sm btn-warning" onclick="window.serviceCompletionManager.showConfirmationModal(${JSON.stringify(booking).replace(/"/g, '&quot;')})">
-                        <i class="fas fa-star"></i> Confirm & Rate
-                    </button>
-                `;
-            case 'completed':
-                return `
-                    <span class="badge bg-success">
-                        <i class="fas fa-check-circle"></i> Completed
-                    </span>
-                `;
-            case 'cancelled':
-                return `
-                    <span class="badge bg-danger">
-                        <i class="fas fa-times-circle"></i> Cancelled
-                    </span>
-                `;
-            default:
-                return '';
-        }
-    }
-
-    // Enhanced status color function with pending_confirmation
+    // Helper functions
     function getStatusColor(status) {
         const colors = {
             pending: 'warning',
             confirmed: 'primary',
-            pending_confirmation: 'info',
             completed: 'success',
             cancelled: 'danger'
         };
@@ -746,6 +720,16 @@ window.ConsumerDashboard = (function() {
             utils.showToast('Booking cancellation feature to be implemented', 'info');
         }
     };
+    
+    /**
+     * Show service confirmation modal for a specific booking
+     */
+    window.showServiceConfirmation = function(bookingId) {
+        const booking = state.bookings.find(b => b.id === bookingId);
+        if (booking && window.serviceCompletionManager) {
+            window.serviceCompletionManager.showConfirmationModal(booking);
+        }
+    };
 
     window.showBookingHistory = function() {
         switchSection('bookings');
@@ -763,13 +747,36 @@ window.ConsumerDashboard = (function() {
         utils.showToast('Review writing feature to be implemented', 'info');
     };
 
-    // Public API
+    // Expose public methods
     return {
         init,
         switchSection,
         getState: () => ({ ...state }),
         updateMetrics: loadUserMetrics,
-        refreshDashboard: () => loadRecentActivities()
+        refreshDashboard: () => loadRecentActivities(),
+        refresh: async function() {
+            console.log('Refreshing consumer dashboard');
+            try {
+                // Set refresh timestamp to prevent immediate pending confirmation checks
+                state.lastRefreshTime = Date.now();
+                
+                // Load data for current section
+                await loadSectionData(state.currentSection);
+                
+                // Update metrics
+                await loadUserMetrics();
+                renderMetricCards();
+                
+                // Update activity feed
+                await loadRecentActivities();
+                renderActivityFeed();
+                
+                console.log('Dashboard refreshed successfully');
+            } catch (error) {
+                console.error('Error refreshing dashboard:', error);
+            }
+        },
+        loadBookings: loadBookingsSection
     };
 
 })();
@@ -781,3 +788,84 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Consumer dashboard elements detected, ready for initialization');
     }
 });
+
+/**
+ * Get appropriate action button based on booking status
+ */
+function getBookingActionButton(booking) {
+    switch (booking.status) {
+        case 'pending_confirmation':
+            return `
+                <button class="btn btn-sm btn-warning" onclick="showServiceConfirmation('${booking.id}')">
+                    <i class="fas fa-check-circle"></i> Confirm Completion
+                </button>
+            `;
+        case 'pending':
+            return `
+                <button class="btn btn-sm btn-danger" onclick="cancelBooking('${booking.id}')">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+            `;
+        case 'confirmed':
+            return `
+                <button class="btn btn-sm btn-info" disabled>
+                    <i class="fas fa-clock"></i> In Progress
+                </button>
+            `;
+        case 'completed':
+            return `
+                <button class="btn btn-sm btn-success" disabled>
+                    <i class="fas fa-check-circle"></i> Completed
+                </button>
+            `;
+        case 'cancelled':
+            return `
+                <button class="btn btn-sm btn-secondary" disabled>
+                    <i class="fas fa-times"></i> Cancelled
+                </button>
+            `;
+        default:
+            return '';
+    }
+}
+
+/**
+ * Get user-friendly status label
+ */
+function getStatusLabel(status) {
+    const labels = {
+        'pending': 'Pending',
+        'confirmed': 'Confirmed',
+        'pending_confirmation': 'Needs Confirmation',
+        'completed': 'Completed',
+        'cancelled': 'Cancelled'
+    };
+    return labels[status] || status;
+}
+
+/**
+ * Enhanced function to load consumer bookings with better refresh
+ */
+window.loadConsumerBookings = async function() {
+    try {
+        console.log('Loading consumer bookings with enhanced refresh');
+        
+        if (window.ConsumerDashboard && window.ConsumerDashboard.state && window.ConsumerDashboard.state.user) {
+            // Reload user metrics and activities
+            await Promise.all([
+                window.ConsumerDashboard.loadUserMetrics(),
+                window.ConsumerDashboard.loadRecentActivities()
+            ]);
+            
+            // Re-render dashboard components
+            window.ConsumerDashboard.renderMetricCards();
+            window.ConsumerDashboard.renderActivityFeed();
+            
+            console.log('Consumer dashboard refreshed successfully');
+        } else {
+            console.warn('ConsumerDashboard not properly initialized for refresh');
+        }
+    } catch (error) {
+        console.error('Error refreshing consumer dashboard:', error);
+    }
+};

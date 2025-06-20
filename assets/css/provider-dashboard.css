@@ -880,5 +880,408 @@
 }
 
 .badge.bg-danger {
-    background-color: #e63946 !important;
+    background-color: var(--dashboard-error) !important;
+}
+
+/* =================================================
+   BOOKING HISTORY SECTION
+   ================================================= */
+
+.history-container {
+  margin-top: 1.5rem;
+}
+
+.history-filters {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.history-filters .form-select {
+  min-width: 150px;
+  border: 2px solid var(--dashboard-border);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  background: var(--dashboard-surface);
+  color: var(--dashboard-text);
+  transition: all 0.3s ease;
+}
+
+.history-filters .form-select:focus {
+  border-color: var(--dashboard-primary);
+  box-shadow: 0 0 0 0.2rem rgba(36, 180, 126, 0.25);
+}
+
+.history-card {
+  background: var(--dashboard-surface);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 16px var(--dashboard-shadow);
+  border: 1px solid var(--dashboard-border);
+  transition: all 0.3s ease;
+}
+
+.history-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--dashboard-shadow-hover);
+}
+
+.history-header {
+  display: flex;
+  justify-content: between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.history-header h5 {
+  margin: 0;
+  color: var(--dashboard-text);
+  font-weight: 600;
+  flex: 1;
+}
+
+.history-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.completion-date {
+  color: var(--dashboard-muted);
+  font-size: 0.875rem;
+}
+
+.history-details {
+  margin-bottom: 1rem;
+}
+
+.history-details p {
+  margin-bottom: 0.5rem;
+  color: var(--dashboard-text);
+  font-size: 0.875rem;
+}
+
+.history-details p i {
+  width: 16px;
+  margin-right: 0.5rem;
+  color: var(--dashboard-primary);
+}
+
+.history-actions {
+  border-top: 1px solid var(--dashboard-border);
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+/* =================================================
+   REVIEWS SECTION
+   ================================================= */
+
+.review-stats {
+  background: var(--dashboard-surface);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  border: 1px solid var(--dashboard-border);
+}
+
+.avg-rating {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.rating-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--dashboard-primary);
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.review-count {
+  color: var(--dashboard-muted);
+  font-size: 0.875rem;
+}
+
+.reviews-container {
+  margin-top: 1.5rem;
+}
+
+.review-card {
+  background: var(--dashboard-surface);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 16px var(--dashboard-shadow);
+  border: 1px solid var(--dashboard-border);
+  transition: all 0.3s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--dashboard-shadow-hover);
+}
+
+.review-header {
+  display: flex;
+  justify-content: between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.reviewer-info h6 {
+  margin: 0;
+  color: var(--dashboard-text);
+  font-weight: 600;
+}
+
+.review-date {
+  color: var(--dashboard-muted);
+  font-size: 0.875rem;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.review-body {
+  color: var(--dashboard-text);
+}
+
+.service-name {
+  color: var(--dashboard-muted);
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+}
+
+.service-name i {
+  color: var(--dashboard-primary);
+  margin-right: 0.5rem;
+}
+
+.review-text {
+  font-style: italic;
+  color: var(--dashboard-text);
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: rgba(36, 180, 126, 0.05);
+  border-radius: 8px;
+  border-left: 4px solid var(--dashboard-primary);
+}
+
+.provider-response {
+  background: rgba(255, 200, 87, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-left: 4px solid var(--dashboard-accent);
+}
+
+.provider-response h6 {
+  color: var(--dashboard-text);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.provider-response h6 i {
+  color: var(--dashboard-accent);
+  margin-right: 0.5rem;
+}
+
+/* =================================================
+   SETTINGS SECTION
+   ================================================= */
+
+.settings-container {
+  margin-top: 1.5rem;
+}
+
+.settings-card {
+  background: var(--dashboard-surface);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px var(--dashboard-shadow);
+  border: 1px solid var(--dashboard-border);
+  margin-bottom: 2rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.settings-card:hover {
+  box-shadow: 0 8px 24px var(--dashboard-shadow-hover);
+}
+
+.settings-card-header {
+  background: linear-gradient(135deg, var(--dashboard-primary) 0%, var(--dashboard-success) 100%);
+  color: white;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--dashboard-border);
+}
+
+.settings-card-header h5 {
+  margin: 0;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.settings-card-header h5 i {
+  margin-right: 0.75rem;
+  font-size: 1.2rem;
+}
+
+.settings-card-body {
+  padding: 2rem;
+}
+
+.form-label {
+  color: var(--dashboard-text);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  border: 2px solid var(--dashboard-border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  background: var(--dashboard-surface);
+  color: var(--dashboard-text);
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: var(--dashboard-primary);
+  box-shadow: 0 0 0 0.2rem rgba(36, 180, 126, 0.25);
+  background: var(--dashboard-surface);
+}
+
+.form-control[readonly] {
+  background: rgba(122, 134, 154, 0.1);
+  color: var(--dashboard-muted);
+}
+
+.form-check-input {
+  border: 2px solid var(--dashboard-border);
+  border-radius: 4px;
+}
+
+.form-check-input:checked {
+  background-color: var(--dashboard-primary);
+  border-color: var(--dashboard-primary);
+}
+
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(36, 180, 126, 0.25);
+}
+
+.form-check-label {
+  color: var(--dashboard-text);
+  font-weight: 500;
+}
+
+.btn-block {
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.btn-outline-primary {
+  border: 2px solid var(--dashboard-primary);
+  color: var(--dashboard-primary);
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+  background: var(--dashboard-primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(36, 180, 126, 0.3);
+}
+
+.btn-outline-info {
+  border: 2px solid var(--dashboard-accent);
+  color: var(--dashboard-accent);
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-info:hover {
+  background: var(--dashboard-accent);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(255, 200, 87, 0.3);
+}
+
+.btn-outline-danger {
+  border: 2px solid var(--dashboard-error);
+  color: var(--dashboard-error);
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-danger:hover {
+  background: var(--dashboard-error);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(233, 79, 55, 0.3);
+}
+
+/* =================================================
+   RESPONSIVE DESIGN FOR NEW SECTIONS
+   ================================================= */
+
+@media (max-width: 768px) {
+  .history-meta,
+  .review-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .avg-rating {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .history-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .history-filters .form-select {
+    width: 100%;
+  }
+  
+  .settings-card-header,
+  .settings-card-body {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .history-card,
+  .review-card,
+  .settings-card {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    border-radius: 0;
+  }
+  
+  .history-details .row {
+    flex-direction: column;
+  }
+  
+  .btn-block {
+    font-size: 0.875rem;
+    padding: 0.75rem;
+  }
 } 
